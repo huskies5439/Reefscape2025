@@ -34,6 +34,7 @@ public class CorailManip extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
     
   }
 

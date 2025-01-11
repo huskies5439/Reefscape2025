@@ -45,8 +45,9 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     
-    SmartDashboard.putNumber("Hauteur Ascenseur",0);
+    SmartDashboard.putNumber("Hauteur Ascenseur",getPosition());
     forceAscenseur = SmartDashboard.getNumber("voltage ascenseur", 0);
+    SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
   }
 
   public void setVoltage(double voltage){
@@ -88,6 +89,11 @@ public class Ascenseur extends SubsystemBase {
 
   public void resetEncoders(){
     moteur.getEncoder().setPosition(0);
+  }
+
+  public boolean isLimitSwitch(){
+    return !limitSwitch.get();
+
   }
 
 }
