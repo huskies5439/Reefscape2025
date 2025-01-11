@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -61,5 +62,9 @@ public class Ascenseur extends SubsystemBase {
     return pidAscenseur;
   }
 
+  @Logged
+  public double getPosition(){
+  return moteur.getEncoder().getPosition();
+  }
   
 }

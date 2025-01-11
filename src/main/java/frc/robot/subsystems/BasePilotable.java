@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -99,7 +100,7 @@ public class BasePilotable extends SubsystemBase {
     double ySpeedDelivered = ySpeed * Constants.maxVitesseLineaire;
     double rotDelivered = rot * Constants.maxVitesseRotation;
 
-    var swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(
+    SwerveModuleState[] swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 //getPose().getRotation()) //Quand on a de la vision correcte
@@ -150,8 +151,9 @@ public class BasePilotable extends SubsystemBase {
   }
 
   /////////////// GYRO
+  @Logged
   public double getAngle() {
-    return -gyro.getAngle();
+    return gyro.getYaw().getValueAsDouble();
   }
 
 

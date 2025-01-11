@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -33,6 +34,7 @@ public class CorailManip extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  @Logged
   public boolean isCorail(){
     return !capteur.get(); 
   }
