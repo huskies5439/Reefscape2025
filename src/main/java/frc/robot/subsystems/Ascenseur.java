@@ -9,8 +9,10 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,12 +25,14 @@ public class Ascenseur extends SubsystemBase {
   private double conversionEncoder;
   private double forceAscenseur;
 
+  private final DigitalInput limitSwitch = new DigitalInput(0);
+
   private ArmFeedforward feedfoward = new ArmFeedforward(0,0,0);
   
   
   public Ascenseur() {
 
-    moteurConfig.absoluteEncoder.inverted(false);
+    moteurConfig.inverted(false);
     moteurConfig.idleMode(IdleMode.kBrake);
     moteur.configure(moteurConfig, null, null);
     
@@ -37,7 +41,25 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     
-    Elastic
-    
+    SmartDashboard.putNumber("Hauteur Ascenseur",0);
+    forceAscenseur = SmartDashboard.getNumber("voltage ascenseur", 0);
   }
+
+  public void monter(){
+    moteur.setVoltage(1);
+  }
+
+  public void descendre(){
+    moteur.setVoltage(-1);
+  }
+
+  public void stop(){
+    moteur.setVoltage(0);
+  }
+
+  public ProfiledPIDController getAscenseuController(){
+    return pidAscenseur;
+  }
+
+  
 }
