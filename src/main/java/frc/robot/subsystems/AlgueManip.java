@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -27,11 +28,11 @@ public class AlgueManip extends SubsystemBase {
     // configs moteur droit + gauche
    moteurDroitConfig.inverted(true);
    moteurDroitConfig.idleMode(IdleMode.kBrake);
-   moteurDroit.configure(moteurDroitConfig, null, PersistMode.kPersistParameters);
+   moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
    moteurGauchceConfig.inverted(false); 
-   moteurGauchceConfig.idleMode(IdleMode.kBrake); 
-   moteurGauche.configure(moteurGauchceConfig, null, PersistMode.kPersistParameters);
+   moteurGauchceConfig.idleMode(IdleMode.kBrake);
+   moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 

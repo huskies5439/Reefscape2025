@@ -5,11 +5,14 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -28,14 +31,14 @@ public class Ascenseur extends SubsystemBase {
 
   private final DigitalInput limitSwitch = new DigitalInput(0);
 
-  private ArmFeedforward feedfoward = new ArmFeedforward(0,0,0);
+  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0,0,0);
   
   
   public Ascenseur() {
 
     moteurConfig.inverted(false);
     moteurConfig.idleMode(IdleMode.kBrake);
-    moteur.configure(moteurConfig, null, null);
+    moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
   }
 
@@ -46,16 +49,20 @@ public class Ascenseur extends SubsystemBase {
     forceAscenseur = SmartDashboard.getNumber("voltage ascenseur", 0);
   }
 
+  public void setVoltage(double voltage){
+    moteur.setVoltage(voltage);
+  }
+
   public void monter(){
-    moteur.setVoltage(1);
+    setVoltage(1);
   }
 
   public void descendre(){
-    moteur.setVoltage(-1);
+    setVoltage(-1);
   }
 
   public void stop(){
-    moteur.setVoltage(0);
+   setVoltage(0);
   }
 
   public ProfiledPIDController getAscenseuController(){
@@ -67,4 +74,20 @@ public class Ascenseur extends SubsystemBase {
   return moteur.getEncoder().getPosition();
   }
   
+  public void setPID(double cible){
+    double voltagePID = pidAscenseur.calculate(getPosition(),cible);
+
+    double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
+
+    setVoltage(voltagePID + voltageFF);
+  }
+
+  public boolean atCible(){
+    return pidAscenseur.atGoal();
+  }
+
+  public void resetEncoders(){
+    moteur.getEncoder().setPosition(0);
+  }
+
 }
