@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "OperateurIO.h"
 
-OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_* joystick, Adafruit_NeoPixel strip) {
+OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_ joystick, Adafruit_NeoPixel strip) {
   _firstPin = firstPin;
   _lastPin = lastPin;
   _joystick = joystick;
@@ -10,7 +10,7 @@ OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_* joystick, Adafrui
   _dernierBoutonPasse = 0;
 }
 
-void OperateurIO::loopButtonsAndLEd() {
+void OperateurIO::loopBoutonEtLED() {
   //trouver dernier bouton
   for (int i = _firstPin; i <= _lastPin; i++) {
     if (!digitalRead(i)) {
@@ -24,11 +24,12 @@ void OperateurIO::loopButtonsAndLEd() {
     //On itère sur tous les boutons pour les allumer/éteindre dans la driver station
     //et les LED correspondantes
     for (int i = _firstPin; i <= _lastPin; i++){
-      if (i == _dernierBouton) {
+      
+      if (i == _dernierBouton) {//Allume le dernier bouton
         _joystick.setButton(i, 1);
         _strip.setPixelColor(i-2, 0, 255, 0);
 
-      } else {
+      } else {//Éteint tous les autres
         _joystick.setButton(i, 0);
         _strip.setPixelColor(i-2, 0, 0, 0);
 

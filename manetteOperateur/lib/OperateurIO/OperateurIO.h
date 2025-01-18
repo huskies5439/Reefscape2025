@@ -9,8 +9,8 @@
 class OperateurIO
 {
   public:
-    OperateurIO(int firstPin, int lastPin, Joystick_* joystick, Adafruit_NeoPixel strip);
-    void loopButtonsAndLEd();
+    OperateurIO(int firstPin, int lastPin, Joystick_ joystick, Adafruit_NeoPixel strip);
+    void loopBoutonEtLED();
   private:
     int _firstPin;
     int _lastPin;

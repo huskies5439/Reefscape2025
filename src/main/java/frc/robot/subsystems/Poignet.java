@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.io.ObjectInputFilter.Config;
 
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.PersistMode;
