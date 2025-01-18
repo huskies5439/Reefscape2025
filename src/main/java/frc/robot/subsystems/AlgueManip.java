@@ -11,62 +11,57 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-
 
 public class AlgueManip extends SubsystemBase {
   /** Creates a new AlgueManip. */
-  private final SparkMax moteurDroit = new SparkMax(10,MotorType.kBrushless); // Ids a reverifier
-  private final SparkMax moteurGauche = new SparkMax(11,MotorType.kBrushless); // Ids a reverifier
-  
+  private SparkMax moteurDroit = new SparkMax(10, MotorType.kBrushless); // Ids a reverifier
+  private SparkMax moteurGauche = new SparkMax(11, MotorType.kBrushless); // Ids a reverifier
 
-  public static final SparkMaxConfig moteurDroitConfig = new SparkMaxConfig();
-  public static final SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig(); 
+  private SparkMaxConfig moteurDroitConfig = new SparkMaxConfig();
+  private SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig();
+
   public AlgueManip() {
     // configs moteur droit + gauche
-   moteurDroitConfig.inverted(true);
-   moteurDroitConfig.idleMode(IdleMode.kBrake);
-   moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    moteurDroitConfig.inverted(true);
+    moteurDroitConfig.idleMode(IdleMode.kBrake);
+    moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-   moteurGauchceConfig.inverted(false); 
-   moteurGauchceConfig.idleMode(IdleMode.kBrake);
-   moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    moteurGauchceConfig.inverted(false);
+    moteurGauchceConfig.idleMode(IdleMode.kBrake);
+    moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+
   }
 
-
-
-  public void setVoltage(double voltage){
+  public void setVoltage(double voltage) {
 
     moteurDroit.setVoltage(voltage);
     moteurGauche.setVoltage(voltage);
 
   }
 
-  public void gober(){
+  public void gober() {
 
     setVoltage(4); // Voltages a reverifier
 
   }
-  public void lancer(){
+
+  public void lancer() {
 
     setVoltage(-4);
 
   }
 
-  public void stop(){
+  public void stop() {
 
     setVoltage(0);
 
   }
-
 
 }

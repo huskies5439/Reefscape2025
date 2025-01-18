@@ -22,14 +22,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Poignet extends SubsystemBase {
   /** Creates a new Poignet. */
-  public final SparkFlex moteur = new SparkFlex(13, MotorType.kBrushless);
-  public static final SparkFlexConfig configMoteur = new SparkFlexConfig();
-  public final DigitalInput capteur = new DigitalInput(4);// Channel a reverifier
-  private ProfiledPIDController pidPoignet = new ProfiledPIDController( 0.1, 0, 0, 
-  new TrapezoidProfile.Constraints(320,420));
+  private SparkFlex moteur = new SparkFlex(13, MotorType.kBrushless);
+  private SparkFlexConfig configMoteur = new SparkFlexConfig();
+  private DigitalInput capteur = new DigitalInput(4);// Channel a reverifier
+  private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.1, 0, 0,
+      new TrapezoidProfile.Constraints(320, 420));
 
+  private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0);
 
-  private ArmFeedforward feedforward = new ArmFeedforward(0,0,0);
+  private double angleCible;
 
   public Poignet() {
     configMoteur.inverted(false);
@@ -44,44 +45,55 @@ public class Poignet extends SubsystemBase {
     SmartDashboard.putNumber("Angle Poignet", getPosition());
   }
 
-  public void setVoltage(double voltage){
+  public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
 
-  public void monter(){
+  public void monter() {
     setVoltage(1);
   }
 
-  public void descendre(){
+  public void descendre() {
     setVoltage(-1);
   }
 
-  public void stop(){
+  public void stop() {
     setVoltage(0);
   }
 
-  public double getPosition(){
+  public void resetPID(){
+    pidPoignet.reset(getPosition()); 
+  }
+
+  public double getPosition() {
     return moteur.getEncoder().getPosition();
   }
 
-  public void setPID(double cible){
-    double voltagePID = pidPoignet.calculate(getPosition(),cible);
+  public void setPID(double cible) {
+    double voltagePID = pidPoignet.calculate(getPosition(), cible);
 
-    double voltageFF =  feedforward.calculate(
-      Math.toRadians(getPosition()),
-      pidPoignet.getSetpoint().velocity
-      );
+    double voltageFF = feedforward.calculate(
+        Math.toRadians(getPosition()),
+        pidPoignet.getSetpoint().velocity);
 
     setVoltage(voltagePID + voltageFF);
 
   }
 
-  public boolean atCible(){
+  public boolean atCible() {
     return pidPoignet.atGoal();
   }
 
-  public void resetEncoders(){
+  public void resetEncoders() {
     moteur.getEncoder().setPosition(0);
+  }
+
+  public void setAngleCible(double cible){
+    angleCible = cible;
+  }
+
+  public double getAngleCible(){
+    return angleCible; 
   }
 
 }

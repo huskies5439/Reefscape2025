@@ -19,19 +19,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class BasePilotable extends SubsystemBase {
   // Créer les moteurs swerves
-  private final MAXSwerveModule avantGauche = new MAXSwerveModule(1, 2, -90);
+  private MAXSwerveModule avantGauche = new MAXSwerveModule(1, 2, -90);
 
-  private final MAXSwerveModule avantDroite = new MAXSwerveModule(3, 4, 0);
+  private MAXSwerveModule avantDroite = new MAXSwerveModule(3, 4, 0);
 
-  private final MAXSwerveModule arriereGauche = new MAXSwerveModule(5, 6, 180);
+  private MAXSwerveModule arriereGauche = new MAXSwerveModule(5, 6, 180);
 
-  private final MAXSwerveModule arriereDroite = new MAXSwerveModule(7, 8, 90);
+  private MAXSwerveModule arriereDroite = new MAXSwerveModule(7, 8, 90);
 
   // Le gyroscope
-  private final Pigeon2 gyro = new Pigeon2(1);
+  private Pigeon2 gyro = new Pigeon2(1);
 
   // Initialisation PoseEstimator
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -66,7 +65,7 @@ public class BasePilotable extends SubsystemBase {
             arriereDroite.getPosition()
         });
 
-        SmartDashboard.putNumber("Angle Gyro", getAngle());
+    SmartDashboard.putNumber("Angle Gyro", getAngle());
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
@@ -89,9 +88,9 @@ public class BasePilotable extends SubsystemBase {
     ySpeed = -MathUtil.applyDeadband(ySpeed, deadband);
     rot = -MathUtil.applyDeadband(rot, deadband);
 
-    if (squared){//Mettre les joysticks "au carré" pour adoucir les déplacements
-      xSpeed = xSpeed*Math.abs(xSpeed);
-      ySpeed = ySpeed*Math.abs(ySpeed);
+    if (squared) {// Mettre les joysticks "au carré" pour adoucir les déplacements
+      xSpeed = xSpeed * Math.abs(xSpeed);
+      ySpeed = ySpeed * Math.abs(ySpeed);
       rot = rot * Math.abs(rot);
     }
 
@@ -103,8 +102,8 @@ public class BasePilotable extends SubsystemBase {
     SwerveModuleState[] swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                //getPose().getRotation()) //Quand on a de la vision correcte
-                Rotation2d.fromDegrees(getAngle())) //Quand on conduit sans vision (pratique)
+                // getPose().getRotation()) //Quand on a de la vision correcte
+                Rotation2d.fromDegrees(getAngle())) // Quand on conduit sans vision (pratique)
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
     setModuleStates(swerveModuleStates);
@@ -155,8 +154,6 @@ public class BasePilotable extends SubsystemBase {
   public double getAngle() {
     return gyro.getYaw().getValueAsDouble();
   }
-
-
 
   public void resetGyro() {
     gyro.setYaw(0);

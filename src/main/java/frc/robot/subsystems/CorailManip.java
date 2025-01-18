@@ -19,15 +19,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class CorailManip extends SubsystemBase {
   /** Creates a new CorailManip. */
 
-  private final SparkMax moteur = new SparkMax(12, MotorType.kBrushless); // ID a reverifier 
-  public static final SparkMaxConfig configMoteur = new SparkMaxConfig(); 
+  private SparkMax moteur = new SparkMax(12, MotorType.kBrushless); // ID a reverifier
+  private SparkMaxConfig configMoteur = new SparkMaxConfig();
 
-  public final DigitalInput capteur = new DigitalInput(3); // Channel a reverifier
-
+  private DigitalInput capteur = new DigitalInput(3); // Channel a reverifier
 
   public CorailManip() {
     configMoteur.inverted(false);
-    configMoteur.idleMode(IdleMode.kCoast); 
+    configMoteur.idleMode(IdleMode.kCoast);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -35,32 +34,31 @@ public class CorailManip extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
-    
+
   }
 
   @Logged
-  public boolean isCorail(){
-    return !capteur.get(); 
+  public boolean isCorail() {
+    return !capteur.get();
   }
 
-  public void setVoltage(double voltage){
+  public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
 
-  public void stop(){
+  public void stop() {
     setVoltage(0);
   }
 
-  public void gober(){
-   setVoltage(4);
-    
+  public void gober() {
+    setVoltage(4);
+
   }
 
-  public void lancer(){
-    
-    setVoltage(-4); 
-    
-  }
+  public void lancer() {
 
+    setVoltage(-4);
+
+  }
 
 }
