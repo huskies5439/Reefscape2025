@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "OperateurIO.h"
 
-OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_ joystick, Adafruit_NeoPixel strip) {
+OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_* joystick, Adafruit_NeoPixel strip) {
   _firstPin = firstPin;
   _lastPin = lastPin;
   _joystick = joystick;

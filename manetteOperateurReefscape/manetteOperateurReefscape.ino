@@ -18,8 +18,8 @@ Joystick_ joystick(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_GAMEPAD,
                    false, false,
                    false, false, false);
 
-OperateurIO hauteur(L1, L2, joystick, strip);
-OperateurIO position(L3, L4, joystick, strip);
+OperateurIO hauteur(L1, L2, *joystick, strip);
+OperateurIO position(L3, L4, *joystick, strip);
 
 void setup() {
   
