@@ -15,14 +15,14 @@ Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //Sert à communiquer avec la Driver Station
 Joystick_ joystick(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_GAMEPAD,
-                   4 /* <- c'est le nombre de boutons*/, 0, false, false, false,
+                   6 /* <- c'est le nombre de boutons, il en faut +2 car on n'utilise pas 0 et 1*/, 0, false, false, false,
                    false, false, false,
                    false, false,
                    false, false, false);
 
 //firstPin, lastPin, le joystick et les del
-OperateurIO hauteur(L1, L2, joystick, strip);
-OperateurIO position(L3, L4, joystick, strip);
+OperateurIO hauteur(L1, L2, &joystick, strip);
+OperateurIO position(L3, L4, &joystick, strip);
 
 void setup()
 {
@@ -50,4 +50,5 @@ void loop()
     //Output : Envoie le dernier bouton appuyé à la driver station et aux LEDs
     hauteur.loopBoutonEtLED();
     position.loopBoutonEtLED();
+
 }
