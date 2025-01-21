@@ -49,6 +49,17 @@ public class Ascenseur extends SubsystemBase {
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
   }
 
+  @Logged
+  // Retourne la position de l'encodeur
+  public double getPosition() {
+    return moteur.getEncoder().getPosition();
+  }
+
+  public void resetEncoders() {
+    moteur.getEncoder().setPosition(0);
+  }
+
+  // Donne un voltage au moteur
   public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
@@ -65,15 +76,7 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(0);
   }
 
-  public void resetPID() {
-    pidAscenseur.reset(getPosition());
-  }
-
-  @Logged
-  public double getPosition() {
-    return moteur.getEncoder().getPosition();
-  }
-
+  // PID
   public void setPID(double cible) {
     double voltagePID = pidAscenseur.calculate(getPosition(), cible);
 
@@ -82,19 +85,11 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(voltagePID + voltageFF);
   }
 
-  public boolean atCible() {
-    return pidAscenseur.atGoal();
+  public void resetPID() {
+    pidAscenseur.reset(getPosition());
   }
 
-  public void resetEncoders() {
-    moteur.getEncoder().setPosition(0);
-  }
-
-  public boolean isLimitSwitch() {
-    return !limitSwitch.get();
-
-  }
-
+  // Donne la cible a l'ascenseur
   public void setHauteurCible(double cible) {
     hauteurCible = cible;
 
@@ -102,6 +97,16 @@ public class Ascenseur extends SubsystemBase {
 
   public double getHauteurCible() {
     return hauteurCible;
+  }
+
+  public boolean atCible() {
+    return pidAscenseur.atGoal();
+  }
+
+  // Limit switch
+  public boolean isLimitSwitch() {
+    return !limitSwitch.get();
+
   }
 
 }

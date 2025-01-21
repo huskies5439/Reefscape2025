@@ -32,33 +32,28 @@ public class CorailManip extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
-
-  }
-
-  @Logged
-  public boolean isCorail() {
-    return !capteur.get();
   }
 
   public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
 
+  public void gober() {
+    setVoltage(4);
+  }
+
+  public void lancer() {
+    setVoltage(-4);
+  }
+
   public void stop() {
     setVoltage(0);
   }
 
-  public void gober() {
-    setVoltage(4);
-
-  }
-
-  public void lancer() {
-
-    setVoltage(-4);
-
+  @Logged
+  public boolean isCorail() {
+    return !capteur.get();
   }
 
 }

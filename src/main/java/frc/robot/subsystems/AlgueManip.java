@@ -14,7 +14,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgueManip extends SubsystemBase {
-  /** Creates a new AlgueManip. */
+
   private SparkMax moteurDroit = new SparkMax(10, MotorType.kBrushless); // Ids a reverifier
   private SparkMax moteurGauche = new SparkMax(11, MotorType.kBrushless); // Ids a reverifier
 
@@ -35,7 +35,6 @@ public class AlgueManip extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
 
   }
 
@@ -47,21 +46,15 @@ public class AlgueManip extends SubsystemBase {
   }
 
   public void gober() {
-
     setVoltage(4); // Voltages a reverifier
-
   }
 
   public void lancer() {
-
     setVoltage(-4);
-
   }
 
   public void stop() {
-
     setVoltage(0);
-
   }
 
 }
