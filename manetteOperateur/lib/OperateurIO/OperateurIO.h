@@ -9,7 +9,7 @@
 class OperateurIO
 {
   public:
-    OperateurIO(int firstPin, int lastPin, Joystick_ *joystick, Adafruit_NeoPixel strip);
+    OperateurIO(int firstPin, int lastPin, Joystick_ *joystick, Adafruit_NeoPixel *strip);
     void loopBoutonEtLED();
   private:
     int _firstPin;
@@ -17,7 +17,7 @@ class OperateurIO
     int _dernierBouton;
     int _dernierBoutonPasse;
     Joystick_ *_joystick;
-    Adafruit_NeoPixel _strip;
+    Adafruit_NeoPixel *_strip;
 };
 
 #endif
