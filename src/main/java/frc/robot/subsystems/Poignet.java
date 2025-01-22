@@ -19,9 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Poignet extends SubsystemBase {
+  // créé le moteur + sa config
   private SparkFlex moteur = new SparkFlex(13, MotorType.kBrushless);
   private SparkFlexConfig configMoteur = new SparkFlexConfig();
+  // créé le capteur
   private DigitalInput capteur = new DigitalInput(4);// Channel a reverifier
+
+  // créé PID + FeedForward
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.1, 0, 0,
       new TrapezoidProfile.Constraints(320, 420));
 
@@ -30,6 +34,7 @@ public class Poignet extends SubsystemBase {
   private double angleCible;
 
   public Poignet() {
+    // associe configs au moteur
     configMoteur.inverted(false);
     configMoteur.idleMode(IdleMode.kBrake);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -41,6 +46,7 @@ public class Poignet extends SubsystemBase {
     SmartDashboard.putNumber("Angle Poignet", getPosition());
   }
 
+  // retourne la position poignet ANGLE????
   public double getPosition() {
     return moteur.getEncoder().getPosition();
   }
@@ -49,10 +55,12 @@ public class Poignet extends SubsystemBase {
     moteur.getEncoder().setPosition(0);
   }
 
+  // mets le voltage dans le moteur
   public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
 
+  /// fonctions de jeu avec le poignet
   public void monter() {
     setVoltage(1);
   }
@@ -65,6 +73,7 @@ public class Poignet extends SubsystemBase {
     setVoltage(0);
   }
 
+  // PID
   public void setPID(double cible) {
     double voltagePID = pidPoignet.calculate(getPosition(), cible);
 

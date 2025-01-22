@@ -15,18 +15,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgueManip extends SubsystemBase {
 
+  //créé les moteurs
   private SparkMax moteurDroit = new SparkMax(10, MotorType.kBrushless); // Ids a reverifier
   private SparkMax moteurGauche = new SparkMax(11, MotorType.kBrushless); // Ids a reverifier
 
+  //Configs des moteurs
   private SparkMaxConfig moteurDroitConfig = new SparkMaxConfig();
   private SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig();
 
   public AlgueManip() {
-    // configs moteur droit + gauche
+    // associe configs moteur droit 
     moteurDroitConfig.inverted(true);
     moteurDroitConfig.idleMode(IdleMode.kBrake);
     moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    // associe configs moteur gauche
     moteurGauchceConfig.inverted(false);
     moteurGauchceConfig.idleMode(IdleMode.kBrake);
     moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -45,6 +48,7 @@ public class AlgueManip extends SubsystemBase {
 
   }
 
+  //gober/lancer/stop avec le manip d'algues
   public void gober() {
     setVoltage(4); // Voltages a reverifier
   }

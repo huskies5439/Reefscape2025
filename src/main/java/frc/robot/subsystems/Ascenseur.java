@@ -20,73 +20,84 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Ascenseur extends SubsystemBase {
 
+  // moteur + config
+  private SparkFlex moteur1 = new SparkFlex(0, null);
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
-  private SparkFlex moteur = new SparkFlex(0, null);
+
+  private SparkFlex moteur2 = new SparkFlex(1, null);
+
+  // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,
       new TrapezoidProfile.Constraints(0, 0));
   private double conversionEncoder;
   private double forceAscenseur;
-
-  private final DigitalInput limitSwitch = new DigitalInput(0);
-
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
+
+  // capteur
+  private final DigitalInput limitSwitch = new DigitalInput(0);
 
   private double hauteurCible;
 
   public Ascenseur() {
-
+    // associe parametres moteurs
     moteurConfig.inverted(false);
     moteurConfig.idleMode(IdleMode.kBrake);
-    moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // associe les configs aux moteurs
+    moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
   @Override
   public void periodic() {
 
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPosition());
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());
     forceAscenseur = SmartDashboard.getNumber("voltage ascenseur", 0);
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
   }
 
   @Logged
   // Retourne la position de l'encodeur
-  public double getPosition() {
-    return moteur.getEncoder().getPosition();
+  public double getPositionVortex() {
+    return moteur1.getEncoder().getPosition();
   }
 
-  public void resetEncoders() {
-    moteur.getEncoder().setPosition(0);
+  // reset les encodeurs des vortex
+  public void resetEncodersVortex() {
+    moteur1.getEncoder().setPosition(0);
+    moteur2.getEncoder().setPosition(0);
   }
 
-  // Donne un voltage au moteur
-  public void setVoltage(double voltage) {
-    moteur.setVoltage(voltage);
+  // Donne un voltage aux moteurs
+  public void setVoltageVortex(double voltage) {
+    moteur1.setVoltage(voltage);
+    moteur2.setVoltage(voltage);
   }
 
+  // monter/descendre/arrêter l'ascenseur
   public void monter() {
-    setVoltage(1);
+    setVoltageVortex(1);
   }
 
   public void descendre() {
-    setVoltage(-1);
+    setVoltageVortex(-1);
   }
 
   public void stop() {
-    setVoltage(0);
+    setVoltageVortex(0);
   }
 
-  // PID
+  // PID + FeedForward
   public void setPID(double cible) {
-    double voltagePID = pidAscenseur.calculate(getPosition(), cible);
+    double voltagePID = pidAscenseur.calculate(getPositionVortex(), cible);
 
     double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
 
-    setVoltage(voltagePID + voltageFF);
+    setVoltageVortex(voltagePID + voltageFF);
   }
 
   public void resetPID() {
-    pidAscenseur.reset(getPosition());
+    pidAscenseur.reset(getPositionVortex());
   }
 
   // Donne la cible a l'ascenseur
@@ -95,6 +106,7 @@ public class Ascenseur extends SubsystemBase {
 
   }
 
+  // La hauteur de la cible
   public double getHauteurCible() {
     return hauteurCible;
   }
