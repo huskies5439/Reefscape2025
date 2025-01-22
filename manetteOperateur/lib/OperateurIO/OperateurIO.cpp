@@ -7,22 +7,24 @@ https://stackoverflow.com/questions/76930785/c-arduino-pass-one-objects-instance
 //TODO : Mieux commenter la classe
 
 //Le * peut être soit collé sur le type, soit sur le nom de la variable.
-OperateurIO::OperateurIO(int firstPin, int lastPin, Joystick_ *joystick, Adafruit_NeoPixel *strip) {
-  _firstPin = firstPin;
-  _lastPin = lastPin;
+OperateurIO::OperateurIO(int firstChannel, int lastChannel, Joystick_ *joystick, Adafruit_NeoPixel *strip, CD74HC4067 *mux) {
+  _firstChannel = firstChannel;
+  _lastChannel = lastChannel;
   
   _joystick = joystick; //pas mettre le * car le nom de la variable du pointeur est seulement joystick, pas *joystick.
   _strip = strip;
+  _mux = mux;
 
-  _dernierBouton = 0;
-  _dernierBoutonPasse = 0;
+  _dernierBouton = 999;
+  _dernierBoutonPasse = 999;
 }
 
 
 void OperateurIO::loopBoutonEtLED() {
   //trouver dernier bouton
-  for (int i = _firstPin; i <= _lastPin; i++) {
-    if (!digitalRead(i)) {
+  for (int i = _firstChannel; i <= _lastChannel; i++) {
+    _mux->channel(i);
+    if (!digitalRead(2)) {
       _dernierBouton = i;
     }
   }
@@ -32,15 +34,15 @@ void OperateurIO::loopBoutonEtLED() {
   if (_dernierBouton != _dernierBoutonPasse) {
     //On itère sur tous les boutons pour les allumer/éteindre dans la driver station
     //et les LED correspondantes
-    for (int i = _firstPin; i <= _lastPin; i++){
+    for (int i = _firstChannel; i <= _lastChannel; i++){
       
       if (i == _dernierBouton) {//Allume le dernier bouton
         _joystick -> setButton(i, 1); //Il faut utiliser l'opérateur lambda -> car on passe par un pointeur 
-        _strip -> setPixelColor(i-2, 0, 255, 0);
+        _strip -> setPixelColor(i, 0, 255, 0);
 
       } else {//Éteint tous les autres
         _joystick -> setButton(i, 0);
-        _strip -> setPixelColor(i-2, 0, 0, 0);
+        _strip -> setPixelColor(i, 0, 0, 0);
 
       }
     }
@@ -49,5 +51,5 @@ void OperateurIO::loopBoutonEtLED() {
 
   //reinitialise dernier bouton
   _dernierBoutonPasse = _dernierBouton;
-  delay(20);
+  delay(10);
 }
