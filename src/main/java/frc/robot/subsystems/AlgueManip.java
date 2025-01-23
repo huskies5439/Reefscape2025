@@ -11,6 +11,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgueManip extends SubsystemBase {
@@ -22,6 +23,8 @@ public class AlgueManip extends SubsystemBase {
   //Configs des moteurs
   private SparkMaxConfig moteurDroitConfig = new SparkMaxConfig();
   private SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig();
+
+  private DigitalInput capteur = new DigitalInput(4);//channel a verifier
 
   public AlgueManip() {
     // associe configs moteur droit 
@@ -59,6 +62,10 @@ public class AlgueManip extends SubsystemBase {
 
   public void stop() {
     setVoltage(0);
+  }
+
+  public boolean isAlgue(){
+    return !capteur.get();
   }
 
 }
