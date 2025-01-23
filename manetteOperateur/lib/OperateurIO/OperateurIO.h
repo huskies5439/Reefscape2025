@@ -6,6 +6,8 @@
 #include <Adafruit_NeoPixel.h>
 #include <CD74HC4067.h>
 
+#include <../../include/DefinitionPins.h>
+
 
 class OperateurIO
 {

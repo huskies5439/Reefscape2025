@@ -1,12 +1,4 @@
-#include <Arduino.h>
-
-#include <Joystick.h>
-#include <Adafruit_NeoPixel.h>
-#include <CD74HC4067.h>
-
 #include <OperateurIO.h>
-#include <DefinitionPins.h>
-
 
 #define NB_BOUTON 4
 

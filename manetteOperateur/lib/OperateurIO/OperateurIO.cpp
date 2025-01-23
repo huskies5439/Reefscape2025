@@ -1,5 +1,6 @@
 #include "OperateurIO.h"
 
+
 /* Voici le site qui a permit de faire fonctionner le joystick
 https://stackoverflow.com/questions/76930785/c-arduino-pass-one-objects-instance-as-a-pointer-to-another-class
 */
@@ -15,8 +16,8 @@ OperateurIO::OperateurIO(int firstChannel, int lastChannel, Joystick_ *joystick,
   _strip = strip;
   _mux = mux;
 
-  _dernierBouton = 999;
-  _dernierBoutonPasse = 999;
+  _dernierBouton = -1;
+  _dernierBoutonPasse = -1;
 }
 
 
@@ -24,7 +25,7 @@ void OperateurIO::loopBoutonEtLED() {
   //trouver dernier bouton
   for (int i = _firstChannel; i <= _lastChannel; i++) {
     _mux->channel(i);
-    if (!digitalRead(2)) {
+    if (!digitalRead(SIG)) {
       _dernierBouton = i;
     }
   }
@@ -51,5 +52,4 @@ void OperateurIO::loopBoutonEtLED() {
 
   //reinitialise dernier bouton
   _dernierBoutonPasse = _dernierBouton;
-  delay(10);
 }
