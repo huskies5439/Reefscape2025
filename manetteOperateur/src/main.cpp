@@ -27,7 +27,7 @@ void setup()
 
     //Initialise le ruban de DEL
     strip.begin();
-    strip.setBrightness(10);
+    strip.setBrightness(50);
 
     //Reset la strip au début du programme
     strip.clear();
