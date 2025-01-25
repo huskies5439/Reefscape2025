@@ -1,6 +1,6 @@
 #include <OperateurIO.h>
 
-#define NB_BOUTON 4
+#define NB_BOUTON 16
 
 
 
@@ -19,8 +19,8 @@ CD74HC4067 mux(S0,S1,S2,S3);
 //firstPin, lastPin, le joystick et les del
 //Il faut pointer vers le joystick car on veut que chaque objet OperateurIO parle au même objet joystick
 //Même chose pour la LED strip
-OperateurIO hauteur(L1, L2, &joystick, &strip, &mux);
-OperateurIO position(L3, L4, &joystick, &strip, &mux);
+OperateurIO hauteur(L1, L4, &joystick, &strip, &mux);
+OperateurIO position(A, L, &joystick, &strip, &mux);
 
 void setup()
 {

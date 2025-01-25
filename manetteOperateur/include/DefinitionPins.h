@@ -17,4 +17,15 @@
 
 //Boutons Récif
 #define A 4
-////etc jusqu'à L = C15
+#define B 5
+#define C 6
+#define D 7
+#define E 8
+#define F 9
+#define G 10
+#define H 11
+#define I 12
+#define J 13
+#define K 14
+#define L 15
+
