@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.nio.file.Path;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -68,4 +72,19 @@ public final class Constants {
 
   }
 
+  public static class Branche {
+
+    public static final Pose2d A = new Pose2d(3.153, 4.187, Rotation2d.fromDegrees(0));
+    public static final Pose2d B = new Pose2d(3.153, 3.851, Rotation2d.fromDegrees(0));
+    public static final Pose2d C = new Pose2d(3.680, 2.940, Rotation2d.fromDegrees(60));
+    public static final Pose2d D = new Pose2d(3.992, 2.784, Rotation2d.fromDegrees(60));
+    public static final Pose2d E = new Pose2d(4.987, 2.784, Rotation2d.fromDegrees(120));
+    public static final Pose2d F = new Pose2d(5.311, 2.940, Rotation2d.fromDegrees(120));
+    public static final Pose2d G = new Pose2d(5.815, 3.860, Rotation2d.fromDegrees(-180));
+    public static final Pose2d H = new Pose2d(5.815, 4.196, Rotation2d.fromDegrees(-180));
+    public static final Pose2d I = new Pose2d(5.275, 5.058, Rotation2d.fromDegrees(-120));
+    public static final Pose2d J = new Pose2d(5.021, 5.244, Rotation2d.fromDegrees(-120));
+    public static final Pose2d K = new Pose2d(3.978, 5.224, Rotation2d.fromDegrees(-60));
+    public static final Pose2d L = new Pose2d(3.715, 5.107, Rotation2d.fromDegrees(-60));
+  }
 }
