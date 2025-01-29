@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import java.lang.reflect.Field;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,6 +18,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -44,12 +48,17 @@ public class BasePilotable extends SubsystemBase {
       },
       new Pose2d());
 
+  Field2d field2d = new Field2d();
+
   public BasePilotable() {
 
     // Reset initial
     resetGyro();
     resetEncoders();
     resetOdometry(new Pose2d());
+
+    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7,0.7,9999999));
+
   }
 
   @Override
