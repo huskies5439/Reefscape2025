@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -21,10 +22,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Ascenseur extends SubsystemBase {
 
   // moteur + config
-  private SparkFlex moteur1 = new SparkFlex(8, null);
+  private SparkFlex moteur1 = new SparkFlex(8, MotorType.kBrushless);
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
 
-  private SparkFlex moteur2 = new SparkFlex(9, null);
+  private SparkFlex moteur2 = new SparkFlex(9, MotorType.kBrushless);
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,
@@ -40,7 +41,7 @@ public class Ascenseur extends SubsystemBase {
 
   public Ascenseur() {
     // associe parametres moteurs
-    moteurConfig.inverted(false);
+    moteurConfig.inverted(true);
     moteurConfig.idleMode(IdleMode.kBrake);
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -76,7 +77,7 @@ public class Ascenseur extends SubsystemBase {
 
   // monter/descendre/arrêter l'ascenseur
   public void monter() {
-    setVoltageVortex(1);
+    setVoltageVortex(3);
   }
 
   public void descendre() {
