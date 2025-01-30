@@ -7,6 +7,10 @@ package frc.robot.subsystems;
 import java.lang.reflect.Field;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
@@ -18,23 +22,25 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 
 public class BasePilotable extends SubsystemBase {
   // Créer les moteurs swerves
-  private MAXSwerveModule avantGauche = new MAXSwerveModule(1, 2, -90);
+  private MAXSwerveModule avantGauche = new MAXSwerveModule(0, 1, -90);
 
-  private MAXSwerveModule avantDroite = new MAXSwerveModule(3, 4, 0);
+  private MAXSwerveModule avantDroite = new MAXSwerveModule(2, 3, 0);
 
-  private MAXSwerveModule arriereGauche = new MAXSwerveModule(5, 6, 180);
+  private MAXSwerveModule arriereGauche = new MAXSwerveModule(4, 5, 180);
 
-  private MAXSwerveModule arriereDroite = new MAXSwerveModule(7, 8, 90);
+  private MAXSwerveModule arriereDroite = new MAXSwerveModule(6, 7, 90);
 
   // Le gyroscope
-  private Pigeon2 gyro = new Pigeon2(1);
+  private Pigeon2 gyro = new Pigeon2(0);
 
   // Initialisation PoseEstimator
   SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
@@ -57,8 +63,39 @@ public class BasePilotable extends SubsystemBase {
     resetEncoders();
     resetOdometry(new Pose2d());
 
-    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7,0.7,9999999));
+    // parametre limelight
+    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
 
+    // aller chercher la configuration du robot dans Pathplanner
+    RobotConfig robotConfig = null;
+    try {
+
+      robotConfig = RobotConfig.fromGUISettings();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    // configuration Pathplanner
+    AutoBuilder.configure(
+        this::getPose,
+        this::resetOdometry,
+        this::getChassisSpeeds,
+        (speeds, feedforward) -> conduireChassis(speeds),
+        new PPHolonomicDriveController(new PIDConstants(1, 0, 0), // a ajuster
+            new PIDConstants(5, 0, 0)),
+        robotConfig, // a ajuster
+        () -> {
+          // Boolean supplier that controls when the path will be mirrored for the red
+          // alliance
+          // This will flip the path being followed to the red side of the field.
+          // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+          var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+          }
+          return false;
+        }, this);
   }
 
   @Override
@@ -73,8 +110,12 @@ public class BasePilotable extends SubsystemBase {
             arriereGauche.getPosition(),
             arriereDroite.getPosition()
         });
-
+    field2d.setRobotPose(getPose());
+    SmartDashboard.putData("Field", field2d);
     SmartDashboard.putNumber("Angle Gyro", getAngle());
+
+    setLimelightRobotOrientation();
+    addVisionPosition();
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
@@ -148,6 +189,26 @@ public class BasePilotable extends SubsystemBase {
         pose);
   }
 
+////////////////////limelight
+  public void setLimelightRobotOrientation() {
+    LimelightHelpers.SetRobotOrientation("limelight",
+        poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+  }
+
+  public void addVisionPosition() {
+    LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    boolean doRejectUpdate = false;
+    if (Math.abs(getRate()) > 720) {
+      doRejectUpdate = true;
+    }
+    if (poseEstimate.tagCount == 0) {
+      doRejectUpdate = true;
+    }
+    if (!doRejectUpdate) {
+      poseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
+    }
+  }
+
   ////////////// Encodeurs
   // Pas besoin de méthode pour obtenir la position des encodeurs, tout ça passe
   ////////////// directement pas la pose2D du robot
@@ -159,12 +220,29 @@ public class BasePilotable extends SubsystemBase {
   }
 
   /////////////// GYRO
-  @Logged
   public double getAngle() {
     return gyro.getYaw().getValueAsDouble();
   }
 
+  public double getRate() {
+    return gyro.getAngularVelocityZWorld().getValueAsDouble();
+  }
+
   public void resetGyro() {
     gyro.setYaw(0);
+  }
+
+  //////////////// Path Planner
+  public ChassisSpeeds getChassisSpeeds() {
+    return Constants.kDriveKinematics.toChassisSpeeds(
+        avantDroite.getState(), avantGauche.getState(), arriereDroite.getState(), arriereGauche.getState());
+  }
+
+  public void conduireChassis(ChassisSpeeds chassisSpeeds) {
+    // Ramene la vitesse en intervale de 20 ms
+    ChassisSpeeds targetSpeed = ChassisSpeeds.discretize(chassisSpeeds, 0.02);
+
+    SwerveModuleState[] swerveModuleState = Constants.kDriveKinematics.toSwerveModuleStates(targetSpeed);
+    setModuleStates(swerveModuleState);
   }
 }
