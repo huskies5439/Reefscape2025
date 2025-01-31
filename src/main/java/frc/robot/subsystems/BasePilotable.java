@@ -31,13 +31,13 @@ import frc.robot.LimelightHelpers;
 
 public class BasePilotable extends SubsystemBase {
   // Créer les moteurs swerves
-  private MAXSwerveModule avantGauche = new MAXSwerveModule(0, 1, -90);
+  private MAXSwerveModule avantGauche = new MAXSwerveModule(1, 2, -90);
 
-  private MAXSwerveModule avantDroite = new MAXSwerveModule(2, 3, 0);
+  private MAXSwerveModule avantDroite = new MAXSwerveModule(3, 4, 0);
 
-  private MAXSwerveModule arriereGauche = new MAXSwerveModule(4, 5, 180);
+  private MAXSwerveModule arriereGauche = new MAXSwerveModule(5, 6, 180);
 
-  private MAXSwerveModule arriereDroite = new MAXSwerveModule(6, 7, 90);
+  private MAXSwerveModule arriereDroite = new MAXSwerveModule(7, 8, 90);
 
   // Le gyroscope
   private Pigeon2 gyro = new Pigeon2(0);
@@ -114,8 +114,10 @@ public class BasePilotable extends SubsystemBase {
     SmartDashboard.putData("Field", field2d);
     SmartDashboard.putNumber("Angle Gyro", getAngle());
 
-    setLimelightRobotOrientation();
-    addVisionPosition();
+
+    //Ajouter seulement quand la Limelight va être branchée sur le robot !
+    //setLimelightRobotOrientation();
+    //addVisionPosition();
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE

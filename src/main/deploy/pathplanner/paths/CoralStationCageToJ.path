@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.70625,
+        "y": 7.369249999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6520000000000006,
+        "y": 6.794
+      },
+      "isLocked": false,
+      "linkedName": "CoralStationCage"
+    },
+    {
+      "anchor": {
+        "x": 5.02125,
+        "y": 5.24375
+      },
+      "prevControl": {
+        "x": 4.056,
+        "y": 5.9555
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "J"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7875518672199173,
+      "rotationDegrees": -119.99999999999999
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 9.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 1440.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.99999999999999
+  },
+  "reversed": false,
+  "folder": "AutoCorailCage",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 126.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6806909159155587,
+        "y": 2.9611662928469515
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.468116352551867,
+        "y": 2.1072759081444494
+      },
+      "isLocked": false,
+      "linkedName": "C"
+    },
+    {
+      "anchor": {
+        "x": 1.5943647540983608,
+        "y": 0.7103995901639337
+      },
+      "prevControl": {
+        "x": 2.4958708186954026,
+        "y": 2.298881445982417
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CoralStationPros"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 9.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 1440.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -126.0
+  },
+  "reversed": false,
+  "folder": "AutoCorailPros",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "useDefaultConstraints": true
+}

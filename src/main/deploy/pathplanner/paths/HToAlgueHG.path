@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.815496715709662,
+        "y": 4.196422190521628
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.065468874515745,
+        "y": 4.1926912627782595
+      },
+      "isLocked": true,
+      "linkedName": "H"
+    },
+    {
+      "anchor": {
+        "x": 5.82075,
+        "y": 4.015249999999999
+      },
+      "prevControl": {
+        "x": 6.070685458886236,
+        "y": 4.009569648661675
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "AlgueHG"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 9.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 1440.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "AutoAlgueCentre",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

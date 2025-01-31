@@ -1,0 +1,55 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartCentreToH"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HToAlgueHG"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgueHGToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToAlgueEF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgueEFToProcessor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ProcessorToAlgueJI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AlgueJIToProcessor"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

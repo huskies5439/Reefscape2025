@@ -22,10 +22,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Ascenseur extends SubsystemBase {
 
   // moteur + config
-  private SparkFlex moteur1 = new SparkFlex(8, MotorType.kBrushless);
+  private SparkFlex moteur1 = new SparkFlex(9, MotorType.kBrushless);
+  private SparkFlex moteur2 = new SparkFlex(10, MotorType.kBrushless);
+
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
 
-  private SparkFlex moteur2 = new SparkFlex(9, MotorType.kBrushless);
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,

@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartCageToI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "IToCoralStationCage"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CoralStationCageToL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LToCoralStationCage"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CoralStationCageToK"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "KToCoralStationCage"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CoralStationCageToJ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "JToCoralStationCage"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
