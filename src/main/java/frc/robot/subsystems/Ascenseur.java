@@ -76,22 +76,22 @@ public class Ascenseur extends SubsystemBase {
   }
 
   // Donne un voltage aux moteurs
-  public void setVoltageVortex(double voltage) {
+  public void setVoltage(double voltage) {
     moteur1.setVoltage(voltage);
     moteur2.setVoltage(voltage);
   }
 
   // monter/descendre/arrêter l'ascenseur
   public void monter() {
-    setVoltageVortex(3);
+    setVoltage(3);
   }
 
   public void descendre() {
-    setVoltageVortex(-1);
+    setVoltage(-1);
   }
 
   public void stop() {
-    setVoltageVortex(0);
+    setVoltage(0);
   }
 
   // PID + FeedForward
@@ -100,7 +100,7 @@ public class Ascenseur extends SubsystemBase {
 
     double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
 
-    setVoltageVortex(voltagePID + voltageFF);
+    setVoltage(voltagePID + voltageFF);
   }
 
   public void resetPID() {

@@ -13,11 +13,12 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
 
-// Une fonction de téléop qui se termine quand le pilote lache le piton
-public class AutoCorail extends ParallelCommandGroup {
-  /** Creates a new AutoCorail. */
-  public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
-    Pose2d cible = basePilotable.getCibleRecif();
+
+public class AutoStation extends ParallelCommandGroup {
+  
+  public AutoStation(BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet  ) {
+   
+   Pose2d cible = basePilotable.getCibleStation();
     addCommands(
       basePilotable.followPath(cible),
       

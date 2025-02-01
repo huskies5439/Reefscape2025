@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 import org.ejml.interfaces.decomposition.TridiagonalSimilarDecomposition;
 
@@ -32,12 +33,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.GamePositions;
 
 public class BasePilotable extends SubsystemBase {
   // Créer les moteurs swerves
@@ -97,18 +100,8 @@ public class BasePilotable extends SubsystemBase {
         new PPHolonomicDriveController(new PIDConstants(1, 0, 0), // a ajuster
             new PIDConstants(5, 0, 0)),
         robotConfig, // a ajuster
-        () -> {
-          // Boolean supplier that controls when the path will be mirrored for the red
-          // alliance
-          // This will flip the path being followed to the red side of the field.
-          // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-          var alliance = DriverStation.getAlliance();
-          if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red;
-          }
-          return false;
-        }, this);
+        this::isRedAlliance,
+        this);
   }
 
   @Override
@@ -127,12 +120,12 @@ public class BasePilotable extends SubsystemBase {
     SmartDashboard.putData("Field", field2d);
     SmartDashboard.putNumber("Angle Gyro", getAngle());
 
-    SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX()); 
-    SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY()); 
+    SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX());
+    SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY());
     SmartDashboard.putNumber("Pose Estimator Theta : ", getPose().getRotation().getDegrees());
     SmartDashboard.putNumber("VX : ", getChassisSpeeds().vxMetersPerSecond);
     SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
-    SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond); 
+    SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
     // setLimelightRobotOrientation();
@@ -169,12 +162,17 @@ public class BasePilotable extends SubsystemBase {
     double xSpeedDelivered = xSpeed * Constants.maxVitesseLineaire;
     double ySpeedDelivered = ySpeed * Constants.maxVitesseLineaire;
     double rotDelivered = rot * Constants.maxVitesseRotation;
+    double invert = 1;
+
+    if (isRedAlliance()) {
+      invert = -1; // on inverse le déplacement du robot
+    }
 
     SwerveModuleState[] swerveModuleStates = Constants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                // getPose().getRotation()) //Quand on a de la vision correcte
-                Rotation2d.fromDegrees(getAngle())) // Quand on conduit sans vision (pratique)
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered * invert, ySpeedDelivered * invert, rotDelivered,
+                getPose().getRotation())
+
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
 
     setModuleStates(swerveModuleStates);
@@ -267,45 +265,64 @@ public class BasePilotable extends SubsystemBase {
     setModuleStates(swerveModuleState);
   }
 
-  /////////////////////////// Pose 2d
-  public Pose2d getPoseCible() {
+  /////////////////////////// gestion des cibles avec la manette de l'opperateur
+  /////////////////////////// au recif
+  public Pose2d getCibleRecif() {
     return ciblePose;
   }
 
-  public void setPoseCible(Pose2d cible) {
-    ciblePose = cible;
+  public Command setCibleRecifCommand(Pose2d cible) {
+    return this.runOnce(() -> ciblePose = cible);
   }
 
-  public Command setPoseCibleCommand(Pose2d cible){
-    return this.runOnce(()->this.setPoseCible(cible));
+  //////////// station cible
+  public Pose2d getCibleStation(){
+    if(isRedAlliance() ^ getPose().getY() >=4){
+      return GamePositions.CoralStationCage; 
+    }else{
+      return GamePositions.CoralStationProc; 
+    }
   }
 
+  public Pose2d getCibleProcesseur(){
+    return GamePositions.Processor; 
+  }
+
+  // Matisse est passé par ici :))
   /////////////// On the fly
-  public PathPlannerPath getPath(Pose2d cible){
+  public PathPlannerPath getPath(Pose2d cible) {
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-      getPose(),
-      cible
-    );
-    
-    PathConstraints constraints = new PathConstraints(3, 2
-    , Math.toRadians(180), Math.toRadians(180)); ////// A Ajuster
+        getPose(),
+        cible);
 
-    PathPlannerPath path = new PathPlannerPath(waypoints, 
-      constraints,
-      null,
-      new GoalEndState(0.0, cible.getRotation())); 
-    
-      path.preventFlipping = false;
+    PathConstraints constraints = new PathConstraints(3, 2, Math.toRadians(180), Math.toRadians(180)); ////// A Ajuster
 
-      return path;
+    PathPlannerPath path = new PathPlannerPath(waypoints,
+        constraints,
+        null,
+        new GoalEndState(0.0, cible.getRotation()));
+
+    path.preventFlipping = false;
+
+    return path;
   }
 
-  public Command followPath(Pose2d cible){
+  public Command followPath(Pose2d cible) {
     return AutoBuilder.followPath(getPath(cible));
   }
 
-  public boolean isProche(Pose2d cible, double distanceMin){
+  public boolean isProche(Pose2d cible, double distanceMin) {
     return getPose().getTranslation().getDistance(cible.getTranslation()) < distanceMin;
+  }
+
+  public boolean isRedAlliance() {
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      return ally.get() == Alliance.Red;
+
+    } else {
+      return false;
+    }
   }
 
 }

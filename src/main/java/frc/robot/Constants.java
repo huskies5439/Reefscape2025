@@ -87,4 +87,14 @@ public final class Constants {
     public static final Pose2d K = new Pose2d(3.978, 5.224, Rotation2d.fromDegrees(-60));
     public static final Pose2d L = new Pose2d(3.715, 5.107, Rotation2d.fromDegrees(-60));
   }
+
+  public static class GamePositions {
+
+    public static final Pose2d CoralStationProc = new Pose2d(1.594, 0.710, Rotation2d.fromDegrees(-126));
+    public static final Pose2d CoralStationCage = new Pose2d(1.706, 7.369, Rotation2d.fromDegrees(126));
+    public static final Pose2d Processor = new Pose2d(7.369, 0.534, Rotation2d.fromDegrees(-90));
+  }
+
+  public static final double distanceMin = 2; 
+
 }

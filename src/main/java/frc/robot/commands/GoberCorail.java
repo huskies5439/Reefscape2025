@@ -24,7 +24,7 @@ public class GoberCorail extends Command {
   public void execute() {
     corailManip.gober();
   }
-
+  // Matisse est passé par ici :) 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

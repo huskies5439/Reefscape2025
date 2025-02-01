@@ -76,7 +76,7 @@ public class Poignet extends SubsystemBase {
   public void stop() {
     setVoltage(0);
   }
-
+  // Matisse est passé par ici :) 
   // PID + feedForward 
   public void setPID(double cible) {
     double voltagePID = pidPoignet.calculate(getAngle(), cible);

@@ -51,20 +51,21 @@ public class RobotContainer {
     // operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.corailL3, ascenseur, poignet));
     // operateur.button(BoutonOperateur.L4).onTrue(new SetHauteur(Hauteur.corailL4, ascenseur, poignet));
     
-    /* 
-    operateur.button(BoutonOperateur.A).onTrue(basePilotable.setPoseCibleCommand(Branche.A));
-    operateur.button(BoutonOperateur.B).onTrue(basePilotable.setPoseCibleCommand(Branche.B));
-    operateur.button(BoutonOperateur.C).onTrue(basePilotable.setPoseCibleCommand(Branche.C));
-    operateur.button(BoutonOperateur.D).onTrue(basePilotable.setPoseCibleCommand(Branche.D));
-    operateur.button(BoutonOperateur.E).onTrue(basePilotable.setPoseCibleCommand(Branche.E));
-    operateur.button(BoutonOperateur.F).onTrue(basePilotable.setPoseCibleCommand(Branche.F));
-    operateur.button(BoutonOperateur.G).onTrue(basePilotable.setPoseCibleCommand(Branche.G));
-    operateur.button(BoutonOperateur.H).onTrue(basePilotable.setPoseCibleCommand(Branche.H));
-    operateur.button(BoutonOperateur.I).onTrue(basePilotable.setPoseCibleCommand(Branche.I));
-    operateur.button(BoutonOperateur.J).onTrue(basePilotable.setPoseCibleCommand(Branche.J));
-    operateur.button(BoutonOperateur.K).onTrue(basePilotable.setPoseCibleCommand(Branche.K));
-    operateur.button(BoutonOperateur.L).onTrue(basePilotable.setPoseCibleCommand(Branche.L)); 
-    */
+    
+    //Matisse est passé par ici :) 
+    operateur.button(BoutonOperateur.A).onTrue(basePilotable.setCibleRecifCommand(Branche.A));
+    operateur.button(BoutonOperateur.B).onTrue(basePilotable.setCibleRecifCommand(Branche.B));
+    operateur.button(BoutonOperateur.C).onTrue(basePilotable.setCibleRecifCommand(Branche.C));
+    operateur.button(BoutonOperateur.D).onTrue(basePilotable.setCibleRecifCommand(Branche.D));
+    operateur.button(BoutonOperateur.E).onTrue(basePilotable.setCibleRecifCommand(Branche.E));
+    operateur.button(BoutonOperateur.F).onTrue(basePilotable.setCibleRecifCommand(Branche.F));
+    operateur.button(BoutonOperateur.G).onTrue(basePilotable.setCibleRecifCommand(Branche.G));
+    operateur.button(BoutonOperateur.H).onTrue(basePilotable.setCibleRecifCommand(Branche.H));
+    operateur.button(BoutonOperateur.I).onTrue(basePilotable.setCibleRecifCommand(Branche.I));
+    operateur.button(BoutonOperateur.J).onTrue(basePilotable.setCibleRecifCommand(Branche.J));
+    operateur.button(BoutonOperateur.K).onTrue(basePilotable.setCibleRecifCommand(Branche.K));
+    operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleRecifCommand(Branche.L)); 
+    
 
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));

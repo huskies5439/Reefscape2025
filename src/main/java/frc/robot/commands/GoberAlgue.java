@@ -14,7 +14,7 @@ public class GoberAlgue extends Command {
     this.algueManip = algueManip;
     addRequirements(algueManip);
   }
-
+  // Matisse est passé par ici :) 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
