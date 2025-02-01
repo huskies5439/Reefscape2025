@@ -9,10 +9,14 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
 
 public class GoToHauteur extends Command {
+  private double cibleAscenceur;
+  private double ciblePoignet;
   private Ascenseur ascenseur;
   private Poignet poignet;
 
-  public GoToHauteur(Ascenseur ascenseur, Poignet poignet) {
+  public GoToHauteur(double cibleAscenceur, double ciblePoignet, Ascenseur ascenseur, Poignet poignet) {
+    this.cibleAscenceur = cibleAscenceur;
+    this.ciblePoignet = ciblePoignet;
     this.ascenseur = ascenseur;
     this.poignet = poignet;
     addRequirements(ascenseur, poignet);
@@ -26,8 +30,8 @@ public class GoToHauteur extends Command {
 
   @Override
   public void execute() {
-    ascenseur.setPID(ascenseur.getHauteurCible());
-    poignet.setPID(poignet.getAngleCible());
+    ascenseur.setPID(cibleAscenceur);
+    poignet.setPID(ciblePoignet);
 
   }
 

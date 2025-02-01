@@ -46,6 +46,9 @@ public final class Constants {
     public static final double algueBas[] = { 1, 180 };
     public static final double algueHaut[] = { 1.5, 180 };
 
+    public static final double processeur[] = {0.5 , 0};
+    public static final double station[] = {0.5, 45};  
+
   }
 
   public static final class BoutonOperateur {
@@ -92,9 +95,9 @@ public final class Constants {
 
     public static final Pose2d CoralStationProc = new Pose2d(1.594, 0.710, Rotation2d.fromDegrees(-126));
     public static final Pose2d CoralStationCage = new Pose2d(1.706, 7.369, Rotation2d.fromDegrees(126));
-    public static final Pose2d Processor = new Pose2d(7.369, 0.534, Rotation2d.fromDegrees(-90));
+    public static final Pose2d Processeur = new Pose2d(7.369, 0.534, Rotation2d.fromDegrees(-90));
   }
 
-  public static final double distanceMin = 2; 
+  public static final double distanceMin = 2;
 
 }

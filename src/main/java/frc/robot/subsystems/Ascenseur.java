@@ -42,7 +42,7 @@ public class Ascenseur extends SubsystemBase {
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
 
   // hauteur cible 
-  private double hauteurCible;
+  private double cible;
 
   public Ascenseur() {
     // set parametres des configs
@@ -60,7 +60,7 @@ public class Ascenseur extends SubsystemBase {
     // SmartDashboard
     SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex()); // Hauteur Ascenceur des VORTEX
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
-    SmartDashboard.putNumber("Cible : ", getHauteurCible());
+    SmartDashboard.putNumber("Cible : ", getCibleRecif());
   }
 
   @Logged
@@ -108,12 +108,12 @@ public class Ascenseur extends SubsystemBase {
   }
 
   // cible de l'ascenseur en utilisant la manette operateur
-  public void setHauteurCible(double cible) {
-    hauteurCible = cible;
+  public void setCible(double cible) {
+    cible = cible;
   }
 
-  public double getHauteurCible() {
-    return hauteurCible;
+  public double getCibleRecif() {
+    return cible;
   }
 
   public boolean atCible() {
