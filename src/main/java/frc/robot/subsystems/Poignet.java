@@ -19,13 +19,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Poignet extends SubsystemBase {
-  // créé le moteur + sa config
-  private SparkFlex moteur = new SparkFlex(13, MotorType.kBrushless);
-  private SparkFlexConfig configMoteur = new SparkFlexConfig();
-  // créé le capteur
-  private DigitalInput capteur = new DigitalInput(4);// Channel a reverifier
 
-  // créé PID + FeedForward
+  // Créer le moteur + config
+  private SparkFlex moteur = new SparkFlex(14, MotorType.kBrushless);
+  private SparkFlexConfig configMoteur = new SparkFlexConfig();
+
+  // Créer le capteur
+  private DigitalInput limitSwitch = new DigitalInput(7);
+
+  // Créer PID + FeedForward
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.1, 0, 0,
       new TrapezoidProfile.Constraints(320, 420));
 
@@ -43,11 +45,17 @@ public class Poignet extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Angle Poignet", getPosition());
+    // SmartDashboard
+    SmartDashboard.putNumber("Angle Poignet", getAngle());
+    SmartDashboard.putNumber("Cible : ", angleCible);
   }
 
-  // retourne la position poignet ANGLE????
-  public double getPosition() {
+  public void setVoltage(double voltage) {
+    moteur.setVoltage(voltage);
+  }
+
+  // retourne la position poignet 
+  public double getAngle() {
     return moteur.getEncoder().getPosition();
   }
 
@@ -55,12 +63,8 @@ public class Poignet extends SubsystemBase {
     moteur.getEncoder().setPosition(0);
   }
 
-  // mets le voltage dans le moteur
-  public void setVoltage(double voltage) {
-    moteur.setVoltage(voltage);
-  }
 
-  /// fonctions de jeu avec le poignet
+  /// monter/descendre/stop avec poignet 
   public void monter() {
     setVoltage(1);
   }
@@ -73,12 +77,12 @@ public class Poignet extends SubsystemBase {
     setVoltage(0);
   }
 
-  // PID
+  // PID + feedForward 
   public void setPID(double cible) {
-    double voltagePID = pidPoignet.calculate(getPosition(), cible);
+    double voltagePID = pidPoignet.calculate(getAngle(), cible);
 
     double voltageFF = feedforward.calculate(
-        Math.toRadians(getPosition()),
+        Math.toRadians(getAngle()),
         pidPoignet.getSetpoint().velocity);
 
     setVoltage(voltagePID + voltageFF);
@@ -86,9 +90,10 @@ public class Poignet extends SubsystemBase {
   }
 
   public void resetPID() {
-    pidPoignet.reset(getPosition());
+    pidPoignet.reset(getAngle());
   }
 
+  //angles Cible 
   public void setAngleCible(double cible) {
     angleCible = cible;
   }
@@ -100,5 +105,11 @@ public class Poignet extends SubsystemBase {
   public boolean atCible() {
     return pidPoignet.atGoal();
   }
+
+  //LimitSwitch 
+  public boolean isHome(){
+    return !limitSwitch.get(); // verifier pour le not !
+  }
+
 
 }

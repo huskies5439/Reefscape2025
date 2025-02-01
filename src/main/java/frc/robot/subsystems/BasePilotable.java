@@ -5,12 +5,20 @@
 package frc.robot.subsystems;
 
 import java.lang.reflect.Field;
+import java.util.List;
+
+import org.ejml.interfaces.decomposition.TridiagonalSimilarDecomposition;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.fasterxml.jackson.databind.deser.impl.NullsConstantProvider;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
@@ -18,6 +26,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -25,6 +34,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -55,6 +65,9 @@ public class BasePilotable extends SubsystemBase {
       new Pose2d());
 
   Field2d field2d = new Field2d();
+
+  // cible du robot sur le terrain en téléop
+  private Pose2d ciblePose = new Pose2d();
 
   public BasePilotable() {
 
@@ -114,10 +127,16 @@ public class BasePilotable extends SubsystemBase {
     SmartDashboard.putData("Field", field2d);
     SmartDashboard.putNumber("Angle Gyro", getAngle());
 
+    SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX()); 
+    SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY()); 
+    SmartDashboard.putNumber("Pose Estimator Theta : ", getPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("VX : ", getChassisSpeeds().vxMetersPerSecond);
+    SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
+    SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond); 
 
-    //Ajouter seulement quand la Limelight va être branchée sur le robot !
-    //setLimelightRobotOrientation();
-    //addVisionPosition();
+    // Ajouter seulement quand la Limelight va être branchée sur le robot !
+    // setLimelightRobotOrientation();
+    // addVisionPosition();
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
@@ -191,7 +210,7 @@ public class BasePilotable extends SubsystemBase {
         pose);
   }
 
-////////////////////limelight
+  //////////////////// limelight
   public void setLimelightRobotOrientation() {
     LimelightHelpers.SetRobotOrientation("limelight",
         poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
@@ -247,4 +266,46 @@ public class BasePilotable extends SubsystemBase {
     SwerveModuleState[] swerveModuleState = Constants.kDriveKinematics.toSwerveModuleStates(targetSpeed);
     setModuleStates(swerveModuleState);
   }
+
+  /////////////////////////// Pose 2d
+  public Pose2d getPoseCible() {
+    return ciblePose;
+  }
+
+  public void setPoseCible(Pose2d cible) {
+    ciblePose = cible;
+  }
+
+  public Command setPoseCibleCommand(Pose2d cible){
+    return this.runOnce(()->this.setPoseCible(cible));
+  }
+
+  /////////////// On the fly
+  public PathPlannerPath getPath(Pose2d cible){
+    List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
+      getPose(),
+      cible
+    );
+    
+    PathConstraints constraints = new PathConstraints(3, 2
+    , Math.toRadians(180), Math.toRadians(180)); ////// A Ajuster
+
+    PathPlannerPath path = new PathPlannerPath(waypoints, 
+      constraints,
+      null,
+      new GoalEndState(0.0, cible.getRotation())); 
+    
+      path.preventFlipping = false;
+
+      return path;
+  }
+
+  public Command followPath(Pose2d cible){
+    return AutoBuilder.followPath(getPath(cible));
+  }
+
+  public boolean isProche(Pose2d cible, double distanceMin){
+    return getPose().getTranslation().getDistance(cible.getTranslation()) < distanceMin;
+  }
+
 }

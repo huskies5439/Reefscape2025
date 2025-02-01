@@ -12,22 +12,24 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgueManip extends SubsystemBase {
 
-  //créé les moteurs
-  private SparkMax moteurDroit = new SparkMax(10, MotorType.kBrushless); // Ids a reverifier
-  private SparkMax moteurGauche = new SparkMax(11, MotorType.kBrushless); // Ids a reverifier
+  // Créer les moteurs
+  private SparkMax moteurDroit = new SparkMax(11, MotorType.kBrushless);
+  private SparkMax moteurGauche = new SparkMax(12, MotorType.kBrushless);
 
-  //Configs des moteurs
+  // Créer configs des moteurs
   private SparkMaxConfig moteurDroitConfig = new SparkMaxConfig();
   private SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig();
 
-  private DigitalInput capteur = new DigitalInput(4);//channel a verifier
+  // Capteur
+  private DigitalInput lightBreak = new DigitalInput(4);
 
   public AlgueManip() {
-    // associe configs moteur droit 
+    // associe configs moteur droit
     moteurDroitConfig.inverted(true);
     moteurDroitConfig.idleMode(IdleMode.kBrake);
     moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -41,22 +43,21 @@ public class AlgueManip extends SubsystemBase {
 
   @Override
   public void periodic() {
-
+    // SmartDashboard
+    SmartDashboard.putBoolean("Capteur Algue : ", isAlgue());
   }
 
   public void setVoltage(double voltage) {
-
     moteurDroit.setVoltage(voltage);
     moteurGauche.setVoltage(voltage);
-
   }
 
-  //gober/lancer/stop avec le manip d'algues
+  // gober/lancer/stop avec le manip d'algues
   public void gober() {
     setVoltage(4); // Voltages a reverifier
   }
 
-  public void lancer() {
+  public void sortir() {
     setVoltage(-4);
   }
 
@@ -64,8 +65,9 @@ public class AlgueManip extends SubsystemBase {
     setVoltage(0);
   }
 
-  public boolean isAlgue(){
-    return !capteur.get();
+  // Retrourne s'il y a de l'algue dans le manip
+  public boolean isAlgue() {
+    return !lightBreak.get(); // verifier pour le not !
   }
 
 }

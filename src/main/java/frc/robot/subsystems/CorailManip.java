@@ -17,15 +17,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CorailManip extends SubsystemBase {
-  
-  //créé moteur + config 
-  private SparkMax moteur = new SparkMax(12, MotorType.kBrushless); // ID a reverifier
+
+  // Créer moteur + config
+  private SparkMax moteur = new SparkMax(13, MotorType.kBrushless);
   private SparkMaxConfig configMoteur = new SparkMaxConfig();
 
-  private DigitalInput capteur = new DigitalInput(3); // Channel a reverifier
+  // InfraRouge
+  private DigitalInput lightBreak = new DigitalInput(5);
 
   public CorailManip() {
-    //associe la config au moteur
+
+    // set parametre de config + associe la config au moteur
     configMoteur.inverted(false);
     configMoteur.idleMode(IdleMode.kCoast);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -33,6 +35,7 @@ public class CorailManip extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // SmartDashboard
     SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
   }
 
@@ -40,12 +43,12 @@ public class CorailManip extends SubsystemBase {
     moteur.setVoltage(voltage);
   }
 
-  ///fonction de jeu avec le manip de corail
+  // gober/lancer/stop avec manip de corail
   public void gober() {
-    setVoltage(4);
+    setVoltage(4); // Voltages a reverifier
   }
 
-  public void lancer() {
+  public void sortir() {
     setVoltage(-4);
   }
 
@@ -53,10 +56,9 @@ public class CorailManip extends SubsystemBase {
     setVoltage(0);
   }
 
-  //retourne s'il y a un corail
-  @Logged
+  // retourne s'il y a un corail dans le manip
   public boolean isCorail() {
-    return !capteur.get();
+    return !lightBreak.get(); // verifier pour le not !
   }
 
 }

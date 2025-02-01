@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
+import frc.robot.Constants.Branche;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.SetHauteur;
 import frc.robot.subsystems.AlgueManip;
@@ -49,6 +50,22 @@ public class RobotContainer {
     // operateur.button(BoutonOperateur.L2).onTrue(new SetHauteur(Hauteur.corailL2, ascenseur, poignet));
     // operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.corailL3, ascenseur, poignet));
     // operateur.button(BoutonOperateur.L4).onTrue(new SetHauteur(Hauteur.corailL4, ascenseur, poignet));
+    
+    /* 
+    operateur.button(BoutonOperateur.A).onTrue(basePilotable.setPoseCibleCommand(Branche.A));
+    operateur.button(BoutonOperateur.B).onTrue(basePilotable.setPoseCibleCommand(Branche.B));
+    operateur.button(BoutonOperateur.C).onTrue(basePilotable.setPoseCibleCommand(Branche.C));
+    operateur.button(BoutonOperateur.D).onTrue(basePilotable.setPoseCibleCommand(Branche.D));
+    operateur.button(BoutonOperateur.E).onTrue(basePilotable.setPoseCibleCommand(Branche.E));
+    operateur.button(BoutonOperateur.F).onTrue(basePilotable.setPoseCibleCommand(Branche.F));
+    operateur.button(BoutonOperateur.G).onTrue(basePilotable.setPoseCibleCommand(Branche.G));
+    operateur.button(BoutonOperateur.H).onTrue(basePilotable.setPoseCibleCommand(Branche.H));
+    operateur.button(BoutonOperateur.I).onTrue(basePilotable.setPoseCibleCommand(Branche.I));
+    operateur.button(BoutonOperateur.J).onTrue(basePilotable.setPoseCibleCommand(Branche.J));
+    operateur.button(BoutonOperateur.K).onTrue(basePilotable.setPoseCibleCommand(Branche.K));
+    operateur.button(BoutonOperateur.L).onTrue(basePilotable.setPoseCibleCommand(Branche.L)); 
+    */
+
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));
     // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));

@@ -16,6 +16,7 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -27,39 +28,43 @@ public class Ascenseur extends SubsystemBase {
 
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
 
-
-  // PID
-  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,
-      new TrapezoidProfile.Constraints(0, 0));
+  // Encodeur
+  private Encoder encoder = new Encoder(1, 2); // Channel à reverifier
   private double conversionEncoder;
-  private double forceAscenseur;
-  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
 
   // capteur
   private final DigitalInput limitSwitch = new DigitalInput(0);
 
+  // PID
+  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,
+      new TrapezoidProfile.Constraints(0, 0));
+
+  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
+
+  // hauteur cible 
   private double hauteurCible;
 
   public Ascenseur() {
-    // associe parametres moteurs
+    // set parametres des configs
     moteurConfig.inverted(true);
     moteurConfig.idleMode(IdleMode.kBrake);
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    encoder.setDistancePerPulse(1); // a calculer
   }
 
   @Override
   public void periodic() {
-
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());
-    forceAscenseur = SmartDashboard.getNumber("voltage ascenseur", 0);
+    // SmartDashboard
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex()); // Hauteur Ascenceur des VORTEX
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
+    SmartDashboard.putNumber("Cible : ", getHauteurCible());
   }
 
   @Logged
-  // Retourne la position de l'encodeur
+  // Retourne la position de l'encodeur VORTEX
   public double getPositionVortex() {
     return moteur1.getEncoder().getPosition();
   }
@@ -102,13 +107,11 @@ public class Ascenseur extends SubsystemBase {
     pidAscenseur.reset(getPositionVortex());
   }
 
-  // Donne la cible a l'ascenseur
+  // cible de l'ascenseur en utilisant la manette operateur
   public void setHauteurCible(double cible) {
     hauteurCible = cible;
-
   }
 
-  // La hauteur de la cible
   public double getHauteurCible() {
     return hauteurCible;
   }
@@ -123,4 +126,16 @@ public class Ascenseur extends SubsystemBase {
 
   }
 
+  // Encodeur Externe
+  public double getPositionExterne() {
+    return encoder.getDistance();
+  }
+
+  public double getEncodeurSpeed() {
+    return encoder.getRate();
+  }
+
+  public void resetEncodeurExterne() {
+    encoder.reset();
+  }
 }
