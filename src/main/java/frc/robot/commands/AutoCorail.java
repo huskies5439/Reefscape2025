@@ -5,25 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
+import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
 // Une fonction de téléop qui se termine quand le pilote lache le piton
 public class AutoCorail extends ParallelCommandGroup {
   /** Creates a new AutoCorail. */
-  public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
+  public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
     Pose2d cible = basePilotable.getCibleRecif();
     addCommands(
       basePilotable.followPath(cible),
       
       new SequentialCommandGroup(
         new WaitUntilCommand(()-> basePilotable.isProche(cible, Constants.distanceMin)),
-        new GoToHauteur(ascenseur.getCibleRecif(), poignet.getCibleRecif(), ascenseur, poignet)
+        new GoToHauteur(ascenseur.getCibleRecif(), poignet.getCibleRecif(), ascenseur, poignet),
+        new InstantCommand(() -> corailManip.sortir(), corailManip).until(() -> !corailManip.isCorail()).andThen(() -> corailManip.stop())
       )
     );
   }
