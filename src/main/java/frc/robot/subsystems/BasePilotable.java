@@ -8,10 +8,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
-import org.ejml.interfaces.decomposition.TridiagonalSimilarDecomposition;
-
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.fasterxml.jackson.databind.deser.impl.NullsConstantProvider;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -21,7 +18,6 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
-import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -70,7 +66,7 @@ public class BasePilotable extends SubsystemBase {
   Field2d field2d = new Field2d();
 
   // cible du robot sur le terrain en téléop
-  private Pose2d ciblePose = new Pose2d();
+  private Pose2d cibleRecif = new Pose2d();
 
   public BasePilotable() {
 
@@ -268,11 +264,11 @@ public class BasePilotable extends SubsystemBase {
   /////////////////////////// gestion des cibles avec la manette de l'opperateur
   /////////////////////////// au recif
   public Pose2d getCibleRecif() {
-    return ciblePose;
+    return cibleRecif;
   }
 
   public Command setCibleRecifCommand(Pose2d cible) {
-    return this.runOnce(() -> ciblePose = cible);
+    return this.runOnce(() -> cibleRecif = cible);
   }
 
   //////////// station cible
@@ -288,7 +284,6 @@ public class BasePilotable extends SubsystemBase {
     return GamePositions.Processeur; 
   }
 
-  // Matisse est passé par ici :))
   /////////////// On the fly
   public PathPlannerPath getPath(Pose2d cible) {
     List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(

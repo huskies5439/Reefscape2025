@@ -41,7 +41,7 @@ public class Ascenseur extends SubsystemBase {
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
 
-  // hauteur cible 
+  // hauteur cible
   private double cible;
 
   public Ascenseur() {
@@ -51,8 +51,6 @@ public class Ascenseur extends SubsystemBase {
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    encoder.setDistancePerPulse(1); // a calculer
   }
 
   @Override
@@ -63,7 +61,6 @@ public class Ascenseur extends SubsystemBase {
     SmartDashboard.putNumber("Cible : ", getCibleRecif());
   }
 
-  @Logged
   // Retourne la position de l'encodeur VORTEX
   public double getPositionVortex() {
     return moteur1.getEncoder().getPosition();
@@ -107,17 +104,17 @@ public class Ascenseur extends SubsystemBase {
     pidAscenseur.reset(getPositionVortex());
   }
 
+  public boolean atCible() {
+    return pidAscenseur.atGoal();
+  }
+
   // cible de l'ascenseur en utilisant la manette operateur
   public void setCible(double cible) {
-    cible = cible;
+    this.cible = cible;
   }
 
   public double getCibleRecif() {
     return cible;
-  }
-
-  public boolean atCible() {
-    return pidAscenseur.atGoal();
   }
 
   // Limit switch

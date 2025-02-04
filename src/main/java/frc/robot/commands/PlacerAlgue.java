@@ -31,7 +31,6 @@ public class PlacerAlgue extends Command {
   public void end(boolean interrupted) {
     algueManip.stop();
   }
-  // Matisse est passé par ici :) 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

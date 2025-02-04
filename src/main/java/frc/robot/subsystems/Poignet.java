@@ -76,7 +76,6 @@ public class Poignet extends SubsystemBase {
   public void stop() {
     setVoltage(0);
   }
-  // Matisse est passé par ici :) 
   // PID + feedForward 
   public void setPID(double cible) {
     double voltagePID = pidPoignet.calculate(getAngle(), cible);
@@ -93,18 +92,19 @@ public class Poignet extends SubsystemBase {
     pidPoignet.reset(getAngle());
   }
 
+  public boolean atCible() {
+    return pidPoignet.atGoal();
+  }
+  
   //angles Cible 
   public void setCible(double cible) {
-    cible = cible;
+    this.cible = cible;
   }
 
   public double getCibleRecif() {
     return cible;
   }
 
-  public boolean atCible() {
-    return pidPoignet.atGoal();
-  }
 
   //LimitSwitch 
   public boolean isHome(){
