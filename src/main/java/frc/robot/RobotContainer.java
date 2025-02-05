@@ -46,10 +46,10 @@ public class RobotContainer {
 
     //manette.a().whileTrue(new GoToHauteur(ascenseur, poignet));
 
-    // operateur.button(BoutonOperateur.L1).onTrue(new SetHauteur(Hauteur.corailL1, ascenseur, poignet));
-    // operateur.button(BoutonOperateur.L2).onTrue(new SetHauteur(Hauteur.corailL2, ascenseur, poignet));
-    // operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.corailL3, ascenseur, poignet));
-    // operateur.button(BoutonOperateur.L4).onTrue(new SetHauteur(Hauteur.corailL4, ascenseur, poignet));
+    //  operateur.button(BoutonOperateur.L1).onTrue(new SetHauteur(Hauteur.corailL1, ascenseur, poignet));
+    //  operateur.button(BoutonOperateur.L2).onTrue(new SetHauteur(Hauteur.corailL2, ascenseur, poignet));
+    //  operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.corailL3, ascenseur, poignet));
+    //  operateur.button(BoutonOperateur.L4).onTrue(new SetHauteur(Hauteur.corailL4, ascenseur, poignet));
     
     
     //Matisse est passé par ici :) 
@@ -66,7 +66,6 @@ public class RobotContainer {
     operateur.button(BoutonOperateur.K).onTrue(basePilotable.setCibleRecifCommand(Branche.K));
     operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleRecifCommand(Branche.L)); 
     
-
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));
     // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));

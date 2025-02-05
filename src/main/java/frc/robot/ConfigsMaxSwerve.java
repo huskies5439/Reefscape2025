@@ -15,7 +15,7 @@ public final class ConfigsMaxSwerve {
 
         // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
         // teeth on the bevel pinion
-        private static final double rapportTransmission = (45.0 * 22) / (13 * 15);// pinion choisi 13 dents
+        private static final double rapportTransmission = (45.0 * 22) / (14 * 15);// pinion choisi 14 dents (high)
         private static final double freeSpeedRoue = (freeSpeedMoteur * circonferenceRoue) / rapportTransmission;
         private static final double conversionEncodeur = circonferenceRoue / rapportTransmission;
 

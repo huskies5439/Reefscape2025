@@ -118,14 +118,17 @@ public class BasePilotable extends SubsystemBase {
         });
     field2d.setRobotPose(getPose());
     SmartDashboard.putData("Field", field2d);
-    SmartDashboard.putNumber("Angle Gyro", getAngle());
+    // SmartDashboard.putNumber("Angle Gyro", getAngle());
+    // SmartDashboard.putNumber("Vitesse Gyro", getRate());
 
     SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX());
     SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY());
     SmartDashboard.putNumber("Pose Estimator Theta : ", getPose().getRotation().getDegrees());
-    SmartDashboard.putNumber("VX : ", getChassisSpeeds().vxMetersPerSecond);
-    SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
-    SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
+    // SmartDashboard.putNumber("VX : ", getChassisSpeeds().vxMetersPerSecond);
+    // SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
+    // SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
+
+    SmartDashboard.putString("Cible Recif", getCibleRecif().toString());
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
     // setLimelightRobotOrientation();

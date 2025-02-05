@@ -50,25 +50,26 @@ public final class Constants {
 
   public static final class BoutonOperateur {
 
-    public static final int L1 = 2;
-    public static final int L2 = 3;
-    public static final int L3 = 4;
-    public static final int L4 = 5;
+    //DriverStation commence a compter a partir de 1
+    public static final int L1 = 1;
+    public static final int L2 = 2;
+    public static final int L3 = 3;
+    public static final int L4 = 4;
 
-    public static final int A = 6;
-    public static final int B = 7;
-    public static final int C = 8;
-    public static final int D = 9;
+    public static final int A = 5;
+    public static final int B = 6;
+    public static final int C = 7;
+    public static final int D = 8;
 
-    public static final int E = 10;
-    public static final int F = 11;
-    public static final int G = 12;
-    public static final int H = 13;
+    public static final int E = 9;
+    public static final int F = 10;
+    public static final int G = 11;
+    public static final int H = 12;
 
-    public static final int I = 14;
-    public static final int J = 15;
-    public static final int K = 16;
-    public static final int L = 17;
+    public static final int I = 13;
+    public static final int J = 14;
+    public static final int K = 15;
+    public static final int L = 16;
 
   }
 
