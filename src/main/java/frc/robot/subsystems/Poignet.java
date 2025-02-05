@@ -39,6 +39,10 @@ public class Poignet extends SubsystemBase {
     // associe configs au moteur
     configMoteur.inverted(false);
     configMoteur.idleMode(IdleMode.kBrake);
+
+    // gearbox 4 pour 1 , 9 pour 1 
+    // 360 degrés par tour
+    configMoteur.encoder.countsPerRevolution(36 * 360);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
@@ -47,6 +51,7 @@ public class Poignet extends SubsystemBase {
   public void periodic() {
     // SmartDashboard
     SmartDashboard.putNumber("Angle Poignet", getAngle());
+    SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
     SmartDashboard.putNumber("Cible : ", cible);
   }
 
@@ -57,6 +62,10 @@ public class Poignet extends SubsystemBase {
   // retourne la position poignet 
   public double getAngle() {
     return moteur.getEncoder().getPosition();
+  }
+
+  public double getVitesse() {
+    return moteur.getEncoder().getVelocity();
   }
 
   public void resetEncoders() {
