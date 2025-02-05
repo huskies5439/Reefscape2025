@@ -9,7 +9,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 public final class ConfigsMaxSwerve {
         // Constantes de conversion d'encodeur du moteur de puissance ("driving").
-        private static final double freeSpeedMoteur = 5676 / 60; // Free speed NEO = 5676 RPM. On converti en RPS
+        private static final double freeSpeedMoteur = 6784.0 / 60; // Free speed Vortex = 6784 RPM. On converti en RPS
 
         private static final double circonferenceRoue = Units.inchesToMeters(3) * Math.PI;// roue de 3 pouces
 
