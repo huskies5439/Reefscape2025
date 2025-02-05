@@ -23,7 +23,7 @@ public class AutoCorail extends ParallelCommandGroup {
       
       new SequentialCommandGroup(
         new WaitUntilCommand(()-> basePilotable.isProche(cible, Constants.distanceMin)),
-        new GoToHauteur(ascenseur, poignet)
+        new GoToHauteur(ascenseur.getCibleRecif(), poignet.getCibleRecif(), ascenseur, poignet)
       )
     );
   }

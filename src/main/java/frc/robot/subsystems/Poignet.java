@@ -33,7 +33,7 @@ public class Poignet extends SubsystemBase {
 
   private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0);
 
-  private double angleCible;
+  private double cible;
 
   public Poignet() {
     // associe configs au moteur
@@ -47,7 +47,7 @@ public class Poignet extends SubsystemBase {
   public void periodic() {
     // SmartDashboard
     SmartDashboard.putNumber("Angle Poignet", getAngle());
-    SmartDashboard.putNumber("Cible : ", angleCible);
+    SmartDashboard.putNumber("Cible : ", cible);
   }
 
   public void setVoltage(double voltage) {
@@ -76,7 +76,6 @@ public class Poignet extends SubsystemBase {
   public void stop() {
     setVoltage(0);
   }
-  // Matisse est passé par ici :) 
   // PID + feedForward 
   public void setPID(double cible) {
     double voltagePID = pidPoignet.calculate(getAngle(), cible);
@@ -93,18 +92,19 @@ public class Poignet extends SubsystemBase {
     pidPoignet.reset(getAngle());
   }
 
-  //angles Cible 
-  public void setAngleCible(double cible) {
-    angleCible = cible;
-  }
-
-  public double getAngleCible() {
-    return angleCible;
-  }
-
   public boolean atCible() {
     return pidPoignet.atGoal();
   }
+  
+  //angles Cible 
+  public void setCible(double cible) {
+    this.cible = cible;
+  }
+
+  public double getCibleRecif() {
+    return cible;
+  }
+
 
   //LimitSwitch 
   public boolean isHome(){

@@ -9,23 +9,23 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
+import frc.robot.Constants.GamePositions;
 import frc.robot.Constants.Hauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
 
 
-public class AutoStation extends ParallelCommandGroup {
-  
-  public AutoStation(BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet  ) {
-   
-   Pose2d cible = basePilotable.getCibleStation();
+public class AutoProcesseur extends ParallelCommandGroup {
+
+  public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
+   Pose2d cible = GamePositions.Processeur;
     addCommands(
-      basePilotable.followPath(cible),
+       basePilotable.followPath(cible),
       
       new SequentialCommandGroup(
         new WaitUntilCommand(()-> basePilotable.isProche(cible, Constants.distanceMin)),
-        new GoToHauteur(Hauteur.station[0], Hauteur.station[1], ascenseur, poignet)
+        new GoToHauteur(Hauteur.processeur[0], Hauteur.processeur[1], ascenseur, poignet)
       )
     );
   }
