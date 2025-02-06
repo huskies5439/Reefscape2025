@@ -10,11 +10,9 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+
 public class ActiverGrimpeur extends SequentialCommandGroup {
-  /** Creates a new ActiverGrimpeur. */
+
   public ActiverGrimpeur(Ascenseur ascenseur, Poignet poignet ) {   
     addCommands(
       new GoToHauteur(Hauteur.grimper[0], Hauteur.grimper[1], ascenseur, poignet ),

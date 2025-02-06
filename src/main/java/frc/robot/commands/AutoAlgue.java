@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.Algue;
-import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Branche;
 import frc.robot.Constants.Hauteur;
 import frc.robot.subsystems.AlgueManip;
@@ -18,14 +17,15 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
 
-
-public class RamasserAlgue extends ParallelCommandGroup {
+public class AutoAlgue extends ParallelCommandGroup {
   private Pose2d cibleManette;
   private double cibleHauteurAlgue[];
   private Pose2d ciblePositionAlgue;
 
-  public RamasserAlgue(Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
-
+  public AutoAlgue(Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
+    // compile les infos de la manette operateur
+    //  Détermine automatiquement quel algue il faut gober
+    //!!NE GOBE PAS AUTOMATIQUEMENT!!
     cibleManette = basePilotable.getCibleManetteOperateur();
 
     if (cibleManette == Branche.A || cibleManette == Branche.B) {
@@ -55,7 +55,7 @@ public class RamasserAlgue extends ParallelCommandGroup {
     }
 
     addCommands(
-
+        // se rend automatiquement à la bonne position sur le recif
         basePilotable.followPath(ciblePositionAlgue),
         new SequentialCommandGroup(
             new WaitUntilCommand(() -> basePilotable.isProche(ciblePositionAlgue, Constants.distanceMin)),

@@ -53,9 +53,53 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
+    manetteOperateur();
+
     // manette.a().whileTrue(new GoToHauteur(ascenseur, poignet));
 
-    //boutton manette oprateur
+    grimpeurTrigger.and(pretAGrimperTrigger.negate())
+        .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = true));
+    grimpeurTrigger.and(pretAGrimperTrigger)
+        .whileTrue(Commands.run(() -> ascenseur.descendreAjustable(manette.getRightTriggerAxis()), ascenseur));
+    grimpeurTrigger.and(manette.rightBumper())
+        .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = false));
+
+    manette.a().whileTrue(Commands.runEnd(() -> ascenseur.setPID(0.3), () -> ascenseur.stop(), ascenseur));
+    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
+    // ascenseur.stop(), ascenseur));
+
+    // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
+    // poignet.stop(), poignet));
+    // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
+    // poignet.stop(), poignet));
+
+    // manette.a().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()->
+    // algueManip.stop(), algueManip));
+    // manette.b().whileTrue(Commands.startEnd(()-> algueManip.sortir(), ()->
+    // algueManip.stop(), algueManip));
+
+    // manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()->
+    // corailManip.stop(), corailManip));
+    // manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()->
+    // corailManip.stop(), corailManip));
+
+    manette.povUp()
+        .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.setVoltage(Constants.kG), ascenseur));
+    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.stop(), ascenseur));
+
+    // manette.povRight().whileTrue(Commands.runEnd(()-> poignet.monter(), ()->
+    // poignet.stop(), poignet));
+    // manette.povLeft().whileTrue(Commands.runEnd(()-> poignet.descendre(), ()->
+    // poignet.stop(), poignet));
+
+  }
+
+  public Command getAutonomousCommand() {
+    return null;
+  }
+
+  private void manetteOperateur() {
+    // boutton manette oprateur
     operateur.button(BoutonOperateur.L1).onTrue(new SetHauteur(Hauteur.L1, ascenseur, poignet));
     operateur.button(BoutonOperateur.L2).onTrue(new SetHauteur(Hauteur.L2, ascenseur, poignet));
     operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.L3, ascenseur, poignet));
@@ -74,45 +118,6 @@ public class RobotContainer {
     operateur.button(BoutonOperateur.K).onTrue(basePilotable.setCibleManetteOperateurCommand(Branche.K));
     operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleManetteOperateurCommand(Branche.L));
 
-    grimpeurTrigger.and(pretAGrimperTrigger.negate())
-        .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = true));
-    grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(
-        () -> ascenseur.descendreAjustable(manette.getRightTriggerAxis()), ascenseur));
-    grimpeurTrigger.and(manette.rightBumper()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = false));
-
-    manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(0.3), ()-> ascenseur.stop(), ascenseur));
-    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
-    // ascenseur.stop(), ascenseur));
-
-    // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
-    // poignet.stop(), poignet));
-    // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
-    // poignet.stop(), poignet));
-
-    /*
-     * manette.a().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()->
-     * algueManip.stop(), algueManip));
-     * manette.b().whileTrue(Commands.startEnd(()-> algueManip.lancer(), ()->
-     * algueManip.stop(), algueManip));
-     * 
-     * manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()->
-     * corailManip.stop(), corailManip));
-     * manette.y().whileTrue(Commands.startEnd(()-> corailManip.lancer(), ()->
-     * corailManip.stop(), corailManip));
-     */
-
-    manette.povUp().whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.stop(), ascenseur));
-    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.stop(), ascenseur));
-    /*
-     * manette.povRight().whileTrue(Commands.runEnd(()-> poignet.monter(), ()->
-     * poignet.stop(), poignet));
-     * manette.povLeft().whileTrue(Commands.runEnd(()-> poignet.descendre(), ()->
-     * poignet.stop(), poignet));
-     */
-  }
-
-  public Command getAutonomousCommand() {
-    return null;
   }
 
 }

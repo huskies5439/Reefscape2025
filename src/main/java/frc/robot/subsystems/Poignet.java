@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.security.PrivateKey;
+
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -20,30 +22,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Poignet extends SubsystemBase {
 
-  // Créer le moteur + config
+  // moteur + config
   private SparkFlex moteur = new SparkFlex(14, MotorType.kBrushless);
-  private SparkFlexConfig configMoteur = new SparkFlexConfig();
+  private SparkFlexConfig moteurConfig = new SparkFlexConfig();
+  private double conversionEncodeur;
 
-  // Créer le capteur
+  // capteur
   private DigitalInput limitSwitch = new DigitalInput(7);
 
-  // Créer PID + FeedForward
+  // PID + FeedForward
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.1, 0, 0,
       new TrapezoidProfile.Constraints(320, 420));
 
   private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0);
 
-  private double cible;
+  // hauteur cible de la manette operateur
+  private double cibleManetteOperateur;
 
   public Poignet() {
-    // associe configs au moteur
-    configMoteur.inverted(false);
-    configMoteur.idleMode(IdleMode.kBrake);
+    // set parametres des configs
+    moteurConfig.inverted(false);
+    moteurConfig.idleMode(IdleMode.kBrake);
 
-    // gearbox 4 pour 1 , 9 pour 1 
+    // gearbox 4 pour 1 , 9 pour 1
     // 360 degrés par tour
-    configMoteur.encoder.countsPerRevolution(36 * 360);
-    moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    conversionEncodeur = (1 / 4.0) * (1 / 9.0) * 360;
+
+    moteurConfig.encoder.positionConversionFactor(conversionEncodeur);
+    moteurConfig.encoder.velocityConversionFactor(conversionEncodeur / 60.0);
+
+    moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
 
@@ -52,14 +60,28 @@ public class Poignet extends SubsystemBase {
     // SmartDashboard
     SmartDashboard.putNumber("Angle Poignet", getAngle());
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
-    SmartDashboard.putNumber("Cible : ", cible);
+    SmartDashboard.putNumber("Cible Poignet : ", cibleManetteOperateur);
   }
 
+  ////////////////// MOTEUR
   public void setVoltage(double voltage) {
     moteur.setVoltage(voltage);
   }
 
-  // retourne la position poignet 
+  public void monter() {
+    setVoltage(1);
+  }
+
+  public void descendre() {
+    setVoltage(-1);
+  }
+
+  public void stop() {
+    setVoltage(0);
+  }
+
+  ///////////////// ENCODEUR
+
   public double getAngle() {
     return moteur.getEncoder().getPosition();
   }
@@ -72,20 +94,7 @@ public class Poignet extends SubsystemBase {
     moteur.getEncoder().setPosition(0);
   }
 
-
-  /// monter/descendre/stop avec poignet 
-  public void monter() {
-    setVoltage(1);
-  }
-
-  public void descendre() {
-    setVoltage(-1);
-  }
-
-  public void stop() {
-    setVoltage(0);
-  }
-  // PID + feedForward 
+  //////////////////// PID + feedForward
   public void setPID(double cible) {
     double voltagePID = pidPoignet.calculate(getAngle(), cible);
 
@@ -104,21 +113,21 @@ public class Poignet extends SubsystemBase {
   public boolean atCible() {
     return pidPoignet.atGoal();
   }
-  
-  //angles Cible 
-  public void setCible(double cible) {
-    this.cible = cible;
+
+  ////////////////// angles Cible
+
+  public void setCibleManetteOperateur(double cible) {
+    this.cibleManetteOperateur = cible;
   }
 
-  public double getCibleRecif() {
-    return cible;
+  public double getCibleManetteOperateur() {
+    return cibleManetteOperateur;
   }
 
+  //////////////////// LimitSwitch
 
-  //LimitSwitch 
-  public boolean isHome(){
+  public boolean isHome() {
     return !limitSwitch.get(); // verifier pour le not !
   }
-
 
 }

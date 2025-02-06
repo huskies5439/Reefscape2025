@@ -17,12 +17,14 @@ import frc.robot.subsystems.Poignet;
 
 
 public class AutoProcesseur extends ParallelCommandGroup {
-
+  //vas automatiquement au prosseseur
+  //!!NE LIVRE PAS L'ALGUE!!
   public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
    Pose2d cible = GamePositions.Processeur;
     addCommands(
        basePilotable.followPath(cible),
       
+      //faut t'il vraiment attendre?
       new SequentialCommandGroup(
         new WaitUntilCommand(()-> basePilotable.isProche(cible, Constants.distanceMin)),
         new GoToHauteur(Hauteur.processeur[0], Hauteur.processeur[1], ascenseur, poignet)

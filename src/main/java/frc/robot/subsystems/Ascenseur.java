@@ -29,7 +29,7 @@ public class Ascenseur extends SubsystemBase {
   private SparkFlex moteur2 = new SparkFlex(10, MotorType.kBrushless);
 
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
-  private double convertionVortex;
+  private double conversionVortex;
 
   private Servo serrureCage = new Servo(6);
 
@@ -54,10 +54,10 @@ public class Ascenseur extends SubsystemBase {
     moteurConfig.idleMode(IdleMode.kBrake);
 
     // pignons 14 dents fait tourner 80 dents. Après, poulie 3/4 de pouce.
-    convertionVortex = (14.0 / 80) * Units.inchesToMeters(0.75) * Math.PI;
+    conversionVortex = (14.0 / 80) * Units.inchesToMeters(0.75) * Math.PI;
 
-    moteurConfig.encoder.positionConversionFactor(convertionVortex); // en mètre
-    moteurConfig.encoder.velocityConversionFactor(convertionVortex / 60.0); // mètre par secondes
+    moteurConfig.encoder.positionConversionFactor(conversionVortex); // en mètre
+    moteurConfig.encoder.velocityConversionFactor(conversionVortex / 60.0); // mètre par secondes
 
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

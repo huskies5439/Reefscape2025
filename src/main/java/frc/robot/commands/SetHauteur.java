@@ -11,9 +11,9 @@ import frc.robot.subsystems.Poignet;
 
 public class SetHauteur extends ParallelCommandGroup {
   public SetHauteur(double[] cible, Ascenseur ascenseur, Poignet poignet) {
-
+    //envoie les donner de la mannette operateur dans les sous-systeme pour etre recupere plus tard
     addCommands(
         Commands.runOnce(() -> ascenseur.setCibleManetteOperateur(cible[0])),
-        Commands.runOnce(() -> poignet.setCible(cible[1])));
+        Commands.runOnce(() -> poignet.setCibleManetteOperateur(cible[1])));
   }
 }

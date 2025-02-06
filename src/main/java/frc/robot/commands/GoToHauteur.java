@@ -14,6 +14,9 @@ public class GoToHauteur extends Command {
   private Ascenseur ascenseur;
   private Poignet poignet;
 
+
+  //Double PID pour le poignet et l'ascenseur
+  //que faire après la command? tel est la question
   public GoToHauteur(double cibleAscenceur, double ciblePoignet, Ascenseur ascenseur, Poignet poignet) {
     this.cibleAscenceur = cibleAscenceur;
     this.ciblePoignet = ciblePoignet;

@@ -18,7 +18,8 @@ import frc.robot.subsystems.Poignet;
 public class AutoStation extends ParallelCommandGroup {
   
   public AutoStation(BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet  ) {
-   
+   //se rend automatiquement a la station de Corail
+   //Gober auto?
    Pose2d cible = basePilotable.getCibleStation();
     addCommands(
       basePilotable.followPath(cible),
