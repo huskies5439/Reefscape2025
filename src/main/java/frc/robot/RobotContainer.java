@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
+import frc.robot.commands.ActiverGrimpeur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.SetHauteur;
 import frc.robot.subsystems.AlgueManip;
@@ -14,21 +15,29 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
+
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   private final BasePilotable basePilotable = new BasePilotable();
   private final Ascenseur ascenseur = new Ascenseur();
-  //private final Poignet poignet = new Poignet();
+  private final Poignet poignet = new Poignet();
   //private final AlgueManip algueManip = new AlgueManip(); 
   //private final CorailManip corailManip = new CorailManip(); 
 
   CommandXboxController manette = new CommandXboxController(0);
 
   CommandGenericHID operateur = new CommandGenericHID(1);
+
+  Trigger grimpeurTrigger =  manette.leftBumper().and(manette.leftTrigger());
+  private boolean pretAGrimper = false;
+  Trigger pretAGrimperTrigger = new Trigger(()-> pretAGrimper);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -65,7 +74,11 @@ public class RobotContainer {
     operateur.button(BoutonOperateur.J).onTrue(basePilotable.setCibleRecifCommand(Branche.J));
     operateur.button(BoutonOperateur.K).onTrue(basePilotable.setCibleRecifCommand(Branche.K));
     operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleRecifCommand(Branche.L)); 
-    
+
+  
+   grimpeurTrigger.and(pretAGrimperTrigger.negate()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = true));
+   grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(()-> ascenseur., null));
+   
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));
     // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));

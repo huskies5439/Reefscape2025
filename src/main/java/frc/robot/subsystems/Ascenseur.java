@@ -100,6 +100,10 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(-1);
   }
 
+  public void descendre(double vitesse){
+    setVoltage(vitesse * 1);
+  }
+
   public void stop() {
     setVoltage(0);
   }

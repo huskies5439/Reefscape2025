@@ -49,6 +49,8 @@ public final class Constants {
     public static final double processeur[] = {0.5 , 0};
     public static final double station[] = {0.5, 45};  
 
+    public static final double grimper[] = {0.5 , 0};
+
   }
 
   public static final class BoutonOperateur {
