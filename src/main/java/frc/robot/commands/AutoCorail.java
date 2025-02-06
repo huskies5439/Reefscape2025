@@ -17,13 +17,13 @@ import frc.robot.subsystems.Poignet;
 public class AutoCorail extends ParallelCommandGroup {
   /** Creates a new AutoCorail. */
   public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
-    Pose2d cible = basePilotable.getCibleRecif();
+    Pose2d cible = basePilotable.getCibleManetteOperateur();
     addCommands(
       basePilotable.followPath(cible),
       
       new SequentialCommandGroup(
         new WaitUntilCommand(()-> basePilotable.isProche(cible, Constants.distanceMin)),
-        new GoToHauteur(ascenseur.getCibleRecif(), poignet.getCibleRecif(), ascenseur, poignet)
+        new GoToHauteur(ascenseur.getCibleManetteOperateur(), poignet.getCibleRecif(), ascenseur, poignet)
       )
     );
   }

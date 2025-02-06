@@ -65,8 +65,8 @@ public class BasePilotable extends SubsystemBase {
 
   Field2d field2d = new Field2d();
 
-  // cible du robot sur le terrain en téléop
-  private Pose2d cibleRecif = new Pose2d();
+  // cible du robot en utilisant la manette operateur
+  private Pose2d cibleManetteOperateur = new Pose2d();
 
   public BasePilotable() {
 
@@ -94,8 +94,8 @@ public class BasePilotable extends SubsystemBase {
         this::getChassisSpeeds,
         (speeds, feedforward) -> conduireChassis(speeds),
         new PPHolonomicDriveController(new PIDConstants(1, 0, 0), // a ajuster
-            new PIDConstants(5, 0, 0)),
-        robotConfig, // a ajuster
+            new PIDConstants(5, 0, 0)), // a ajuster
+        robotConfig,
         this::isRedAlliance,
         this);
   }
@@ -112,8 +112,11 @@ public class BasePilotable extends SubsystemBase {
             arriereGauche.getPosition(),
             arriereDroite.getPosition()
         });
+
+
     field2d.setRobotPose(getPose());
     SmartDashboard.putData("Field", field2d);
+
     // SmartDashboard.putNumber("Angle Gyro", getAngle());
     // SmartDashboard.putNumber("Vitesse Gyro", getRate());
 
@@ -124,7 +127,7 @@ public class BasePilotable extends SubsystemBase {
     // SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
     // SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
 
-    SmartDashboard.putString("Cible Recif", getCibleRecif().toString());
+    SmartDashboard.putString("Cible BasePilotable", getCibleManetteOperateur().toString());
     //SmartDashboard.putString("cible station", getCibleStation().toString());
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
@@ -162,8 +165,9 @@ public class BasePilotable extends SubsystemBase {
     double xSpeedDelivered = xSpeed * Constants.maxVitesseLineaire;
     double ySpeedDelivered = ySpeed * Constants.maxVitesseLineaire;
     double rotDelivered = rot * Constants.maxVitesseRotation;
+    
+    //inversion du field oriented selon l'alliance
     double invert = 1;
-
     if (isRedAlliance()) {
       invert = -1; // on inverse le déplacement du robot
     }
@@ -265,14 +269,13 @@ public class BasePilotable extends SubsystemBase {
     setModuleStates(swerveModuleState);
   }
 
-  /////////////////////////// gestion des cibles avec la manette de l'opperateur
-  /////////////////////////// au recif
-  public Pose2d getCibleRecif() {
-    return cibleRecif;
+  ////////////// gestion des cibles avec la manette de l'opperateur au recif
+  public Pose2d getCibleManetteOperateur() {
+    return cibleManetteOperateur;
   }
 
-  public Command setCibleRecifCommand(Pose2d cible) {
-    return this.runOnce(() -> cibleRecif = cible);
+  public Command setCibleManetteOperateurCommand(Pose2d cible) {
+    return this.runOnce(() -> cibleManetteOperateur = cible);
   }
 
   //////////// station cible
@@ -282,10 +285,6 @@ public class BasePilotable extends SubsystemBase {
     }else{
       return GamePositions.CoralStationProc; 
     }
-  }
-
-  public Pose2d getCibleProcesseur(){
-    return GamePositions.Processeur; 
   }
 
   /////////////// On the fly

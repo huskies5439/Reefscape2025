@@ -26,7 +26,7 @@ public class RamasserAlgue extends ParallelCommandGroup {
 
   public RamasserAlgue(Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
 
-    cibleManette = basePilotable.getCibleRecif();
+    cibleManette = basePilotable.getCibleManetteOperateur();
 
     if (cibleManette == Branche.A || cibleManette == Branche.B) {
       ciblePositionAlgue = Algue.AB;

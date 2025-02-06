@@ -11,7 +11,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -30,11 +29,12 @@ public class Ascenseur extends SubsystemBase {
   private SparkFlex moteur2 = new SparkFlex(10, MotorType.kBrushless);
 
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
+  private double convertionVortex;
 
   private Servo serrureCage = new Servo(6);
 
   // Encodeur
-  private Encoder encoder = new Encoder(1, 2); // Channel à reverifier
+  private Encoder encoder = new Encoder(1, 2);
 
   // capteur
   private final DigitalInput limitSwitch = new DigitalInput(0);
@@ -45,21 +45,19 @@ public class Ascenseur extends SubsystemBase {
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(Constants.kG, 0, 0);
 
-  // hauteur cible
-  private double cible;
-
-  private double convertionVortex;
+  // hauteur cible de la manette operateur
+  private double cibleManetteOperateur;
 
   public Ascenseur() {
     // set parametres des configs
     moteurConfig.inverted(false);
     moteurConfig.idleMode(IdleMode.kBrake);
 
-    // 14 pignons fait tourner 80. Après, pouli 3/4 de pouce.
+    // pignons 14 dents fait tourner 80 dents. Après, poulie 3/4 de pouce.
     convertionVortex = (14.0 / 80) * Units.inchesToMeters(0.75) * Math.PI;
 
-    moteurConfig.encoder.positionConversionFactor(convertionVortex);
-    moteurConfig.encoder.velocityConversionFactor(convertionVortex / 60.0);
+    moteurConfig.encoder.positionConversionFactor(convertionVortex); // en mètre
+    moteurConfig.encoder.velocityConversionFactor(convertionVortex / 60.0); // mètre par secondes
 
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -69,36 +67,24 @@ public class Ascenseur extends SubsystemBase {
     // diamètre poulie 70 mm
     // 1000 conversion mm en m
     // 360 tick par tours
-    encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360);
+    encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360); // peut etre à changer, calculer pour la V1 encodeur
+                                                                  // externe
   }
 
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenceur
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenceur des Encodeurs
+    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenseur
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenseur des Encodeurs moteur
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
-    SmartDashboard.putNumber("Cible : ", getCibleRecif());
+    SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
 
     if (isLimitSwitch()) {
       resetEncoders();
     }
   }
 
-  // Retourne la position de l'encodeur VORTEX
-  public double getPositionVortex() {
-    return moteur1.getEncoder().getPosition();
-  }
-
-  // reset les encodeurs des vortex
-  public void resetEncodersVortex() {
-    moteur1.getEncoder().setPosition(0);
-    moteur2.getEncoder().setPosition(0);
-  }
-
-  public double getVitesseVortex() {
-    return moteur1.getEncoder().getVelocity();
-  }
+  /////////////////// MOTEUR
 
   // Donne un voltage aux moteurs
   public void setVoltage(double voltage) {
@@ -115,7 +101,7 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(-1);
   }
 
-  public void descendre(double vitesse) {
+  public void descendreAjustable(double vitesse) {
     setVoltage(vitesse * 1);
   }
 
@@ -123,7 +109,44 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(0);
   }
 
-  // Servo barrer/debarrer
+  ////////////////////////// ENCODEUR VORTEX
+
+  // Retourne la position de l'encodeur VORTEX
+  public double getPositionVortex() {
+    return moteur1.getEncoder().getPosition();
+  }
+
+  // reset les encodeurs des vortex
+  public void resetEncodersVortex() {
+    moteur1.getEncoder().setPosition(0);
+    moteur2.getEncoder().setPosition(0);
+  }
+
+  public double getVitesseVortex() {
+    return moteur1.getEncoder().getVelocity();
+  }
+
+  //////////////////// Encodeur Externe
+
+  public double getPositionExterne() {
+    return encoder.getDistance();
+  }
+
+  public double getVitesseExterne() {
+    return encoder.getRate();
+  }
+
+  public void resetEncodeurExterne() {
+    encoder.reset();
+  }
+
+  public void resetEncoders() {
+    resetEncodersVortex();
+    resetEncodeurExterne();
+  }
+
+  ///////////////////// Servo
+
   public void barrer() {
     serrureCage.setAngle(45);
   }
@@ -132,12 +155,8 @@ public class Ascenseur extends SubsystemBase {
     serrureCage.setAngle(135);
   }
 
-  public void resetEncoders() {
-    resetEncodersVortex();
-    resetEncodeurExterne();
-  }
+  /////////////////// PID + FeedForward
 
-  // PID + FeedForward
   public void setPID(double cible) {
     double voltagePID = pidAscenseur.calculate(getPositionVortex(), cible);
 
@@ -154,31 +173,21 @@ public class Ascenseur extends SubsystemBase {
     return pidAscenseur.atGoal();
   }
 
-  // cible de l'ascenseur en utilisant la manette operateur
-  public void setCible(double cible) {
-    this.cible = cible;
+  ///////////////////// cible de l'ascenseur en utilisant la manette operateur
+
+  public void setCibleManetteOperateur(double cible) {
+    this.cibleManetteOperateur = cible;
   }
 
-  public double getCibleRecif() {
-    return cible;
+  public double getCibleManetteOperateur() {
+    return cibleManetteOperateur;
   }
 
-  // Limit switch
+  //////////////////// Limit switch
+
   public boolean isLimitSwitch() {
     return !limitSwitch.get();
 
   }
 
-  // Encodeur Externe
-  public double getPositionExterne() {
-    return encoder.getDistance();
-  }
-
-  public double getVitesseExterne() {
-    return encoder.getRate();
-  }
-
-  public void resetEncodeurExterne() {
-    encoder.reset();
-  }
 }

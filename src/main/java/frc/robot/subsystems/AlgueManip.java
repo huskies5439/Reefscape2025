@@ -29,6 +29,7 @@ public class AlgueManip extends SubsystemBase {
   private DigitalInput lightBreak = new DigitalInput(4);
 
   public AlgueManip() {
+    
     // associe configs moteur droit
     moteurDroitConfig.inverted(true);
     moteurDroitConfig.idleMode(IdleMode.kBrake);

@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-import java.nio.file.Path;
-
-import com.fasterxml.jackson.databind.node.POJONode;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -27,9 +23,11 @@ public final class Constants {
   public static final double maxVitesseModule = 4.46;// Vitesse maximale d'un module en m/s
 
   // Chassis configuration
-  public static final double kTrackWidth = Units.inchesToMeters(26.5);
+  public static final double kTrackWidth = Units.inchesToMeters(25.5);
+
   // Distance between centers of right and left wheels on robot
-  public static final double kWheelBase = Units.inchesToMeters(26.5);
+  public static final double kWheelBase = Units.inchesToMeters(25.5);
+
   // Distance between front and back wheels on robot
   public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -40,10 +38,10 @@ public final class Constants {
   public static final class Hauteur { // index 0 == hauteur ascenseur index 1 == angle poignet
 
     public static final double sol[] = { 0, 0 };
-    public static final double corailL1[] = { 1, 0 };
-    public static final double corailL2[] = { 1.25, 0 };
-    public static final double corailL3[] = { 1.5, 0 };
-    public static final double corailL4[] = { 2, 30 };
+    public static final double L1[] = { 0.1, 0 };
+    public static final double L2[] = { 0.125, 0 };
+    public static final double L3[] = { 0.15, 0 };
+    public static final double L4[] = { 0.2, 30 };
 
     public static final double algueBas[] = { 1, 30 };
     public static final double algueHaut[] = { 1.5, 30 };

@@ -13,7 +13,7 @@ public class SetHauteur extends ParallelCommandGroup {
   public SetHauteur(double[] cible, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands(
-        Commands.runOnce(() -> ascenseur.setCible(cible[0])),
+        Commands.runOnce(() -> ascenseur.setCibleManetteOperateur(cible[0])),
         Commands.runOnce(() -> poignet.setCible(cible[1])));
   }
 }
