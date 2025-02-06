@@ -17,6 +17,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -28,9 +29,10 @@ public class Ascenseur extends SubsystemBase {
 
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
 
+  private Servo serrureCage = new Servo(6);
+
   // Encodeur
   private Encoder encoder = new Encoder(1, 2); // Channel à reverifier
-  private double conversionEncoder;
 
   // capteur
   private final DigitalInput limitSwitch = new DigitalInput(0);
@@ -51,14 +53,25 @@ public class Ascenseur extends SubsystemBase {
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    // encodeur a poulie 20 : 68 : 20
+    // diamètre poulie 70 mm
+    // 1000 conversion mm en m
+    // 360 tick par tours
+    encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360);
   }
 
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex()); // Hauteur Ascenceur des VORTEX
+    SmartDashboard.putNumber("Hauteur Ascenseur Externe", getPositionExterne()); // Hauteur Ascenceur des Encodeurs Externes
+    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne());
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
     SmartDashboard.putNumber("Cible : ", getCibleRecif());
+
+    if (isLimitSwitch()){
+      resetEncoders();
+    }
   }
 
   // Retourne la position de l'encodeur VORTEX
@@ -87,13 +100,31 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(-1);
   }
 
+  public void descendre(double vitesse){
+    setVoltage(vitesse * 1);
+  }
+
   public void stop() {
     setVoltage(0);
   }
 
+  // Servo barrer/debarrer
+  public void barrer() {
+    serrureCage.setAngle(45);
+  }
+
+  public void debarrer() {
+    serrureCage.setAngle(135);
+  }
+
+  public void resetEncoders(){
+    resetEncodersVortex();
+    resetEncodeurExterne();
+  }
+
   // PID + FeedForward
   public void setPID(double cible) {
-    double voltagePID = pidAscenseur.calculate(getPositionVortex(), cible);
+    double voltagePID = pidAscenseur.calculate(getPositionExterne(), cible);
 
     double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
 
@@ -128,7 +159,7 @@ public class Ascenseur extends SubsystemBase {
     return encoder.getDistance();
   }
 
-  public double getEncodeurSpeed() {
+  public double getVitesseExterne() {
     return encoder.getRate();
   }
 
