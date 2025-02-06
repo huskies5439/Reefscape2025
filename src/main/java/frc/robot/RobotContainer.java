@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   private final BasePilotable basePilotable = new BasePilotable();
   private final Ascenseur ascenseur = new Ascenseur();
-  private final Poignet poignet = new Poignet();
+  //private final Poignet poignet = new Poignet();
   //private final AlgueManip algueManip = new AlgueManip(); 
   //private final CorailManip corailManip = new CorailManip(); 
 
@@ -35,9 +35,9 @@ public class RobotContainer {
 
   CommandGenericHID operateur = new CommandGenericHID(1);
 
-  Trigger grimpeurTrigger =  manette.leftBumper().and(manette.leftTrigger());
-  private boolean pretAGrimper = false;
-  Trigger pretAGrimperTrigger = new Trigger(()-> pretAGrimper);
+  // Trigger grimpeurTrigger =  manette.leftBumper().and(manette.leftTrigger());
+  // private boolean pretAGrimper = false;
+  // Trigger pretAGrimperTrigger = new Trigger(()-> pretAGrimper);
 
   public RobotContainer() {
     configureButtonBindings();
@@ -76,10 +76,10 @@ public class RobotContainer {
     operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleRecifCommand(Branche.L)); 
 
     //logique du grimpeur a revoir
-   grimpeurTrigger.and(pretAGrimperTrigger.negate()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = true));
-   grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(
-      ()-> ascenseur.descendre(manette.getRightTriggerAxis()), ascenseur)); 
-    grimpeurTrigger.and(manette.rightBumper()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = false));
+  //  grimpeurTrigger.and(pretAGrimperTrigger.negate()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = true));
+  //  grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(
+  //     ()-> ascenseur.descendre(manette.getRightTriggerAxis()), ascenseur)); 
+  //   grimpeurTrigger.and(manette.rightBumper()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = false));
    
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));

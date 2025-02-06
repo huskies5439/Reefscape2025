@@ -125,6 +125,7 @@ public class BasePilotable extends SubsystemBase {
     // SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
 
     SmartDashboard.putString("Cible Recif", getCibleRecif().toString());
+    //SmartDashboard.putString("cible station", getCibleStation().toString());
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
     // setLimelightRobotOrientation();
