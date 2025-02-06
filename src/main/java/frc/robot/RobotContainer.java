@@ -75,9 +75,11 @@ public class RobotContainer {
     operateur.button(BoutonOperateur.K).onTrue(basePilotable.setCibleRecifCommand(Branche.K));
     operateur.button(BoutonOperateur.L).onTrue(basePilotable.setCibleRecifCommand(Branche.L)); 
 
-  
+    //logique du grimpeur a revoir
    grimpeurTrigger.and(pretAGrimperTrigger.negate()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = true));
-   grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(()-> ascenseur., null));
+   grimpeurTrigger.and(pretAGrimperTrigger).whileTrue(Commands.run(
+      ()-> ascenseur.descendre(manette.getRightTriggerAxis()), ascenseur)); 
+    grimpeurTrigger.and(manette.rightBumper()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = false));
    
 
     // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));
