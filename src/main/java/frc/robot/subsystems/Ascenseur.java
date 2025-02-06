@@ -15,11 +15,13 @@ import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Ascenseur extends SubsystemBase {
 
@@ -38,18 +40,27 @@ public class Ascenseur extends SubsystemBase {
   private final DigitalInput limitSwitch = new DigitalInput(0);
 
   // PID
-  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(0, 0, 0,
-      new TrapezoidProfile.Constraints(0, 0));
+  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(100, 0, 0,
+      new TrapezoidProfile.Constraints(0.3, 0.1));
 
-  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, 0, 0);
+  private ElevatorFeedforward feedforward = new ElevatorFeedforward(Constants.kG, 0, 0);
 
   // hauteur cible
   private double cible;
 
+  private double convertionVortex;
+
   public Ascenseur() {
     // set parametres des configs
-    moteurConfig.inverted(true);
+    moteurConfig.inverted(false);
     moteurConfig.idleMode(IdleMode.kBrake);
+
+    // 14 pignons fait tourner 80. Après, pouli 3/4 de pouce.
+    convertionVortex = (14.0 / 80) * Units.inchesToMeters(0.75) * Math.PI;
+
+    moteurConfig.encoder.positionConversionFactor(convertionVortex);
+    moteurConfig.encoder.velocityConversionFactor(convertionVortex / 60.0);
+
     // associe les configs aux moteurs
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -64,12 +75,12 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Hauteur Ascenseur Externe", getPositionExterne()); // Hauteur Ascenceur des Encodeurs Externes
-    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne());
+    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenceur
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenceur des Encodeurs
     SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
     SmartDashboard.putNumber("Cible : ", getCibleRecif());
 
-    if (isLimitSwitch()){
+    if (isLimitSwitch()) {
       resetEncoders();
     }
   }
@@ -83,6 +94,10 @@ public class Ascenseur extends SubsystemBase {
   public void resetEncodersVortex() {
     moteur1.getEncoder().setPosition(0);
     moteur2.getEncoder().setPosition(0);
+  }
+
+  public double getVitesseVortex() {
+    return moteur1.getEncoder().getVelocity();
   }
 
   // Donne un voltage aux moteurs
@@ -100,7 +115,7 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(-1);
   }
 
-  public void descendre(double vitesse){
+  public void descendre(double vitesse) {
     setVoltage(vitesse * 1);
   }
 
@@ -117,14 +132,14 @@ public class Ascenseur extends SubsystemBase {
     serrureCage.setAngle(135);
   }
 
-  public void resetEncoders(){
+  public void resetEncoders() {
     resetEncodersVortex();
     resetEncodeurExterne();
   }
 
   // PID + FeedForward
   public void setPID(double cible) {
-    double voltagePID = pidAscenseur.calculate(getPositionExterne(), cible);
+    double voltagePID = pidAscenseur.calculate(getPositionVortex(), cible);
 
     double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
 

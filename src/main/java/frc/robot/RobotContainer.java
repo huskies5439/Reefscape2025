@@ -82,8 +82,8 @@ public class RobotContainer {
   //   grimpeurTrigger.and(manette.rightBumper()).whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(()-> pretAGrimper = false));
    
 
-    // manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(1), ()-> ascenseur.stop(), ascenseur));
-    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));
+    manette.a().whileTrue(Commands.runEnd(()->ascenseur.setPID(0.3), ()-> ascenseur.stop(), ascenseur));
+    //manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));
     
     // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()-> poignet.stop(), poignet));
     // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()-> poignet.stop(), poignet));
@@ -95,7 +95,7 @@ public class RobotContainer {
     manette.y().whileTrue(Commands.startEnd(()-> corailManip.lancer(), ()-> corailManip.stop(), corailManip));*/
     
 
-    manette.povUp().whileTrue(Commands.startEnd(()-> ascenseur.monter(), ()-> ascenseur.stop(), ascenseur));
+    manette.povUp().whileTrue(Commands.startEnd(()-> ascenseur.monter(), ()-> ascenseur.setVoltage(Constants.kG), ascenseur));
     manette.povDown().whileTrue(Commands.startEnd(()-> ascenseur.descendre(), ()-> ascenseur.stop(), ascenseur));
     /*manette.povRight().whileTrue(Commands.runEnd(()-> poignet.monter(), ()-> poignet.stop(), poignet));
     manette.povLeft().whileTrue(Commands.runEnd(()-> poignet.descendre(), ()-> poignet.stop(), poignet));*/
