@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.nio.file.Path;
 
+import com.fasterxml.jackson.databind.node.POJONode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -41,19 +43,19 @@ public final class Constants {
     public static final double corailL1[] = { 1, 0 };
     public static final double corailL2[] = { 1.25, 0 };
     public static final double corailL3[] = { 1.5, 0 };
-    public static final double corailL4[] = { 2, 180 };
+    public static final double corailL4[] = { 2, 30 };
 
-    public static final double algueBas[] = { 1, 180 };
-    public static final double algueHaut[] = { 1.5, 180 };
+    public static final double algueBas[] = { 1, 30 };
+    public static final double algueHaut[] = { 1.5, 30 };
 
-    public static final double processeur[] = {0.5 , 0};
-    public static final double station[] = {0.5, 45};  
+    public static final double processeur[] = { 0.5, 0 };
+    public static final double station[] = { 0.5, 45 };
 
   }
 
   public static final class BoutonOperateur {
 
-    //DriverStation commence a compter a partir de 1
+    // DriverStation commence a compter a partir de 1
     public static final int L1 = 1;
     public static final int L2 = 2;
     public static final int L3 = 3;
@@ -90,6 +92,17 @@ public final class Constants {
     public static final Pose2d J = new Pose2d(5.021, 5.244, Rotation2d.fromDegrees(-120));
     public static final Pose2d K = new Pose2d(3.978, 5.224, Rotation2d.fromDegrees(-60));
     public static final Pose2d L = new Pose2d(3.715, 5.107, Rotation2d.fromDegrees(-60));
+  }
+
+  public static class Algue {
+
+    public static final Pose2d AB = new Pose2d(3.188, 4.035, Rotation2d.fromDegrees(0));
+    public static final Pose2d CD = new Pose2d(3.861, 2.855, Rotation2d.fromDegrees(60));
+    public static final Pose2d EF = new Pose2d(5.119, 2.894, Rotation2d.fromDegrees(120));
+    public static final Pose2d GH = new Pose2d(5.811, 4.015, Rotation2d.fromDegrees(-180));
+    public static final Pose2d IJ = new Pose2d(5.168, 5.146, Rotation2d.fromDegrees(-120));
+    public static final Pose2d KL = new Pose2d(3.832, 5.107, Rotation2d.fromDegrees(-60));
+
   }
 
   public static class GamePositions {
