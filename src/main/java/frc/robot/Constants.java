@@ -107,9 +107,15 @@ public final class Constants {
 
   public static class GamePositions {
 
-    public static final Pose2d CoralStationProc = new Pose2d(1.594, 0.710, Rotation2d.fromDegrees(-126));
-    public static final Pose2d CoralStationCage = new Pose2d(1.706, 7.369, Rotation2d.fromDegrees(126));
-    public static final Pose2d Processeur = new Pose2d(7.369, 0.534, Rotation2d.fromDegrees(-90));
+    public static final Pose2d BlueCoralStationProc = new Pose2d(1.594, 0.710, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationCage = new Pose2d(1.706, 7.369, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueProcesseur = new Pose2d(6.0, 0.55, Rotation2d.fromDegrees(-90));
+    public static final Pose2d BlueCentreRecif = new Pose2d(4.5,4,Rotation2d.kZero);
+
+    public static final Pose2d RedCoralStationProc = new Pose2d(0, 0, Rotation2d.fromDegrees(126));
+    public static final Pose2d RedCoralStationCage = new Pose2d(0, 0, Rotation2d.fromDegrees(-126));
+    public static final Pose2d RedProcesseur = new Pose2d(12.75, 7.45, Rotation2d.fromDegrees(90));
+    public static final Pose2d RedCentreRecif = new Pose2d(0,4,Rotation2d.kZero);
   }
 
   public static final double distanceMin = 2;

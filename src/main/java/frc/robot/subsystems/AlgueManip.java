@@ -13,7 +13,10 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AlgueManip extends SubsystemBase {
 
@@ -71,4 +74,11 @@ public class AlgueManip extends SubsystemBase {
     return !lightBreak.get(); // verifier pour le not !
   }
 
+  public Command goberCommand(){
+    return Commands.runOnce(this::gober, this).until(this::isAlgue).andThen(this::stop, this);
+  }
+
+  public Command sortirCommand(){
+    return Commands.runOnce(this::sortir, this).until(()->!isAlgue()).andThen(new WaitCommand(0.5)).andThen(this::stop, this);
+  }
 }

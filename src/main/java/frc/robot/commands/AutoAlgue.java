@@ -55,7 +55,7 @@ public class AutoAlgue extends ParallelCommandGroup {
     }
 
     addCommands(
-        // se rend automatiquement à la bonne position sur le recif
+        // se rend automatiquement à la bonne position sur le recif et se rend a la bonne hauteur 
         basePilotable.followPath(ciblePositionAlgue),
         new SequentialCommandGroup(
             new WaitUntilCommand(() -> basePilotable.isProche(ciblePositionAlgue, Constants.distanceMin)),

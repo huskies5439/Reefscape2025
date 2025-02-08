@@ -8,6 +8,7 @@ import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.commands.ActiverGrimpeur;
+import frc.robot.commands.AutoCorail;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.SetHauteur;
 import frc.robot.subsystems.AlgueManip;
@@ -17,6 +18,10 @@ import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
 import java.util.function.BooleanSupplier;
+
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.path.EventMarker;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -28,8 +33,10 @@ public class RobotContainer {
   private final BasePilotable basePilotable = new BasePilotable();
   private final Ascenseur ascenseur = new Ascenseur();
   private final Poignet poignet = new Poignet();
-  // private final AlgueManip algueManip = new AlgueManip();
-  // private final CorailManip corailManip = new CorailManip();
+
+  private final AlgueManip algueManip = new AlgueManip();
+  private final CorailManip corailManip = new CorailManip();
+  
 
   CommandXboxController manette = new CommandXboxController(0);
 
@@ -49,6 +56,18 @@ public class RobotContainer {
                 manette.getLeftY(), manette.getLeftX(), manette.getRightX(),
                 true, true),
             basePilotable));
+
+      // commmandes pour pathPlanner 
+      
+      NamedCommands.registerCommand("SortirCorail", corailManip.sortirCommand());
+     // new EventTrigger("GoberCorail").onTrue(corailManip.goberCommand());
+      NamedCommands.registerCommand("GoberCorail", corailManip.goberCommand());
+    
+      NamedCommands.registerCommand("SortirAlgue", algueManip.sortirCommand());
+      //new EventTrigger("GoberAlgue").onTrue(algueManip.goberCommand());
+      NamedCommands.registerCommand("GoberAlgue", algueManip.goberCommand()); 
+
+
   }
 
   private void configureButtonBindings() {
@@ -73,15 +92,6 @@ public class RobotContainer {
     // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
     // poignet.stop(), poignet));
 
-    // manette.a().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()->
-    // algueManip.stop(), algueManip));
-    // manette.b().whileTrue(Commands.startEnd(()-> algueManip.sortir(), ()->
-    // algueManip.stop(), algueManip));
-
-    // manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()->
-    // corailManip.stop(), corailManip));
-    // manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()->
-    // corailManip.stop(), corailManip));
 
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.setVoltage(Constants.kG), ascenseur));

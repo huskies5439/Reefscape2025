@@ -36,7 +36,20 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "descendreStation",
+      "waypointRelativePos": 0.21935483870967593,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "GoberCorail",
+      "waypointRelativePos": 0.71761786600495,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 9.0,

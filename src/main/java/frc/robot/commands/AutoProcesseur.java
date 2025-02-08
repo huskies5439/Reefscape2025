@@ -20,7 +20,7 @@ public class AutoProcesseur extends ParallelCommandGroup {
   //vas automatiquement au prosseseur
   //!!NE LIVRE PAS L'ALGUE!!
   public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
-   Pose2d cible = GamePositions.Processeur;
+   Pose2d cible = GamePositions.BlueProcesseur;
     addCommands(
        basePilotable.followPath(cible),
       

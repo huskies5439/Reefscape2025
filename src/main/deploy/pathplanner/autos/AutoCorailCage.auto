@@ -11,9 +11,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SortirCorail"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "IToCoralStationCage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoberCorail"
           }
         },
         {
@@ -23,9 +35,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SortirCorail"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "LToCoralStationCage"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoberCorail"
           }
         },
         {
@@ -35,15 +59,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SortirCorail"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "KToCoralStationCage"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "GoberCorail"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "CoralStationCageToJ"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SortirCorail"
           }
         },
         {

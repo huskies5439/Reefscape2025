@@ -281,9 +281,9 @@ public class BasePilotable extends SubsystemBase {
   //////////// station cible
   public Pose2d getCibleStation(){
     if(isRedAlliance() ^ getPose().getY() >=4){
-      return GamePositions.CoralStationCage; 
+      return GamePositions.BlueCoralStationCage; 
     }else{
-      return GamePositions.CoralStationProc; 
+      return GamePositions.BlueCoralStationProc; 
     }
   }
 
