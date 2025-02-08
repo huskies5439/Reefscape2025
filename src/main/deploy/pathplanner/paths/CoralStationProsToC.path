@@ -31,14 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "monterCorail",
-      "waypointRelativePos": 0.8049627791563261,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 9.0,
@@ -52,7 +45,7 @@
     "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "AutoCorailPros",
+  "folder": "AutoCorailProcesseur",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -126.0

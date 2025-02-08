@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartCageToI"
+                  "pathName": "StartProsToF"
                 }
               },
               {
@@ -30,13 +30,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "IToCoralStationCage"
+                  "pathName": "FToCoralStationPros"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
+                  "name": "actionStationProcesseur"
                 }
               }
             ]
@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToL"
+                  "pathName": "CoralStationProsToC"
                 }
               },
               {
@@ -68,13 +68,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LToCoralStationCage"
+                  "pathName": "CToCoralStationPros"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
+                  "name": "actionStationProcesseur"
                 }
               }
             ]
@@ -87,7 +87,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToK"
+                  "pathName": "CoralStationProsToD"
                 }
               },
               {
@@ -106,13 +106,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "KToCoralStationCage"
+                  "pathName": "DToCoralStationPros"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
+                  "name": "actionStationProcesseur"
                 }
               }
             ]
@@ -125,7 +125,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToJ"
+                  "pathName": "CoralStationProsToE"
                 }
               },
               {
@@ -144,13 +144,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "JToCoralStationCage"
+                  "pathName": "EToCoralStationPros"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
+                  "name": "actionStationProcesseur"
                 }
               }
             ]

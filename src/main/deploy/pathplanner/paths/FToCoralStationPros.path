@@ -36,20 +36,7 @@
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "descendreStation",
-      "waypointRelativePos": 0.253101736972698,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "GoberCorail",
-      "waypointRelativePos": 0.7533498759305184,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 9.0,
@@ -63,7 +50,7 @@
     "rotation": -126.0
   },
   "reversed": false,
-  "folder": "AutoCorailPros",
+  "folder": "AutoCorailProcesseur",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 119.99999999999999

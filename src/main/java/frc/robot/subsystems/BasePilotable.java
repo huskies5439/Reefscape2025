@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,6 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -309,8 +307,25 @@ public class BasePilotable extends SubsystemBase {
     return AutoBuilder.followPath(getPath(cible));
   }
 
+  // isProche multiple pour séparation rouge/bleu en automatique
   public boolean isProche(Pose2d cible, double distanceMin) {
     return getPose().getTranslation().getDistance(cible.getTranslation()) < distanceMin;
+  }
+
+  public boolean isProcheRecif() {
+    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 2);
+  }
+
+  public boolean isProcheProcesseur(){
+    return isProche(isRedAlliance() ? GamePositions.RedProcesseur : GamePositions.BlueProcesseur,2);
+  }
+
+  public boolean isProcheStationCage(){
+    return isProche(isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCage, 2);
+  }
+
+  public boolean isProcheStationProcesseur(){
+    return isProche(isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProc, 2);
   }
 
   public boolean isRedAlliance() {

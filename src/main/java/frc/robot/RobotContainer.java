@@ -8,21 +8,20 @@ import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.commands.ActiverGrimpeur;
-import frc.robot.commands.AutoCorail;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.SetHauteur;
+import frc.robot.commands.pathplanner.ActionProcesseurPathPlanner;
+import frc.robot.commands.pathplanner.ActionRecifAlgueBasPathPlanner;
+import frc.robot.commands.pathplanner.ActionRecifAlgueHautPathPlanner;
+import frc.robot.commands.pathplanner.ActionRecifCorailPathPlanner;
+import frc.robot.commands.pathplanner.ActionStationCagePathPlanner;
+import frc.robot.commands.pathplanner.ActionStationProcesseurPathPlanner;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
-
-import java.util.function.BooleanSupplier;
-
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.events.EventTrigger;
-import com.pathplanner.lib.path.EventMarker;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
@@ -58,15 +57,15 @@ public class RobotContainer {
             basePilotable));
 
       // commmandes pour pathPlanner 
-      
-      NamedCommands.registerCommand("SortirCorail", corailManip.sortirCommand());
-     // new EventTrigger("GoberCorail").onTrue(corailManip.goberCommand());
-      NamedCommands.registerCommand("GoberCorail", corailManip.goberCommand());
-    
-      NamedCommands.registerCommand("SortirAlgue", algueManip.sortirCommand());
-      //new EventTrigger("GoberAlgue").onTrue(algueManip.goberCommand());
-      NamedCommands.registerCommand("GoberAlgue", algueManip.goberCommand()); 
+      NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand()); 
+      NamedCommands.registerCommand("monterAlgueBas",new GoToHauteur(Hauteur.algueBas[0], Hauteur.algueBas[1], ascenseur, poignet));
 
+      NamedCommands.registerCommand("actionProcesseur", new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet, algueManip));
+      NamedCommands.registerCommand("actionRecifAlgueBas", new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet, algueManip));
+      NamedCommands.registerCommand("actionRecifAlgueHaut", new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet, algueManip));
+      NamedCommands.registerCommand("actionRecifCorail", new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet, corailManip));
+      NamedCommands.registerCommand("actionStationCage", new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet, corailManip));
+      NamedCommands.registerCommand("actionStationProcesseur", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet, corailManip));
 
   }
 
@@ -84,8 +83,7 @@ public class RobotContainer {
         .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = false));
 
     manette.a().whileTrue(Commands.runEnd(() -> ascenseur.setPID(0.3), () -> ascenseur.stop(), ascenseur));
-    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
-    // ascenseur.stop(), ascenseur));
+    manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));
 
     // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
     // poignet.stop(), poignet));

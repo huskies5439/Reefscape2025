@@ -106,19 +106,18 @@ public final class Constants {
   }
 
   public static class GamePositions {
-
-    public static final Pose2d BlueCoralStationProc = new Pose2d(1.594, 0.710, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationCage = new Pose2d(1.706, 7.369, Rotation2d.fromDegrees(126));
+    //Terrain x = 17.5 y = 8 valeur à ajuster
+    public static final Pose2d BlueCoralStationProc = new Pose2d(1.6, 0.7, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationCage = new Pose2d(1.6, 7.4, Rotation2d.fromDegrees(126));
     public static final Pose2d BlueProcesseur = new Pose2d(6.0, 0.55, Rotation2d.fromDegrees(-90));
     public static final Pose2d BlueCentreRecif = new Pose2d(4.5,4,Rotation2d.kZero);
-
-    public static final Pose2d RedCoralStationProc = new Pose2d(0, 0, Rotation2d.fromDegrees(126));
-    public static final Pose2d RedCoralStationCage = new Pose2d(0, 0, Rotation2d.fromDegrees(-126));
-    public static final Pose2d RedProcesseur = new Pose2d(12.75, 7.45, Rotation2d.fromDegrees(90));
-    public static final Pose2d RedCentreRecif = new Pose2d(0,4,Rotation2d.kZero);
+    // position bleu/rouge pour IsProche
+    public static final Pose2d RedCoralStationProc = new Pose2d(15.9, 7.4, Rotation2d.fromDegrees(54));
+    public static final Pose2d RedCoralStationCage = new Pose2d(15.9, 0.7, Rotation2d.fromDegrees(-54));
+    public static final Pose2d RedProcesseur = new Pose2d(11.5, 7.45, Rotation2d.fromDegrees(90));
+    public static final Pose2d RedCentreRecif = new Pose2d(13,4,Rotation2d.kZero);
   }
 
-  public static final double distanceMin = 2;
   public static final double kG = 0.3;
 
 }

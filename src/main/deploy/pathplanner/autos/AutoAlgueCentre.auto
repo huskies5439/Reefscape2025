@@ -5,45 +5,142 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "StartCentreToH"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartCentreToH"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifCorail"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "HToAlgueHG"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "HToAlgueHG"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "monterAlgueBas"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "goberAlgue"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "AlgueHGToProcessor"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgueHGToProcessor"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ProcessorToAlgueEF"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ProcessorToAlgueEF"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifAlgueHaut"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "AlgueEFToProcessor"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgueEFToProcessor"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "ProcessorToAlgueJI"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ProcessorToAlgueJI"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifAlgueHaut"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "AlgueJIToProcessor"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AlgueJIToProcessor"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
           }
         }
       ]

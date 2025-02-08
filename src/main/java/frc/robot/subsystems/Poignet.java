@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.security.PrivateKey;
-
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -61,6 +59,7 @@ public class Poignet extends SubsystemBase {
     SmartDashboard.putNumber("Angle Poignet", getAngle());
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
     SmartDashboard.putNumber("Cible Poignet : ", cibleManetteOperateur);
+    SmartDashboard.putBoolean("Capteur Poignet", isHome());
   }
 
   ////////////////// MOTEUR

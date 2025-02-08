@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8437090119418764,
-        "y": 2.006665757857371
+        "x": 2.9422257773384866,
+        "y": 2.3701022799048466
       },
       "isLocked": false,
       "linkedName": "D"
@@ -20,8 +20,8 @@
         "y": 0.7103995901639337
       },
       "prevControl": {
-        "x": 2.8548618550233247,
-        "y": 2.403957477521393
+        "x": 2.232165350565252,
+        "y": 1.8845214747487227
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,20 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "descendreStation",
-      "waypointRelativePos": 0.0764267990074415,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "GoberCorail",
-      "waypointRelativePos": 0.8049627791563241,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 9.0,
@@ -58,7 +45,7 @@
     "rotation": -126.0
   },
   "reversed": false,
-  "folder": "AutoCorailPros",
+  "folder": "AutoCorailProcesseur",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 59.99999999999999

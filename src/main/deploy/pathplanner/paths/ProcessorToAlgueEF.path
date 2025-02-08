@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.532,
-        "y": 1.6615
+        "y": 1.6614999999999993
       },
       "isLocked": false,
       "linkedName": "Processeur"
     },
     {
       "anchor": {
-        "x": 5.15775,
-        "y": 2.8354999999999997
+        "x": 5.12,
+        "y": 2.9
       },
       "prevControl": {
-        "x": 5.694000000000001,
-        "y": 1.938499999999999
+        "x": 5.656250000000001,
+        "y": 2.003
       },
       "nextControl": null,
       "isLocked": false,
