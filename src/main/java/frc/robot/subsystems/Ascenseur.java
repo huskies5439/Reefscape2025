@@ -34,7 +34,7 @@ public class Ascenseur extends SubsystemBase {
   private Servo serrureCage = new Servo(6);
 
   // Encodeur
-  private Encoder encoder = new Encoder(1, 2);
+  private Encoder encoder = new Encoder(2, 3);
 
   // capteur
   private final DigitalInput limitSwitch = new DigitalInput(0);
