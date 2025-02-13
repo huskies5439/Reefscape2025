@@ -71,7 +71,7 @@ public class Ascenseur extends SubsystemBase {
     encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360); // peut etre à changer, calculer pour la V1 encodeur
                                                                   // externe
                                 
-    debarrer();
+    // debarrer();
   }
 
   @Override

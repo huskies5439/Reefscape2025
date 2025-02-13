@@ -34,12 +34,12 @@ public class AlgueManip extends SubsystemBase {
   public AlgueManip() {
     
     // associe configs moteur droit
-    moteurDroitConfig.inverted(true);
+    moteurDroitConfig.inverted(false);
     moteurDroitConfig.idleMode(IdleMode.kBrake);
     moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // associe configs moteur gauche
-    moteurGauchceConfig.inverted(false);
+    moteurGauchceConfig.inverted(true);
     moteurGauchceConfig.idleMode(IdleMode.kBrake);
     moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 

@@ -47,11 +47,11 @@ public class CorailManip extends SubsystemBase {
 
   // gober/lancer/stop avec manip de corail
   public void gober() {
-    setVoltage(4); // Voltages a reverifier
+    setVoltage(2); // Voltages a reverifier
   }
 
   public void sortir() {
-    setVoltage(-4);
+    setVoltage(-2);
   }
 
   public void stop() {
