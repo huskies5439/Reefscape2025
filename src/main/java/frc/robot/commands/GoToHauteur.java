@@ -40,8 +40,8 @@ public class GoToHauteur extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    ascenseur.stop();
-    poignet.stop();
+    ascenseur.hold();
+    poignet.hold();
   }
 
   @Override

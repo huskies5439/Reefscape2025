@@ -10,20 +10,16 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
-import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
-
 
 public class ActionRecifCorailPathPlanner extends SequentialCommandGroup {
 
- /**Actions durant le déplacement vers le récif pour un corail*/
-  public ActionRecifCorailPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
-    
+  /** Actions durant le déplacement vers le récif pour un corail */
+  public ActionRecifCorailPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
+
     addCommands(
         new GoToHauteur(Hauteur.sol[0], Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(Hauteur.L4[0],Hauteur.L4[1], ascenseur, poignet),
-        corailManip.sortirCommand()
-        );
+        new GoToHauteur(Hauteur.L4[0], Hauteur.L4[1], ascenseur, poignet));
   }
 }

@@ -24,6 +24,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -55,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AlgueHGToProcessor"
+                  "pathName": "AlgueHGToProcesseur"
                 }
               },
               {
@@ -68,13 +74,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirAlgue"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ProcessorToAlgueEF"
+                  "pathName": "ProcesseurToAlgueEF"
                 }
               },
               {
@@ -87,13 +99,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberAlgue"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AlgueEFToProcessor"
+                  "pathName": "AlgueEFToProcesseur"
                 }
               },
               {
@@ -106,13 +124,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirAlgue"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ProcessorToAlgueJI"
+                  "pathName": "ProcesseurToAlgueJI"
                 }
               },
               {
@@ -125,13 +149,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberAlgue"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AlgueJIToProcessor"
+                  "pathName": "AlgueJIToProcesseur"
                 }
               },
               {
@@ -141,6 +171,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "sortirAlgue"
           }
         }
       ]

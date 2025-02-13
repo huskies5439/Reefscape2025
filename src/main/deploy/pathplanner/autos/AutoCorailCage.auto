@@ -24,13 +24,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "IToCoralStationCage"
+                  "pathName": "IToStationCorailCage"
                 }
               },
               {
@@ -43,13 +49,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToL"
+                  "pathName": "StationCorailCageToL"
                 }
               },
               {
@@ -62,13 +74,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LToCoralStationCage"
+                  "pathName": "LToStationCorailCage"
                 }
               },
               {
@@ -81,13 +99,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToK"
+                  "pathName": "StationCorailCageToK"
                 }
               },
               {
@@ -100,13 +124,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "KToCoralStationCage"
+                  "pathName": "KToStationCorailCage"
                 }
               },
               {
@@ -119,13 +149,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationCageToJ"
+                  "pathName": "StationCorailCageToJ"
                 }
               },
               {
@@ -138,13 +174,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "JToCoralStationCage"
+                  "pathName": "JToStationCorailCage"
                 }
               },
               {
@@ -154,6 +196,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
           }
         }
       ]

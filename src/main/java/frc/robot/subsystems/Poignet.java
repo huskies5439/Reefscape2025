@@ -75,6 +75,10 @@ public class Poignet extends SubsystemBase {
     setVoltage(-1);
   }
 
+  public void hold(){
+    setVoltage(feedforward.calculate(Math.toRadians(getAngle()), 0));
+  }
+
   public void stop() {
     setVoltage(0);
   }

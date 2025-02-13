@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartProsToF"
+                  "pathName": "StartProcesseurToF"
                 }
               },
               {
@@ -24,13 +24,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FToCoralStationPros"
+                  "pathName": "FToStationCorailProcesseur"
                 }
               },
               {
@@ -43,13 +49,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationProsToC"
+                  "pathName": "StationCorailProcesseurToC"
                 }
               },
               {
@@ -62,13 +74,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CToCoralStationPros"
+                  "pathName": "CToStationCorailProcesseur"
                 }
               },
               {
@@ -81,13 +99,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationProsToD"
+                  "pathName": "StationCorailProcesseurToD"
                 }
               },
               {
@@ -100,13 +124,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "DToCoralStationPros"
+                  "pathName": "DToStationCorailProcesseur"
                 }
               },
               {
@@ -119,13 +149,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralStationProsToE"
+                  "pathName": "StationCorailProcesseurToE"
                 }
               },
               {
@@ -138,13 +174,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "EToCoralStationPros"
+                  "pathName": "EToStationCorailProcesseur"
                 }
               },
               {
@@ -154,6 +196,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
           }
         }
       ]

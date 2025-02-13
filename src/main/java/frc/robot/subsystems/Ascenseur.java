@@ -37,7 +37,8 @@ public class Ascenseur extends SubsystemBase {
   private Encoder encoder = new Encoder(2, 3);
 
   // capteur
-  private final DigitalInput limitSwitch = new DigitalInput(0);
+  private final DigitalInput limitSwitchGauche = new DigitalInput(0);
+  private final DigitalInput limitSwitchDroite = new DigitalInput(1);
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(100, 0, 0,
@@ -69,6 +70,8 @@ public class Ascenseur extends SubsystemBase {
     // 360 tick par tours
     encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360); // peut etre à changer, calculer pour la V1 encodeur
                                                                   // externe
+                                
+    debarrer();
   }
 
   @Override
@@ -101,8 +104,8 @@ public class Ascenseur extends SubsystemBase {
     setVoltage(-1);
   }
 
-  public void descendreAjustable(double vitesse) {
-    setVoltage(vitesse * 1);
+  public void hold(){
+    setVoltage(feedforward.calculate(0,0));
   }
 
   public void stop() {
@@ -186,7 +189,7 @@ public class Ascenseur extends SubsystemBase {
   //////////////////// Limit switch
 
   public boolean isLimitSwitch() {
-    return !limitSwitch.get();
+    return !limitSwitchGauche.get() || !limitSwitchDroite.get();
 
   }
 

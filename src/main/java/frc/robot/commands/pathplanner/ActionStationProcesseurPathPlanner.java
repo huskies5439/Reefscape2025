@@ -10,19 +10,17 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
-import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
 public class ActionStationProcesseurPathPlanner extends SequentialCommandGroup {
 
   /**Actions durant le déplacement vers la station côté processeur*/
-  public ActionStationProcesseurPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet,
-      CorailManip corailManip) {
+  public ActionStationProcesseurPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands(
         new GoToHauteur(Hauteur.sol[0], Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheStationCage),
-        new GoToHauteur(Hauteur.station[0], Hauteur.station[1], ascenseur, poignet),
-        corailManip.goberCommand());
+        new GoToHauteur(Hauteur.station[0], Hauteur.station[1], ascenseur, poignet)
+        );
   }
 }

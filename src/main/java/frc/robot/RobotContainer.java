@@ -7,9 +7,9 @@ package frc.robot;
 import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
-import frc.robot.commands.ActiverGrimpeur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.SetHauteur;
+import frc.robot.commands.grimpeur.ActiverGrimpeur;
 import frc.robot.commands.pathplanner.ActionProcesseurPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifAlgueBasPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifAlgueHautPathPlanner;
@@ -21,7 +21,13 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
+
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.FollowPathCommand;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
@@ -45,8 +51,13 @@ public class RobotContainer {
   private boolean pretAGrimper = false;
   Trigger pretAGrimperTrigger = new Trigger(() -> pretAGrimper);
 
+  private final SendableChooser<Command> autoChooser;
+
   public RobotContainer() {
     configureButtonBindings();
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    FollowPathCommand.warmupCommand().schedule(); // warm up la librairie pour éviter les temps d'attente 
 
     // Commandes par défaut
     basePilotable.setDefaultCommand(
@@ -58,15 +69,21 @@ public class RobotContainer {
 
       // commmandes pour pathPlanner 
       NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand()); 
+      NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand());
+
+      NamedCommands.registerCommand("goberCorail", corailManip.goberCommand());
+      NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand());
+
       NamedCommands.registerCommand("monterAlgueBas",new GoToHauteur(Hauteur.algueBas[0], Hauteur.algueBas[1], ascenseur, poignet));
 
-      NamedCommands.registerCommand("actionProcesseur", new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet, algueManip));
-      NamedCommands.registerCommand("actionRecifAlgueBas", new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet, algueManip));
-      NamedCommands.registerCommand("actionRecifAlgueHaut", new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet, algueManip));
-      NamedCommands.registerCommand("actionRecifCorail", new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet, corailManip));
-      NamedCommands.registerCommand("actionStationCage", new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet, corailManip));
-      NamedCommands.registerCommand("actionStationProcesseur", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet, corailManip));
+      NamedCommands.registerCommand("actionProcesseur", new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
+      NamedCommands.registerCommand("actionRecifAlgueBas", new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
+      NamedCommands.registerCommand("actionRecifAlgueHaut", new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
+      NamedCommands.registerCommand("actionRecifCorail", new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
+      NamedCommands.registerCommand("actionStationCage", new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet));
+      NamedCommands.registerCommand("actionStationProcesseur", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet));
 
+      SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureButtonBindings() {
@@ -75,15 +92,10 @@ public class RobotContainer {
 
     // manette.a().whileTrue(new GoToHauteur(ascenseur, poignet));
 
-    grimpeurTrigger.and(pretAGrimperTrigger.negate())
-        .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = true));
-    grimpeurTrigger.and(pretAGrimperTrigger)
-        .whileTrue(Commands.run(() -> ascenseur.descendreAjustable(manette.getRightTriggerAxis()), ascenseur));
-    grimpeurTrigger.and(manette.rightBumper())
-        .whileTrue(new ActiverGrimpeur(ascenseur, poignet).andThen(() -> pretAGrimper = false));
+  
 
-    manette.a().whileTrue(Commands.runEnd(() -> ascenseur.setPID(0.3), () -> ascenseur.stop(), ascenseur));
-    manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur));
+    // manette.a().whileTrue(Commands.runEnd(() -> ascenseur.setPID(0.3), () -> ascenseur.stop(), ascenseur));
+    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur)); 
 
     // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
     // poignet.stop(), poignet));
@@ -93,18 +105,25 @@ public class RobotContainer {
 
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.setVoltage(Constants.kG), ascenseur));
-    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.stop(), ascenseur));
+    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.setVoltage(Constants.kG), ascenseur));
 
-    // manette.povRight().whileTrue(Commands.runEnd(()-> poignet.monter(), ()->
-    // poignet.stop(), poignet));
-    // manette.povLeft().whileTrue(Commands.runEnd(()-> poignet.descendre(), ()->
-    // poignet.stop(), poignet));
+    manette.povRight().whileTrue(Commands.startEnd(()-> poignet.monter(), ()->
+    poignet.stop(), poignet));
+    manette.povLeft().whileTrue(Commands.startEnd(()-> poignet.descendre(), ()->
+    poignet.stop(), poignet));
+
+    manette.a().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()-> corailManip.stop(), corailManip));
+    manette.b().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()-> corailManip.stop(), corailManip));
+
+    manette.x().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()-> algueManip.stop(), algueManip));
+    manette.y().whileTrue(Commands.startEnd(()-> algueManip.sortir(),()-> algueManip.stop(), algueManip));
 
   }
 
   public Command getAutonomousCommand() {
-    return null;
+    return autoChooser.getSelected();
   }
+
 
   private void manetteOperateur() {
     // boutton manette oprateur
