@@ -8,6 +8,7 @@ import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.commands.GoToHauteur;
+import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
 import frc.robot.commands.grimpeur.ActiverGrimpeur;
 import frc.robot.commands.pathplanner.ActionProcesseurPathPlanner;
@@ -118,6 +119,7 @@ public class RobotContainer {
     manette.x().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()-> algueManip.stop(), algueManip));
     manette.y().whileTrue(Commands.startEnd(()-> algueManip.sortir(),()-> algueManip.stop(), algueManip));
 
+    manette.start().onTrue(new PreparationPit(ascenseur,poignet));
   }
 
   public Command getAutonomousCommand() {
