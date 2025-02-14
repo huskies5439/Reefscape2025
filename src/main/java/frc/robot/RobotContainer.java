@@ -77,7 +77,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("goberCorail", corailManip.goberCommand());
       NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand());
 
-      NamedCommands.registerCommand("monterAlgueBas",new GoToHauteur(Hauteur.algueBas[0], Hauteur.algueBas[1], ascenseur, poignet));
+      NamedCommands.registerCommand("monterAlgueBas",new GoToHauteur(()-> Hauteur.algueBas[0], ()-> Hauteur.algueBas[1], ascenseur, poignet));
 
       NamedCommands.registerCommand("actionProcesseur", new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
       NamedCommands.registerCommand("actionRecifAlgueBas", new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
@@ -93,9 +93,10 @@ public class RobotContainer {
 
     manetteOperateur();
 
-    manette.a().whileTrue( new GoToHauteur(ascenseur.getCibleManetteOperateur(), poignet.getCibleManetteOperateur(), ascenseur, poignet));
+    manette.a().onTrue( new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),()-> poignet.getCibleManetteOperateur(), ascenseur, poignet));
 
- 
+    manette.b().onTrue( new GoToHauteur(() -> 0,()-> -90, ascenseur, poignet));
+
 
      // manette.a().onTrue(Commands.runEnd(() -> ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () -> ascenseur.hold(), ascenseur));
     //  manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur)); 
@@ -111,7 +112,7 @@ public class RobotContainer {
 
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
-    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.setVoltage(Constants.kG), ascenseur));
+    manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
 
     manette.povRight().whileTrue(Commands.startEnd(()-> poignet.monter(), ()->
     poignet.stop(), poignet));

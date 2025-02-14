@@ -26,7 +26,7 @@ public class AutoStation extends ParallelCommandGroup {
           return basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur();
           }
         ),
-        new GoToHauteur(Hauteur.station[0], Hauteur.station[1], ascenseur, poignet)
+        new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet)
       )
     );
   }

@@ -27,7 +27,7 @@ public class AutoProcesseur extends ParallelCommandGroup {
       //faut t'il vraiment attendre?
       new SequentialCommandGroup(
         new WaitUntilCommand(basePilotable::isProcheProcesseur),
-        new GoToHauteur(Hauteur.processeur[0], Hauteur.processeur[1], ascenseur, poignet)
+        new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)
       )
     );
   }

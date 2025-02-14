@@ -40,7 +40,7 @@ public final class Constants {
     public static final double sol[] = { 0, 90 };
     public static final double L1[] = { 0, 60 };
     public static final double L2[] = { 0.13, -85 };
-    public static final double L3[] = { 0.21, 40 };
+    public static final double L3[] = { 0.21, -40 };
     public static final double L4[] = { 0.44, -25 };
 
     public static final double algueBas[] = { 1, 30 };

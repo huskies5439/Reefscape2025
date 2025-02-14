@@ -18,8 +18,10 @@ public class ActionRecifAlgueBasPathPlanner extends SequentialCommandGroup {
   /**Actions durant le déplacement vers le récif pour une algue basse*/
   public ActionRecifAlgueBasPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
-    addCommands( new GoToHauteur(Hauteur.sol[0], Hauteur.sol[1], ascenseur, poignet),
+    addCommands( 
+        new GoToHauteur(()-> Hauteur.sol[0], ()-> Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(Hauteur.algueBas[0], Hauteur.algueBas[1], ascenseur, poignet));
+        new GoToHauteur(()-> Hauteur.algueBas[0], ()-> Hauteur.algueBas[1], ascenseur, poignet)
+        );
   }
 }

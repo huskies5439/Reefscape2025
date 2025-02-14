@@ -59,7 +59,8 @@ public class AutoAlgue extends ParallelCommandGroup {
         basePilotable.followPath(ciblePositionAlgue),
         new SequentialCommandGroup(
             new WaitUntilCommand(basePilotable::isProcheRecif),
-            new GoToHauteur(cibleHauteurAlgue[0], cibleHauteurAlgue[1], ascenseur, poignet))
+            new GoToHauteur(()-> cibleHauteurAlgue[0], ()-> cibleHauteurAlgue[1], ascenseur, poignet)
+            )
 
     );
   }

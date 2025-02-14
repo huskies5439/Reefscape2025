@@ -4,21 +4,26 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
 
 public class GoToHauteur extends Command {
-  private double cibleAscenceur;
-  private double ciblePoignet;
+  private DoubleSupplier cibleAscenceur;
+  private DoubleSupplier ciblePoignet;
+  private double ciblePoignetProtege;
+  private double cibleAngleMin;
   private Ascenseur ascenseur;
   private Poignet poignet;
 
 
   //Double PID pour le poignet et l'ascenseur
   //que faire après la command? tel est la question
-  public GoToHauteur(double cibleAscenceur, double ciblePoignet, Ascenseur ascenseur, Poignet poignet) {
+  public GoToHauteur(DoubleSupplier cibleAscenceur, DoubleSupplier ciblePoignet, Ascenseur ascenseur, Poignet poignet) {
     this.cibleAscenceur = cibleAscenceur;
     this.ciblePoignet = ciblePoignet;
     this.ascenseur = ascenseur;
@@ -35,9 +40,14 @@ public class GoToHauteur extends Command {
 
   @Override
   public void execute() {
-    ascenseur.setPID(cibleAscenceur);
-    poignet.setPID(ciblePoignet);
-    SmartDashboard.putNumber("Cible ascenseur", cibleAscenceur);
+
+    ciblePoignetProtege=ciblePoignet.getAsDouble();
+
+    //cibleAngleMin=-Math.toDegrees(Math.asin(ascenseur.getPositionVortex()+0.15)); calcul à revoir
+    //ciblePoignetProtege = MathUtil.clamp(ciblePoignetProtege,-90 , 90);
+
+    ascenseur.setPID(cibleAscenceur.getAsDouble());
+    poignet.setPID(ciblePoignetProtege);
 
   }
 
@@ -49,7 +59,6 @@ public class GoToHauteur extends Command {
 
   @Override
   public boolean isFinished() {
-    //return ascenseur.atCible() && poignet.atCible();
-    return false; 
+    return ascenseur.atCible() && poignet.atCible();
   }
 }

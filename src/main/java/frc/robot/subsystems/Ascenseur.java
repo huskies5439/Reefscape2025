@@ -72,6 +72,8 @@ public class Ascenseur extends SubsystemBase {
                                                                   // externe
                                 
     // debarrer();
+
+    pidAscenseur.setTolerance(0.03);
   }
 
   @Override
@@ -81,6 +83,9 @@ public class Ascenseur extends SubsystemBase {
     SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenseur des Encodeurs moteur
     //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
     SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
+    SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
+
+    SmartDashboard.putNumber("AngleMin", Math.toDegrees(Math.acos((getPositionVortex()+0.11)/0.36)));//Calcul à revoir
 
     if (isLimitSwitch()) {
       resetEncoders();
@@ -105,7 +110,12 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void hold(){
-    setVoltage(feedforward.calculate(0,0));
+    if(getPositionVortex()>=0.01){//On hold seulement si l'échelle est déployée
+      setVoltage(feedforward.calculate(0));
+    }
+    else{
+      stop();
+    }
   }
 
   public void stop() {

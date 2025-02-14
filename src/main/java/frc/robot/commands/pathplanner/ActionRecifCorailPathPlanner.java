@@ -18,8 +18,9 @@ public class ActionRecifCorailPathPlanner extends SequentialCommandGroup {
   public ActionRecifCorailPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands(
-        new GoToHauteur(Hauteur.sol[0], Hauteur.sol[1], ascenseur, poignet),
+        new GoToHauteur(()-> Hauteur.sol[0], ()-> Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(Hauteur.L4[0], Hauteur.L4[1], ascenseur, poignet));
+        new GoToHauteur(()-> Hauteur.L4[0], ()-> Hauteur.L4[1], ascenseur, poignet)
+        );
   }
 }

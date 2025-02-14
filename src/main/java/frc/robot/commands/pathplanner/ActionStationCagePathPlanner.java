@@ -18,8 +18,9 @@ public class ActionStationCagePathPlanner extends SequentialCommandGroup {
   public ActionStationCagePathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands(
-        new GoToHauteur(Hauteur.sol[0], Hauteur.sol[1], ascenseur, poignet),
+        new GoToHauteur(()-> Hauteur.sol[0], ()-> Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheStationCage),
-        new GoToHauteur(Hauteur.station[0], Hauteur.station[1], ascenseur, poignet));
+        new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet)
+        );
   }
 }

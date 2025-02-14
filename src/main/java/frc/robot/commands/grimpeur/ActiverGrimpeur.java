@@ -16,6 +16,7 @@ public class ActiverGrimpeur extends SequentialCommandGroup {
   public ActiverGrimpeur(Ascenseur ascenseur, Poignet poignet) {
     addCommands(
         new InstantCommand(ascenseur::debarrer, ascenseur),
-        new GoToHauteur(Hauteur.grimper[0], Hauteur.grimper[1], ascenseur, poignet));
+        new GoToHauteur(()-> Hauteur.grimper[0], ()-> Hauteur.grimper[1], ascenseur, poignet)
+        );
   }
 }

@@ -21,12 +21,12 @@ public class AutoCorail extends ParallelCommandGroup {
   public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     Pose2d cible = basePilotable.getCibleManetteOperateur();
     addCommands(
-      //basePilotable.followPath(cible),
+      basePilotable.followPath(cible),
       
       //quand suffisament proche, met l'ascenseur et le poignet à la bonne position
       new SequentialCommandGroup(
         //new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(ascenseur.getCibleManetteOperateur(), poignet.getCibleManetteOperateur(), ascenseur, poignet)
+        new GoToHauteur(()-> ascenseur.getCibleManetteOperateur(), ()-> poignet.getCibleManetteOperateur(), ascenseur, poignet)
       )
     );
   }

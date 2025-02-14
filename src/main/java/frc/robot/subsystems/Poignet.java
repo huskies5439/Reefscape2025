@@ -52,6 +52,7 @@ public class Poignet extends SubsystemBase {
     moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     resetEncodeurStartUp();
 
+    pidPoignet.setTolerance(5);
   }
 
   @Override
@@ -61,6 +62,8 @@ public class Poignet extends SubsystemBase {
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
     SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
+    SmartDashboard.putBoolean("Pgn. PID AT CIBLE", atCible());
+
 
     if(isLimitSwitch()){
       resetEncodeurLimitSwitch();
