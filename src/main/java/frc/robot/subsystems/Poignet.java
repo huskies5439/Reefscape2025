@@ -59,7 +59,7 @@ public class Poignet extends SubsystemBase {
     SmartDashboard.putNumber("Angle Poignet", getAngle());
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
     SmartDashboard.putNumber("Cible Poignet : ", cibleManetteOperateur);
-    SmartDashboard.putBoolean("Capteur Poignet", isHome());
+    SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
   }
 
   ////////////////// MOTEUR
@@ -93,8 +93,8 @@ public class Poignet extends SubsystemBase {
     return moteur.getEncoder().getVelocity();
   }
 
-  public void resetEncoders() {
-    moteur.getEncoder().setPosition(0);
+  public void resetEncodeurs() {
+    moteur.getEncoder().setPosition(-90);
   }
 
   //////////////////// PID + feedForward
@@ -129,7 +129,7 @@ public class Poignet extends SubsystemBase {
 
   //////////////////// LimitSwitch
 
-  public boolean isHome() {
+  public boolean isLimitSwitch() {
     return !limitSwitch.get(); // verifier pour le not !
   }
 
