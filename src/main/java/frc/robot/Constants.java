@@ -37,11 +37,11 @@ public final class Constants {
 
   public static final class Hauteur { // index 0 == hauteur ascenseur index 1 == angle poignet
 
-    public static final double sol[] = { 0, 0 };
-    public static final double L1[] = { 0.1, 0 };
-    public static final double L2[] = { 0.125, 0 };
-    public static final double L3[] = { 0.15, 0 };
-    public static final double L4[] = { 0.2, 30 };
+    public static final double sol[] = { 0, 90 };
+    public static final double L1[] = { 0, 60 };
+    public static final double L2[] = { 0.13, -85 };
+    public static final double L3[] = { 0.21, 40 };
+    public static final double L4[] = { 0.44, -25 };
 
     public static final double algueBas[] = { 1, 30 };
     public static final double algueHaut[] = { 1.5, 30 };

@@ -29,8 +29,8 @@ public class Poignet extends SubsystemBase {
   private DigitalInput limitSwitch = new DigitalInput(7);
 
   // PID + FeedForward
-  private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.1, 0, 0,
-      new TrapezoidProfile.Constraints(320, 420));
+  private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.045, 0, 0,
+      new TrapezoidProfile.Constraints(270, 360));
 
   private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0);
 
@@ -39,7 +39,7 @@ public class Poignet extends SubsystemBase {
 
   public Poignet() {
     // set parametres des configs
-    moteurConfig.inverted(false);
+    moteurConfig.inverted(true);
     moteurConfig.idleMode(IdleMode.kBrake);
 
     // gearbox 4 pour 1 , 9 pour 1
@@ -50,6 +50,7 @@ public class Poignet extends SubsystemBase {
     moteurConfig.encoder.velocityConversionFactor(conversionEncodeur / 60.0);
 
     moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    resetEncodeurStartUp();
 
   }
 
@@ -58,8 +59,12 @@ public class Poignet extends SubsystemBase {
     // SmartDashboard
     SmartDashboard.putNumber("Angle Poignet", getAngle());
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
-    SmartDashboard.putNumber("Cible Poignet : ", cibleManetteOperateur);
+    SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
+
+    if(isLimitSwitch()){
+      resetEncodeurLimitSwitch();
+    }
   }
 
   ////////////////// MOTEUR
@@ -93,8 +98,12 @@ public class Poignet extends SubsystemBase {
     return moteur.getEncoder().getVelocity();
   }
 
-  public void resetEncodeurs() {
+  public void resetEncodeurLimitSwitch() {
     moteur.getEncoder().setPosition(-90);
+  }
+
+  public void resetEncodeurStartUp(){
+    moteur.getEncoder().setPosition(90); 
   }
 
   //////////////////// PID + feedForward

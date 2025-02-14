@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
@@ -29,12 +30,14 @@ public class GoToHauteur extends Command {
   public void initialize() {
     ascenseur.resetPID();
     poignet.resetPID();
+
   }
 
   @Override
   public void execute() {
     ascenseur.setPID(cibleAscenceur);
     poignet.setPID(ciblePoignet);
+    SmartDashboard.putNumber("Cible ascenseur", cibleAscenceur);
 
   }
 
@@ -46,6 +49,7 @@ public class GoToHauteur extends Command {
 
   @Override
   public boolean isFinished() {
-    return ascenseur.atCible() && poignet.atCible();
+    //return ascenseur.atCible() && poignet.atCible();
+    return false; 
   }
 }

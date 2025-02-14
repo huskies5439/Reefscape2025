@@ -57,7 +57,7 @@ public class PreparationPit extends SequentialCommandGroup {
     Commands.run(()->poignet.setVoltage(-1),poignet).until(poignet::isLimitSwitch),
 
     Commands.runOnce(poignet :: stop),
-    Commands.runOnce(poignet :: resetEncodeurs),
+    Commands.runOnce(poignet :: resetEncodeurLimitSwitch),
 
     // remonte légèrement le poignet
     Commands.run(()->poignet.setVoltage(0.5)).withTimeout(0.5),
@@ -66,7 +66,7 @@ public class PreparationPit extends SequentialCommandGroup {
     Commands.run(() ->poignet.setVoltage(-0.5),poignet).until(poignet::isLimitSwitch),
 
     Commands.runOnce(poignet :: stop), 
-    Commands.runOnce(poignet :: resetEncodeurs),
+    Commands.runOnce(poignet :: resetEncodeurLimitSwitch),
    
     Commands.run(()->poignet.setVoltage(1),poignet).until(()->{
         return poignet.getAngle() >= 90;

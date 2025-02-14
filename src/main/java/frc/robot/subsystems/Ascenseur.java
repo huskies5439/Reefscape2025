@@ -42,9 +42,9 @@ public class Ascenseur extends SubsystemBase {
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(100, 0, 0,
-      new TrapezoidProfile.Constraints(0.3, 0.1));
+      new TrapezoidProfile.Constraints(1, 1));
 
-  private ElevatorFeedforward feedforward = new ElevatorFeedforward(Constants.kG, 0, 0);
+  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, Constants.kG, 0);
 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
@@ -77,9 +77,9 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenseur
+    //SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenseur
     SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenseur des Encodeurs moteur
-    SmartDashboard.putBoolean("At limit Switch", isLimitSwitch());
+    //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
     SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
 
     if (isLimitSwitch()) {
