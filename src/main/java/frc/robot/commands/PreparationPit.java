@@ -47,7 +47,7 @@ public class PreparationPit extends SequentialCommandGroup {
 
     //définie la position de l'ascenseur a 20cm
     Commands.run(()->ascenseur.setVoltage(1),ascenseur).until(()->{
-        return ascenseur.getPositionVortex() >= 0.2;
+        return ascenseur.getPositionExterne() >= 0.2;
       }
     ),
     //garde l'ascenseur dans les airs

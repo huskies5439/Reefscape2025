@@ -34,7 +34,7 @@ public class Ascenseur extends SubsystemBase {
   private Servo serrureCage = new Servo(6);
 
   // Encodeur
-  private Encoder encoder = new Encoder(2, 3);
+  private Encoder encoder = new Encoder(2, 3,true);
 
   // capteur
   private final DigitalInput limitSwitchGauche = new DigitalInput(0);
@@ -64,14 +64,11 @@ public class Ascenseur extends SubsystemBase {
     moteur1.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    // encodeur a poulie 20 : 68 : 20
-    // diamètre poulie 70 mm
-    // 1000 conversion mm en m
-    // 360 tick par tours
-    encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360); // peut etre à changer, calculer pour la V1 encodeur
-                                                                  // externe
+  
+    encoder.setDistancePerPulse(0.0422 / 100 ); 
+                                                                  
                                 
-    // debarrer();
+     debarrer();
 
     pidAscenseur.setTolerance(0.03);
   }
@@ -79,8 +76,8 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    //SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseVortex()); // Vitesse Ascenseur
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionVortex());// Hauteur Ascenseur des Encodeurs moteur
+    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
     //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
     SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
@@ -104,11 +101,11 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void descendre() {
-    setVoltage(-3);
+    setVoltage(-1);
   }
 
   public void hold(){
-    if(getPositionVortex()>=0.01){//On hold seulement si l'échelle est déployée
+    if(getPositionExterne()>=0.01){//On hold seulement si l'échelle est déployée
       setVoltage(feedforward.calculate(0));
     }
     else{
@@ -169,7 +166,7 @@ public class Ascenseur extends SubsystemBase {
   /////////////////// PID + FeedForward
 
   public void setPID(double cible) {
-    double voltagePID = pidAscenseur.calculate(getPositionVortex(), cible);
+    double voltagePID = pidAscenseur.calculate(getPositionExterne(), cible);
 
     double voltageFF = feedforward.calculate(pidAscenseur.getSetpoint().velocity);
 
@@ -177,7 +174,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void resetPID() {
-    pidAscenseur.reset(getPositionVortex());
+    pidAscenseur.reset(getPositionExterne());
   }
 
   public boolean atCible() {
