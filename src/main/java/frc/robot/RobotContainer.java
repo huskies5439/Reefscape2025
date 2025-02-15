@@ -95,8 +95,6 @@ public class RobotContainer {
 
     manette.a().onTrue( new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),()-> poignet.getCibleManetteOperateur(), ascenseur, poignet));
 
-    manette.b().onTrue( new GoToHauteur(() -> 0,()-> -90, ascenseur, poignet));
-
 
      // manette.a().onTrue(Commands.runEnd(() -> ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () -> ascenseur.hold(), ascenseur));
     //  manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur)); 

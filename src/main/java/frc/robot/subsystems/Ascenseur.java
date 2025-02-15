@@ -85,8 +85,6 @@ public class Ascenseur extends SubsystemBase {
     SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
 
-    SmartDashboard.putNumber("AngleMin", Math.toDegrees(Math.acos((getPositionVortex()+0.11)/0.36)));//Calcul à revoir
-
     if (isLimitSwitch()) {
       resetEncoders();
     }

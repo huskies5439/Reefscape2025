@@ -6,8 +6,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
@@ -15,8 +14,6 @@ import frc.robot.subsystems.Poignet;
 public class GoToHauteur extends Command {
   private DoubleSupplier cibleAscenceur;
   private DoubleSupplier ciblePoignet;
-  private double ciblePoignetProtege;
-  private double cibleAngleMin;
   private Ascenseur ascenseur;
   private Poignet poignet;
 
@@ -41,13 +38,8 @@ public class GoToHauteur extends Command {
   @Override
   public void execute() {
 
-    ciblePoignetProtege=ciblePoignet.getAsDouble();
-
-    //cibleAngleMin=-Math.toDegrees(Math.asin(ascenseur.getPositionVortex()+0.15)); calcul à revoir
-    //ciblePoignetProtege = MathUtil.clamp(ciblePoignetProtege,-90 , 90);
-
     ascenseur.setPID(cibleAscenceur.getAsDouble());
-    poignet.setPID(ciblePoignetProtege);
+    poignet.setPID(ciblePoignet.getAsDouble());
 
   }
 
