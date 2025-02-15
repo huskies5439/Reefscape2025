@@ -104,7 +104,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void descendre() {
-    setVoltage(-1);
+    setVoltage(-3);
   }
 
   public void hold(){

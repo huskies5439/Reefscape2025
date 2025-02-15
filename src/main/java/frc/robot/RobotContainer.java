@@ -95,6 +95,8 @@ public class RobotContainer {
 
     manette.a().onTrue( new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),()-> poignet.getCibleManetteOperateur(), ascenseur, poignet));
 
+    manette.x().onTrue(Commands.runOnce(ascenseur :: barrer)); 
+    manette.y().onFalse(Commands.runOnce(ascenseur :: debarrer)); 
 
      // manette.a().onTrue(Commands.runEnd(() -> ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () -> ascenseur.hold(), ascenseur));
     //  manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur)); 
@@ -117,8 +119,8 @@ public class RobotContainer {
     manette.povLeft().whileTrue(Commands.startEnd(()-> poignet.descendre(), ()->
     poignet.stop(), poignet));
 
-    manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()-> corailManip.stop(), corailManip));
-    manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()-> corailManip.stop(), corailManip));
+    // manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()-> corailManip.stop(), corailManip));
+    // manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()-> corailManip.stop(), corailManip));
 
     // manette.x().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()-> algueManip.stop(), algueManip));
     // manette.y().whileTrue(Commands.startEnd(()-> algueManip.sortir(),()-> algueManip.stop(), algueManip));
