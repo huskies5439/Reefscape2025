@@ -119,8 +119,8 @@ public class RobotContainer {
     // manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()-> corailManip.stop(), corailManip));
     // manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()-> corailManip.stop(), corailManip));
 
-    // manette.x().whileTrue(Commands.startEnd(()-> algueManip.gober(), ()-> algueManip.stop(), algueManip));
-    // manette.y().whileTrue(Commands.startEnd(()-> algueManip.sortir(),()-> algueManip.stop(), algueManip));
+    manette.x().whileTrue(algueManip.goberCommand());
+    manette.y().whileTrue(algueManip.sortirCommand());
 
     manette.start().onTrue(new PreparationPit(ascenseur,poignet));
   }
