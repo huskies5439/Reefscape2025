@@ -18,10 +18,11 @@ OperateurIO::OperateurIO(int firstChannel, int lastChannel, Joystick_ *joystick,
 
   _dernierBouton = -1;
   _dernierBoutonPasse = -1;
+  _changementBouton = false;
 }
 
 
-void OperateurIO::loopBoutonEtLED() {
+void OperateurIO::lireBouton() {
   //trouver dernier bouton
   for (int i = _firstChannel; i <= _lastChannel; i++) {
     _mux->channel(i);
@@ -30,14 +31,26 @@ void OperateurIO::loopBoutonEtLED() {
     }
   }
   
-  
   //determiner si le bouton vient de changer
-  if (_dernierBouton != _dernierBoutonPasse) {
+  if (_dernierBouton != _dernierBoutonPasse){
+    _changementBouton = true;
+  }
+  else{
+    _changementBouton = false;
+  }
+
+  //reinitialise dernier bouton
+  _dernierBoutonPasse = _dernierBouton;
+
+}
+
+
+void OperateurIO::actionsBouton(int idxBouton){
     //On itère sur tous les boutons pour les allumer/éteindre dans la driver station
     //et les LED correspondantes
     for (int i = _firstChannel; i <= _lastChannel; i++){
       
-      if (i == _dernierBouton) {//Allume le dernier bouton
+      if (i == idxBouton) {//Le bouton que l'on vient d'activer
         _joystick -> setButton(i, 1); //Il faut utiliser l'opérateur lambda -> car on passe par un pointeur 
         _strip -> setPixelColor(i, 0, 255, 0);
 
@@ -46,10 +59,30 @@ void OperateurIO::loopBoutonEtLED() {
         _strip -> setPixelColor(i, 0, 0, 0);
 
       }
-    }
+    
     _strip -> show();
   }
+}
 
-  //reinitialise dernier bouton
-  _dernierBoutonPasse = _dernierBouton;
+
+int OperateurIO::getDernierBouton(){
+  return _dernierBouton;
+}
+
+bool OperateurIO::isChangementBouton(){
+  return _changementBouton;
+}
+
+
+void OperateurIO::reset(){
+  _dernierBouton = -1;
+  _dernierBoutonPasse = -1;
+  _changementBouton = false;
+
+  for (int i = _firstChannel; i <= _lastChannel; i++){
+    _joystick -> setButton(i, 0);
+    _strip -> setPixelColor(i, 0, 0, 0);
+  }
+
+  _strip -> show();
 }
