@@ -30,7 +30,7 @@ public class CorailManip extends SubsystemBase {
   public CorailManip() {
 
     // set parametre de config + associe la config au moteur
-    configMoteur.inverted(false);
+    configMoteur.inverted(true);
     configMoteur.idleMode(IdleMode.kCoast);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
@@ -47,7 +47,7 @@ public class CorailManip extends SubsystemBase {
 
   // gober/lancer/stop avec manip de corail
   public void gober() {
-    setVoltage(2); // Voltages a reverifier
+    setVoltage(1.5); // Voltages a reverifier
   }
 
   public void sortir() {
@@ -64,10 +64,10 @@ public class CorailManip extends SubsystemBase {
   }
 
    public Command goberCommand(){
-    return Commands.runOnce(this::gober, this).until(this::isCorail).andThen(this::stop, this);
+    return Commands.runEnd(this::gober, this::stop, this).until(this::isCorail).andThen(this::stop, this);
   }
 
   public Command sortirCommand(){
-    return Commands.runOnce(this::sortir, this).until(()->!isCorail()).andThen(new WaitCommand(0.5)).andThen(this::stop, this);
+    return Commands.runEnd(this::sortir, this::stop, this);
   }
 }

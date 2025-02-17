@@ -41,8 +41,8 @@ public class Ascenseur extends SubsystemBase {
   private final DigitalInput limitSwitchDroite = new DigitalInput(1);
 
   // PID
-  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(100, 0, 0,
-      new TrapezoidProfile.Constraints(1, 1));
+  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(20, 0, 0.02,
+      new TrapezoidProfile.Constraints(0.2, 0.2));
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, Constants.kG, 0);
 

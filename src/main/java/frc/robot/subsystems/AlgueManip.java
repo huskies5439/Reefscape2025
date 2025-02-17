@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -36,11 +37,13 @@ public class AlgueManip extends SubsystemBase {
     // associe configs moteur droit
     moteurDroitConfig.inverted(false);
     moteurDroitConfig.idleMode(IdleMode.kBrake);
+    moteurDroitConfig.smartCurrentLimit(20);
     moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // associe configs moteur gauche
     moteurGauchceConfig.inverted(true);
     moteurGauchceConfig.idleMode(IdleMode.kBrake);
+    moteurGauchceConfig.smartCurrentLimit(20);
     moteurGauche.configure(moteurGauchceConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   }
@@ -57,7 +60,7 @@ public class AlgueManip extends SubsystemBase {
 
   // gober/lancer/stop avec le manip d'algues
   public void gober() {
-    setVoltage(4); // Voltages a reverifier
+    setVoltage(2); // Voltages a reverifier
   }
 
   public void sortir() {
@@ -68,16 +71,20 @@ public class AlgueManip extends SubsystemBase {
     setVoltage(0);
   }
 
+  public void hold() {
+    setVoltage(0.5);
+  }
+
   // Retrourne s'il y a de l'algue dans le manip
   public boolean isAlgue() {
     return !lightBreak.get(); // verifier pour le not !
   }
 
   public Command goberCommand(){
-    return Commands.runOnce(this::gober, this).until(this::isAlgue).andThen(this::stop, this);
+    return Commands.run(this::gober, this).until(this::isAlgue);
   }
 
   public Command sortirCommand(){
-    return Commands.runOnce(this::sortir, this).until(()->!isAlgue()).andThen(new WaitCommand(0.5)).andThen(this::stop, this);
+    return Commands.runEnd(this::sortir,this::stop, this);
   }
 }

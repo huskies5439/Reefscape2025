@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,7 +45,6 @@ public class RobotContainer {
 
   private final AlgueManip algueManip = new AlgueManip();
   private final CorailManip corailManip = new CorailManip();
-  
 
   CommandXboxController manette = new CommandXboxController(0);
 
@@ -60,7 +60,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     autoChooser = AutoBuilder.buildAutoChooser();
-    FollowPathCommand.warmupCommand().schedule(); // warm up la librairie pour éviter les temps d'attente 
+    FollowPathCommand.warmupCommand().schedule(); // warm up la librairie pour éviter les temps d'attente
 
     // Commandes par défaut
     basePilotable.setDefaultCommand(
@@ -69,66 +69,78 @@ public class RobotContainer {
                 manette.getLeftY(), manette.getLeftX(), manette.getRightX(),
                 true, true),
             basePilotable));
+    algueManip.setDefaultCommand(new ConditionalCommand(Commands.runOnce(algueManip::hold, algueManip),
+        Commands.runOnce(algueManip::stop, algueManip), algueManip::isAlgue));
 
-      // commmandes pour pathPlanner 
-      NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand()); 
-      NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand());
+    // commmandes pour pathPlanner
+    NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand());
+    NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand().withTimeout(1));
 
-      NamedCommands.registerCommand("goberCorail", corailManip.goberCommand());
-      NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand());
+    NamedCommands.registerCommand("goberCorail", corailManip.goberCommand());
+    NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand().withTimeout(1));
 
-      NamedCommands.registerCommand("monterAlgueBas",new GoToHauteur(()-> Hauteur.algueBas[0], ()-> Hauteur.algueBas[1], ascenseur, poignet));
+    NamedCommands.registerCommand("monterAlgueBas",
+        new GoToHauteur(() -> Hauteur.algueBas[0], () -> Hauteur.algueBas[1], ascenseur, poignet));
 
-      NamedCommands.registerCommand("actionProcesseur", new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
-      NamedCommands.registerCommand("actionRecifAlgueBas", new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
-      NamedCommands.registerCommand("actionRecifAlgueHaut", new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
-      NamedCommands.registerCommand("actionRecifCorail", new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
-      NamedCommands.registerCommand("actionStationCage", new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet));
-      NamedCommands.registerCommand("actionStationProcesseur", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionProcesseur",
+        new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionRecifAlgueBas",
+        new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionRecifAlgueHaut",
+        new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionRecifCorail",
+        new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionStationCage",
+        new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet));
+    NamedCommands.registerCommand("actionStationProcesseur",
+        new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet));
 
-      SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   private void configureButtonBindings() {
 
     manetteOperateur();
 
-    manette.a().onTrue( new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),()-> poignet.getCibleManetteOperateur(), ascenseur, poignet));
+    manette.a().whileTrue(new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),
+        () -> poignet.getCibleManetteOperateur(), ascenseur, poignet));
 
-     // manette.a().onTrue(Commands.runEnd(() -> ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () -> ascenseur.hold(), ascenseur));
-    //  manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()-> ascenseur.stop(), ascenseur)); 
+    // manette.a().onTrue(Commands.runEnd(() ->
+    // ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () ->
+    // ascenseur.hold(), ascenseur));
+    // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
+    // ascenseur.stop(), ascenseur));
 
-      //manette.a().onTrue(Commands.runEnd(() -> poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(), poignet));
-    //  manette.b().onTrue(Commands.runEnd(()->poignet.setPID(45), ()-> poignet.stop(), poignet)); 
+    // manette.a().onTrue(Commands.runEnd(() ->
+    // poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(),
+    // poignet));
+    // manette.b().onTrue(Commands.runEnd(()->poignet.setPID(45), ()->
+    // poignet.stop(), poignet));
 
     // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
     // poignet.stop(), poignet));
     // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
     // poignet.stop(), poignet));
 
-
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
     manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
 
-    manette.povRight().whileTrue(Commands.startEnd(()-> poignet.monter(), ()->
-    poignet.stop(), poignet));
-    manette.povLeft().whileTrue(Commands.startEnd(()-> poignet.descendre(), ()->
-    poignet.stop(), poignet));
+    manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
+    manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
 
-    // manette.x().whileTrue(Commands.startEnd(()-> corailManip.gober(), ()-> corailManip.stop(), corailManip));
-    // manette.y().whileTrue(Commands.startEnd(()-> corailManip.sortir(), ()-> corailManip.stop(), corailManip));
+    manette.x().whileTrue(corailManip.goberCommand());
+    manette.y().whileTrue(corailManip.sortirCommand());
 
-    manette.x().whileTrue(algueManip.goberCommand());
-    manette.y().whileTrue(algueManip.sortirCommand());
+    // manette.x().whileTrue(algueManip.goberCommand());
+    // manette.y().whileTrue(algueManip.sortirCommand());
 
-    manette.start().onTrue(new PreparationPit(ascenseur,poignet));
+    manette.start().onTrue(new PreparationPit(ascenseur, poignet));
   }
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
-
 
   private void manetteOperateur() {
     // boutton manette oprateur

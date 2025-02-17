@@ -59,7 +59,7 @@ public class BasePilotable extends SubsystemBase {
           arriereGauche.getPosition(),
           arriereDroite.getPosition()
       },
-      new Pose2d());
+      Pose2d.kZero);
 
   Field2d field2d = new Field2d();
 
@@ -96,6 +96,7 @@ public class BasePilotable extends SubsystemBase {
         robotConfig,
         this::isRedAlliance,
         this);
+
   }
 
   @Override
@@ -115,7 +116,7 @@ public class BasePilotable extends SubsystemBase {
     field2d.setRobotPose(getPose());
     SmartDashboard.putData("Field", field2d);
 
-    // SmartDashboard.putNumber("Angle Gyro", getAngle());
+    SmartDashboard.putNumber("Angle Gyro", getAngle());
     // SmartDashboard.putNumber("Vitesse Gyro", getRate());
 
     SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX());
