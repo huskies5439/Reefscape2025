@@ -32,7 +32,7 @@ public class Poignet extends SubsystemBase {
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.045, 0, 0,
       new TrapezoidProfile.Constraints(270, 360));
 
-  private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0);
+  private ArmFeedforward feedforward = new ArmFeedforward(0, 0.1749, 0.0,0);
 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
@@ -72,6 +72,8 @@ public class Poignet extends SubsystemBase {
 
   ////////////////// MOTEUR
   public void setVoltage(double voltage) {
+   SmartDashboard.putNumber("Voltage Poignet ", voltage);
+
     moteur.setVoltage(voltage);
   }
 
@@ -116,8 +118,10 @@ public class Poignet extends SubsystemBase {
     double voltageFF = feedforward.calculate(
         Math.toRadians(getAngle()),
         pidPoignet.getSetpoint().velocity);
-
     setVoltage(voltagePID + voltageFF);
+
+    SmartDashboard.putNumber("setpoint positionn",pidPoignet.getSetpoint().position);
+    SmartDashboard.putNumber("setpoint velocity",pidPoignet.getSetpoint().velocity);
 
   }
 

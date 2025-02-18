@@ -130,8 +130,8 @@ public class BasePilotable extends SubsystemBase {
     //SmartDashboard.putString("cible station", getCibleStation().toString());
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
-    // setLimelightRobotOrientation();
-    // addVisionPosition();
+    setLimelightRobotOrientation();
+    addVisionPosition();
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
@@ -220,6 +220,11 @@ public class BasePilotable extends SubsystemBase {
   public void addVisionPosition() {
     LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
     boolean doRejectUpdate = false;
+    if(poseEstimate == null)
+    {
+      return;
+    }
+
     if (Math.abs(getRate()) > 720) {
       doRejectUpdate = true;
     }

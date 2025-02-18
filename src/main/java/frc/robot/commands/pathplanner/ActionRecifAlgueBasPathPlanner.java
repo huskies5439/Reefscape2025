@@ -5,6 +5,7 @@
 package frc.robot.commands.pathplanner;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
@@ -19,9 +20,10 @@ public class ActionRecifAlgueBasPathPlanner extends SequentialCommandGroup {
   public ActionRecifAlgueBasPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands( 
-        new GoToHauteur(()-> Hauteur.sol[0], ()-> Hauteur.sol[1], ascenseur, poignet),
+        // new GoToHauteur(()-> Hauteur.sol[0], ()-> Hauteur.sol[1], ascenseur, poignet),
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(()-> Hauteur.algueBas[0], ()-> Hauteur.algueBas[1], ascenseur, poignet)
+        // new GoToHauteur(()-> Hauteur.algueBas[0], ()-> Hauteur.algueBas[1], ascenseur, poignet)
+        new WaitCommand(1)
         );
   }
 }

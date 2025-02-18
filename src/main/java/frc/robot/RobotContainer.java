@@ -102,8 +102,8 @@ public class RobotContainer {
 
     manetteOperateur();
 
-    manette.a().whileTrue(new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),
-        () -> poignet.getCibleManetteOperateur(), ascenseur, poignet));
+    // manette.a().whileTrue(new GoToHauteur(() -> ascenseur.getCibleManetteOperateur(),
+    //     () -> poignet.getCibleManetteOperateur(), ascenseur, poignet));
 
     // manette.a().onTrue(Commands.runEnd(() ->
     // ascenseur.setPID(ascenseur.getCibleManetteOperateur()), () ->
@@ -111,16 +111,19 @@ public class RobotContainer {
     // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
     // ascenseur.stop(), ascenseur));
 
-    // manette.a().onTrue(Commands.runEnd(() ->
-    // poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(),
-    // poignet));
-    // manette.b().onTrue(Commands.runEnd(()->poignet.setPID(45), ()->
-    // poignet.stop(), poignet));
+    manette.a().whileTrue(Commands.runEnd(() ->
+    poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(),
+    poignet));
+    manette.b().whileTrue(Commands.runEnd(()->poignet.setPID(45), ()->
+    poignet.hold(), poignet));
 
-    // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
-    // poignet.stop(), poignet));
+    manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
+    poignet.hold(), poignet));
     // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
     // poignet.stop(), poignet));
+
+    manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(-45
+    ), ()->poignet.hold(), poignet));
 
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
@@ -129,8 +132,8 @@ public class RobotContainer {
     manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
     manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
 
-    manette.x().whileTrue(corailManip.goberCommand());
-    manette.y().whileTrue(corailManip.sortirCommand());
+    // manette.x().whileTrue(corailManip.goberCommand());
+    // manette.y().whileTrue(corailManip.sortirCommand());
 
     // manette.x().whileTrue(algueManip.goberCommand());
     // manette.y().whileTrue(algueManip.sortirCommand());
