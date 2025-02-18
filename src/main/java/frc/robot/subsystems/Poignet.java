@@ -32,7 +32,7 @@ public class Poignet extends SubsystemBase {
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.045, 0, 0,
       new TrapezoidProfile.Constraints(270, 360));
 
-  private ArmFeedforward feedforward = new ArmFeedforward(0, 0.1749, 0.0,0);
+  private ArmFeedforward feedforward = new ArmFeedforward(0.1564, 0.1749, 0.01049,0);
 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
@@ -60,9 +60,10 @@ public class Poignet extends SubsystemBase {
     // SmartDashboard
     SmartDashboard.putNumber("Angle Poignet", getAngle());
     SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
-    SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
-    SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
-    SmartDashboard.putBoolean("Pgn. PID AT CIBLE", atCible());
+    //SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
+    //SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
+    //SmartDashboard.putBoolean("Pgn. PID AT CIBLE", atCible());
+
 
 
     if(isLimitSwitch()){
@@ -120,8 +121,10 @@ public class Poignet extends SubsystemBase {
         pidPoignet.getSetpoint().velocity);
     setVoltage(voltagePID + voltageFF);
 
-    SmartDashboard.putNumber("setpoint positionn",pidPoignet.getSetpoint().position);
-    SmartDashboard.putNumber("setpoint velocity",pidPoignet.getSetpoint().velocity);
+    // SmartDashboard.putNumber("setpoint positionn",pidPoignet.getSetpoint().position);
+    // SmartDashboard.putNumber("setpoint velocity",pidPoignet.getSetpoint().velocity);
+    // SmartDashboard.putNumber("Voltage FF", voltageFF);
+
 
   }
 
