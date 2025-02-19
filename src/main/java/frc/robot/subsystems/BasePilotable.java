@@ -73,9 +73,6 @@ public class BasePilotable extends SubsystemBase {
     resetEncoders();
     resetOdometry(new Pose2d());
 
-    // parametre limelight
-    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
-
     // aller chercher la configuration du robot dans Pathplanner
     RobotConfig robotConfig = null;
     try {
@@ -112,7 +109,6 @@ public class BasePilotable extends SubsystemBase {
             arriereDroite.getPosition()
         });
 
-
     field2d.setRobotPose(getPose());
     SmartDashboard.putData("Field", field2d);
 
@@ -124,14 +120,16 @@ public class BasePilotable extends SubsystemBase {
     SmartDashboard.putNumber("Pose Estimator Theta : ", getPose().getRotation().getDegrees());
     // SmartDashboard.putNumber("VX : ", getChassisSpeeds().vxMetersPerSecond);
     // SmartDashboard.putNumber("VY : ", getChassisSpeeds().vyMetersPerSecond);
-    // SmartDashboard.putNumber("omega : ", getChassisSpeeds().omegaRadiansPerSecond);
+    // SmartDashboard.putNumber("omega : ",
+    // getChassisSpeeds().omegaRadiansPerSecond);
 
     SmartDashboard.putString("Cible BasePilotable", getCibleManetteOperateur().toString());
-    //SmartDashboard.putString("cible station", getCibleStation().toString());
+    // SmartDashboard.putString("cible station", getCibleStation().toString());
 
     // Ajouter seulement quand la Limelight va être branchée sur le robot !
     setLimelightRobotOrientation();
-    addVisionPosition();
+    addVisionPosition("limelight-haut");
+    addVisionPosition("limelight-bas");
   }
 
   ///////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
@@ -164,8 +162,8 @@ public class BasePilotable extends SubsystemBase {
     double xSpeedDelivered = xSpeed * Constants.maxVitesseLineaire;
     double ySpeedDelivered = ySpeed * Constants.maxVitesseLineaire;
     double rotDelivered = rot * Constants.maxVitesseRotation;
-    
-    //inversion du field oriented selon l'alliance
+
+    // inversion du field oriented selon l'alliance
     double invert = 1;
     if (isRedAlliance()) {
       invert = -1; // on inverse le déplacement du robot
@@ -213,15 +211,20 @@ public class BasePilotable extends SubsystemBase {
 
   //////////////////// limelight
   public void setLimelightRobotOrientation() {
-    LimelightHelpers.SetRobotOrientation("limelight",
-        poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+    LimelightHelpers.SetRobotOrientation("limelight-haut",
+    poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+    LimelightHelpers.SetRobotOrientation("limelight-bas",
+      poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
   }
 
-  public void addVisionPosition() {
-    LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+  public void addVisionPosition(String nomComplet) {
+
+    // parametre limelight
+     poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
+
+    LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(nomComplet);
     boolean doRejectUpdate = false;
-    if(poseEstimate == null)
-    {
+    if (poseEstimate == null) {
       return;
     }
 
@@ -231,6 +234,7 @@ public class BasePilotable extends SubsystemBase {
     if (poseEstimate.tagCount == 0) {
       doRejectUpdate = true;
     }
+    SmartDashboard.putBoolean(nomComplet, !doRejectUpdate);
     if (!doRejectUpdate) {
       poseEstimator.addVisionMeasurement(poseEstimate.pose, poseEstimate.timestampSeconds);
     }
@@ -282,35 +286,16 @@ public class BasePilotable extends SubsystemBase {
     return this.runOnce(() -> cibleManetteOperateur = cible);
   }
 
-  //////////// station cible
-  public Pose2d getCibleStation(){
-    if(isRedAlliance() ^ getPose().getY() >=4){
-      return GamePositions.BlueCoralStationCage; 
-    }else{
-      return GamePositions.BlueCoralStationProc; 
-    }
-  }
+
 
   /////////////// On the fly
-  public PathPlannerPath getPath(Pose2d cible) {
-    List<Waypoint> waypoints = PathPlannerPath.waypointsFromPoses(
-        getPose(),
-        cible);
+
+  public Command followPath(Pose2d cible) {
 
     PathConstraints constraints = new PathConstraints(3, 2, Math.toRadians(180), Math.toRadians(180)); ////// A Ajuster
 
-    PathPlannerPath path = new PathPlannerPath(waypoints,
-        constraints,
-        null,
-        new GoalEndState(0.0, cible.getRotation()));
+    return AutoBuilder.pathfindToPose(cible, constraints, 0.0);
 
-    path.preventFlipping = false;
-
-    return path;
-  }
-
-  public Command followPath(Pose2d cible) {
-    return AutoBuilder.followPath(getPath(cible));
   }
 
   // isProche multiple pour séparation rouge/bleu en automatique
@@ -322,15 +307,15 @@ public class BasePilotable extends SubsystemBase {
     return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 2);
   }
 
-  public boolean isProcheProcesseur(){
-    return isProche(isRedAlliance() ? GamePositions.RedProcesseur : GamePositions.BlueProcesseur,2);
+  public boolean isProcheProcesseur() {
+    return isProche(isRedAlliance() ? GamePositions.RedProcesseur : GamePositions.BlueProcesseur, 2);
   }
 
-  public boolean isProcheStationCage(){
+  public boolean isProcheStationCage() {
     return isProche(isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCage, 2);
   }
 
-  public boolean isProcheStationProcesseur(){
+  public boolean isProcheStationProcesseur() {
     return isProche(isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProc, 2);
   }
 
@@ -342,6 +327,10 @@ public class BasePilotable extends SubsystemBase {
     } else {
       return false;
     }
+  }
+
+  public boolean isStationCage(){
+    return isRedAlliance() ^ getPose().getY() >= 4; 
   }
 
 }

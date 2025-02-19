@@ -76,11 +76,11 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
-    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
-    //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
-    SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
-    SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
+    // SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
+    // SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
+    // //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
+    // SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
+    // SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
 
     if (isLimitSwitch()) {
       resetEncoders();

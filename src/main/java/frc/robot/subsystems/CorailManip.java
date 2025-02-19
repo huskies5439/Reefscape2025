@@ -38,7 +38,7 @@ public class CorailManip extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
+    // SmartDashboard.putBoolean("Corail dans gobeur", isCorail());
   }
 
   public void setVoltage(double voltage) {

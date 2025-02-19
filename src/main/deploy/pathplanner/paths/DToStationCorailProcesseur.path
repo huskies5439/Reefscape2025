@@ -28,15 +28,20 @@
       "linkedName": "CoralStationPros"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.35435684647302895,
+      "rotationDegrees": -119.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 1440.0,
-    "maxAngularAcceleration": 1440.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

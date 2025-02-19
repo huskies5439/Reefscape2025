@@ -50,7 +50,7 @@ public class AlgueManip extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Capteur Algue : ", isAlgue());
+    // SmartDashboard.putBoolean("Capteur Algue : ", isAlgue());
   }
 
   public void setVoltage(double voltage) {

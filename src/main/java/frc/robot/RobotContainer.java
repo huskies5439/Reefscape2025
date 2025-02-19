@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
+import frc.robot.Constants.GamePositions;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
@@ -18,6 +19,8 @@ import frc.robot.commands.pathplanner.ActionRecifCorailPathPlanner;
 import frc.robot.commands.pathplanner.ActionStationCagePathPlanner;
 import frc.robot.commands.pathplanner.ActionStationProcesseurPathPlanner;
 import frc.robot.commands.sequence.AutoCorail;
+import frc.robot.commands.sequence.AutoProcesseur;
+import frc.robot.commands.sequence.AutoStation;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
@@ -53,6 +56,8 @@ public class RobotContainer {
   Trigger grimpeurTrigger = manette.leftBumper().and(manette.leftTrigger());
   private boolean pretAGrimper = false;
   Trigger pretAGrimperTrigger = new Trigger(() -> pretAGrimper);
+
+  Trigger stationCageTrigger = new Trigger(basePilotable :: isStationCage); 
 
   private final SendableChooser<Command> autoChooser;
 
@@ -111,19 +116,24 @@ public class RobotContainer {
     // manette.b().whileTrue(Commands.runEnd(()->ascenseur.setPID(0), ()->
     // ascenseur.stop(), ascenseur));
 
-    manette.a().whileTrue(Commands.runEnd(() ->
-    poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(),
-    poignet));
-    manette.b().whileTrue(Commands.runEnd(()->poignet.setPID(45), ()->
-    poignet.hold(), poignet));
+    // manette.a().whileTrue(Commands.runEnd(() ->
+    // poignet.setPID(poignet.getCibleManetteOperateur()), () -> poignet.hold(),
+    // poignet));
+    // manette.b().whileTrue(Commands.runEnd(()->poignet.setPID(45), ()->
+    // poignet.hold(), poignet));
 
-    manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
-    poignet.hold(), poignet));
-    // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
-    // poignet.stop(), poignet));
+    // manette.x().whileTrue(Commands.runEnd(()->poignet.setPID(0), ()->
+    // poignet.hold(), poignet));
+    // // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(90), ()->
+    // // poignet.stop(), poignet));
 
-    manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(-45
-    ), ()->poignet.hold(), poignet));
+    // manette.y().whileTrue(Commands.runEnd(()->poignet.setPID(-45
+    // ), ()->poignet.hold(), poignet));
+
+    manette.a().whileTrue(new AutoCorail(basePilotable, ascenseur, poignet));
+    manette.b().and(stationCageTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCage,basePilotable, ascenseur, poignet));
+    manette.b().and(stationCageTrigger.negate()).whileTrue(new AutoStation(GamePositions.BlueCoralStationProc,basePilotable, ascenseur, poignet));
+    manette.x().whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
 
     manette.povUp()
         .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
