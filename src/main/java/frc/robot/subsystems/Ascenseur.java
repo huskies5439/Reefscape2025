@@ -65,7 +65,7 @@ public class Ascenseur extends SubsystemBase {
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   
-    encoder.setDistancePerPulse(0.0422 / 100 ); 
+    encoder.setDistancePerPulse(0.06*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
                                                                   
                                 
      debarrer();
@@ -77,7 +77,7 @@ public class Ascenseur extends SubsystemBase {
   public void periodic() {
     // SmartDashboard
     // SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
-    // SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
+     SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
     // //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
     // SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     // SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());

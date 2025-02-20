@@ -22,37 +22,12 @@ public class AutoAlgue extends ParallelCommandGroup {
   private double cibleHauteurAlgue[];
   private Pose2d ciblePositionAlgue;
 
-  public AutoAlgue(Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
+  public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
     // compile les infos de la manette operateur
     //  Détermine automatiquement quel algue il faut gober
     //!!NE GOBE PAS AUTOMATIQUEMENT!!
     cibleManette = basePilotable.getCibleManetteOperateur();
 
-    if (cibleManette == Branche.A || cibleManette == Branche.B) {
-      ciblePositionAlgue = Algue.AB;
-      cibleHauteurAlgue = Hauteur.algueHaut;
-
-    } else if (cibleManette == Branche.C || cibleManette == Branche.D) {
-      ciblePositionAlgue = Algue.CD;
-      cibleHauteurAlgue = Hauteur.algueBas;
-
-    } else if (cibleManette == Branche.E || cibleManette == Branche.F) {
-      ciblePositionAlgue = Algue.EF;
-      cibleHauteurAlgue = Hauteur.algueHaut;
-
-    } else if (cibleManette == Branche.G || cibleManette == Branche.H) {
-      ciblePositionAlgue = Algue.GH;
-      cibleHauteurAlgue = Hauteur.algueBas;
-
-    } else if (cibleManette == Branche.I || cibleManette == Branche.J) {
-      ciblePositionAlgue = Algue.IJ;
-      cibleHauteurAlgue = Hauteur.algueHaut;
-
-    } else if (cibleManette == Branche.K || cibleManette == Branche.L) {
-      ciblePositionAlgue = Algue.KL;
-      cibleHauteurAlgue = Hauteur.algueBas;
-
-    }
 
     addCommands(
         // se rend automatiquement à la bonne position sur le recif et se rend a la bonne hauteur 

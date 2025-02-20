@@ -18,8 +18,7 @@ import frc.robot.subsystems.Poignet;
 public class AutoCorail extends ParallelCommandGroup {
   //compile les infos de la manette operateur
   // se rend automatiquement à la bonne position sur le recif
-  public AutoCorail(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
-    Pose2d cible = basePilotable.getCibleManetteOperateur();
+  public AutoCorail(Pose2d cible, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     addCommands(
       basePilotable.followPath(cible),
       

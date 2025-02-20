@@ -121,11 +121,6 @@ public class Poignet extends SubsystemBase {
         pidPoignet.getSetpoint().velocity);
     setVoltage(voltagePID + voltageFF);
 
-    // SmartDashboard.putNumber("setpoint positionn",pidPoignet.getSetpoint().position);
-    // SmartDashboard.putNumber("setpoint velocity",pidPoignet.getSetpoint().velocity);
-    // SmartDashboard.putNumber("Voltage FF", voltageFF);
-
-
   }
 
   public void resetPID() {
