@@ -65,7 +65,7 @@ public class Ascenseur extends SubsystemBase {
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   
-    encoder.setDistancePerPulse(0.06*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
+    encoder.setDistancePerPulse(0.07*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
                                                                   
                                 
      debarrer();
