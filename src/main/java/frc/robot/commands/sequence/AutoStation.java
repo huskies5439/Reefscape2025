@@ -6,6 +6,7 @@ package frc.robot.commands.sequence;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -24,7 +25,10 @@ public class AutoStation extends ParallelCommandGroup {
    //se rend automatiquement a la station de Corail
 
     addCommands(
-      //basePilotable.followPath(cible),
+      //basePilotable.followPath(cible).andThen(
+      Commands.run(basePilotable::setX, basePilotable),
+      //)
+      
       
       new SequentialCommandGroup(
         // new WaitUntilCommand(()->{

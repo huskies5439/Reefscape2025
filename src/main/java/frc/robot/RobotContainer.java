@@ -9,7 +9,9 @@ import frc.robot.Constants.BoutonOperateur;
 import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.Constants.GamePositions;
+import frc.robot.commands.AscenseurDefaut;
 import frc.robot.commands.GoToHauteur;
+import frc.robot.commands.PoignetAuSol;
 import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
 import frc.robot.commands.grimpeur.ActiverGrimpeur;
@@ -83,11 +85,8 @@ public class RobotContainer {
         algueManip.setDefaultCommand(new ConditionalCommand(Commands.runOnce(algueManip::hold, algueManip),
                 Commands.runOnce(algueManip::stop, algueManip), algueManip::isAlgue));
         
-        ascenseur.setDefaultCommand(Commands.runEnd(()-> ascenseur.setPID(Hauteur.sol[0]), ascenseur::stop, ascenseur));
-        poignet.setDefaultCommand(
-            new ConditionalCommand(Commands.runEnd(()-> poignet.setPID(0), poignet::stop, poignet),
-                                  Commands.runEnd(()-> poignet.setPID(Hauteur.sol[1]), poignet::stop, poignet), 
-                                  algueManip::isAlgue));
+        ascenseur.setDefaultCommand(new AscenseurDefaut(ascenseur, poignet));
+        poignet.setDefaultCommand(new PoignetAuSol(poignet, algueManip));
        
     
 

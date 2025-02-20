@@ -30,7 +30,7 @@ public class Poignet extends SubsystemBase {
 
   // PID + FeedForward
   private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.045, 0, 0,
-      new TrapezoidProfile.Constraints(270, 360));
+      new TrapezoidProfile.Constraints(540, 540));
 
   private ArmFeedforward feedforward = new ArmFeedforward(0.1564, 0.1749, 0.01049,0);
 
