@@ -44,7 +44,7 @@ public class Ascenseur extends SubsystemBase {
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(20, 0, 0.02,
       new TrapezoidProfile.Constraints(0.2, 0.2));
 
-  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0, Constants.kG, 0);
+  private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.701, 0.5074, 6.3327, 0.2652);
 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
@@ -70,7 +70,7 @@ public class Ascenseur extends SubsystemBase {
                                 
      debarrer();
 
-    pidAscenseur.setTolerance(0.03);
+    pidAscenseur.setTolerance(0.05);
   }
 
   @Override

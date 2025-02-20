@@ -133,9 +133,11 @@ public class RobotContainer {
 
     // manette.x().whileTrue(corailManip.goberCommand());
     // manette.x().whileTrue(algueManip.goberCommand());
+
+    manette.start().whileTrue(Commands.runEnd(()->ascenseur.setPID(0.25), ()->ascenseur.hold(), ascenseur));
     
 
-    manette.start().onTrue(new PreparationPit(ascenseur, poignet));
+    // manette.start().onTrue(new PreparationPit(ascenseur, poignet));
   }
 
   public Command getAutonomousCommand() {
