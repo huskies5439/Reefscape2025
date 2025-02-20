@@ -17,9 +17,6 @@ import frc.robot.subsystems.Poignet;
 public class AutoAlgue extends ParallelCommandGroup {
 
   public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
-    // compile les infos de la manette operateur
-    //  Détermine automatiquement quel algue il faut gober
-    //!!NE GOBE PAS AUTOMATIQUEMENT!!
 
     addCommands(
         // se rend automatiquement à la bonne position sur le recif et se rend a la bonne hauteur 

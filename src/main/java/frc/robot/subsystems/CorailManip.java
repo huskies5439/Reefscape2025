@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class CorailManip extends SubsystemBase {
 
@@ -25,7 +24,7 @@ public class CorailManip extends SubsystemBase {
   private SparkMaxConfig configMoteur = new SparkMaxConfig();
 
   // InfraRouge
-  private DigitalInput lightBreak = new DigitalInput(5);
+  private DigitalInput limitSwitch = new DigitalInput(5);
 
   public CorailManip() {
 
@@ -60,7 +59,7 @@ public class CorailManip extends SubsystemBase {
 
   // retourne s'il y a un corail dans le manip
   public boolean isCorail() {
-    return !lightBreak.get(); // verifier pour le not !
+    return !limitSwitch.get(); // verifier pour le not !
   }
 
    public Command goberCommand(){

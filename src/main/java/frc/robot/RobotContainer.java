@@ -11,7 +11,7 @@ import frc.robot.Constants.Branche;
 import frc.robot.Constants.GamePositions;
 import frc.robot.commands.AscenseurDefaut;
 import frc.robot.commands.GoToHauteur;
-import frc.robot.commands.PoignetAuSol;
+import frc.robot.commands.PoignetDefaut;
 import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
 import frc.robot.commands.grimpeur.ActiverGrimpeur;
@@ -82,11 +82,18 @@ public class RobotContainer {
                                 manette.getLeftY(), manette.getLeftX(), manette.getRightX(),
                                 true, true),
                         basePilotable));
-        algueManip.setDefaultCommand(new ConditionalCommand(Commands.runOnce(algueManip::hold, algueManip),
-                Commands.runOnce(algueManip::stop, algueManip), algueManip::isAlgue));
+
+
+        algueManip.setDefaultCommand(new ConditionalCommand(
+                Commands.runOnce(algueManip::hold, algueManip),
+                Commands.runOnce(algueManip::stop, algueManip), 
+                algueManip::isAlgue)
+                );
         
-       ascenseur.setDefaultCommand(new AscenseurDefaut(ascenseur, poignet));
-        poignet.setDefaultCommand(new PoignetAuSol(poignet, algueManip));
+        //Note SAM : si ça ne marche pas avec le dPad, changer les commandes pour prendre un boolean au lieu d'un BooleanSupplier
+        //Les boutons de la manettes sont des Triggers, donc des BooleanSupplier !
+        ascenseur.setDefaultCommand(new AscenseurDefaut(manette.povUp(),manette.povDown(), ascenseur, poignet));
+        poignet.setDefaultCommand(new PoignetDefaut(manette.povLeft(), manette.povRight(),poignet, algueManip));
        
     
 
@@ -134,19 +141,15 @@ public class RobotContainer {
         grimpeurTrigger.toggleOnTrue(new ActiverGrimpeur(ascenseur, poignet)
                 .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur)));
 
-        manette.povUp()
-                .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
-        manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
+        //dPad pour ajuster le bouton. Normalement ça devrait être intégré aux commandes par défaut pour plus de sécurité.
+        // manette.povUp().whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
+        // manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
 
-        //manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
-        manette.povRight().whileTrue(new PreparationPit(ascenseur, poignet));
-        manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
-
-        // manette.x().whileTrue(corailManip.goberCommand());
-        // manette.x().whileTrue(algueManip.goberCommand());
+        // manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
+        // manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
 
 
-        // manette.start().onTrue(new PreparationPit(ascenseur, poignet));
+        manette.start().onTrue(new PreparationPit(ascenseur, poignet));
     }
 
     public Command getAutonomousCommand() {

@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+
 
 public class Ascenseur extends SubsystemBase {
 
@@ -66,11 +66,12 @@ public class Ascenseur extends SubsystemBase {
 
   
     encoder.setDistancePerPulse(0.07*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
-                                                                  
-                                
-     debarrer();
+                       
+    pidAscenseur.setTolerance(0.01);
 
-    pidAscenseur.setTolerance(0.001);
+                                
+    debarrer();
+
   }
 
   @Override

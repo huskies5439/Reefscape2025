@@ -4,20 +4,18 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AlgueManip extends SubsystemBase {
 
@@ -30,7 +28,7 @@ public class AlgueManip extends SubsystemBase {
   private SparkMaxConfig moteurGauchceConfig = new SparkMaxConfig();
 
   // Capteur
-  private DigitalInput lightBreak = new DigitalInput(4);
+  private DigitalInput limitSwitch = new DigitalInput(4);
 
   public AlgueManip() {
     
@@ -77,7 +75,7 @@ public class AlgueManip extends SubsystemBase {
 
   // Retrourne s'il y a de l'algue dans le manip
   public boolean isAlgue() {
-    return !lightBreak.get(); // verifier pour le not !
+    return !limitSwitch.get(); // verifier pour le not !
   }
 
   public Command goberCommand(){
