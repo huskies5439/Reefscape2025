@@ -19,7 +19,7 @@ public class AscenseurDefaut extends Command {
     this.ascenseur = ascenseur;
     this.poignet = poignet; 
 
-    addRequirements(ascenseur, poignet);
+    addRequirements(ascenseur);
   }
 
   // Called when the command is initially scheduled.
@@ -30,8 +30,8 @@ public class AscenseurDefaut extends Command {
   @Override
   public void execute() {
 
-    if (poignet.getAngle()<0){
-      ascenseur.hold();
+    if (poignet.getAngle()<-30 && ascenseur.getPositionExterne() < 0.13){
+       ascenseur.hold();
     }
     else{
       ascenseur.setPID(Hauteur.sol[0]);

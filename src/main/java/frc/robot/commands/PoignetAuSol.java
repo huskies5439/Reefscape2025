@@ -19,7 +19,7 @@ public class PoignetAuSol extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.poignet = poignet;
     this.algueManip = algueManip;
-    addRequirements(poignet, algueManip);
+    addRequirements(poignet);
   }
 
   // Called when the command is initially scheduled.
@@ -29,7 +29,7 @@ public class PoignetAuSol extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (poignet.getAngle()<85){
+    if (poignet.getAngle() < 85){
       if (algueManip.isAlgue()){
         poignet.setPID(0);
       }

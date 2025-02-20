@@ -49,7 +49,7 @@ public final class Constants {
     public static final double processeur[] = { 0.5, 0 };
     public static final double station[] = { 0.01, 83 };
 
-    public static final double grimper[] = {0.5 , 0};
+    public static final double grimper[] = {0.2 , 0};
 
   }
 
@@ -117,7 +117,4 @@ public final class Constants {
     public static final Pose2d RedProcesseur = new Pose2d(11.5, 7.45, Rotation2d.fromDegrees(90));
     public static final Pose2d RedCentreRecif = new Pose2d(13,4,Rotation2d.kZero);
   }
-
-  public static final double kG = 0.3;
-
 }

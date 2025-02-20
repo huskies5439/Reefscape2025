@@ -58,7 +58,7 @@ public class RobotContainer {
 
     CommandGenericHID operateur = new CommandGenericHID(1);
 
-    Trigger grimpeurTrigger = manette.leftBumper().and(manette.rightBumper());
+    Trigger grimpeurTrigger = manette.leftTrigger(0.9).and(manette.rightTrigger(0.9));
     private boolean pretAGrimper = false;
     Trigger pretAGrimperTrigger = new Trigger(() -> pretAGrimper);
 
@@ -85,7 +85,7 @@ public class RobotContainer {
         algueManip.setDefaultCommand(new ConditionalCommand(Commands.runOnce(algueManip::hold, algueManip),
                 Commands.runOnce(algueManip::stop, algueManip), algueManip::isAlgue));
         
-        ascenseur.setDefaultCommand(new AscenseurDefaut(ascenseur, poignet));
+       ascenseur.setDefaultCommand(new AscenseurDefaut(ascenseur, poignet));
         poignet.setDefaultCommand(new PoignetAuSol(poignet, algueManip));
        
     
@@ -138,7 +138,8 @@ public class RobotContainer {
                 .whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
         manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
 
-        manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
+        //manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
+        manette.povRight().whileTrue(new PreparationPit(ascenseur, poignet));
         manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
 
         // manette.x().whileTrue(corailManip.goberCommand());
