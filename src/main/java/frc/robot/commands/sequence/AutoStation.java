@@ -14,23 +14,24 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
+import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
 
 public class AutoStation extends ParallelCommandGroup {
   
-  public AutoStation(Pose2d cible, BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet  ) {
+  public AutoStation(Pose2d cible, BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet, CorailManip corailManip ) {
    //se rend automatiquement a la station de Corail
 
     addCommands(
-      basePilotable.followPath(cible),
+      //basePilotable.followPath(cible),
       
       new SequentialCommandGroup(
         // new WaitUntilCommand(()->{
         //   return basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur();
         //   }
         // ),
-        // new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet)
+         new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand())
       )
     );
   }

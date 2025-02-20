@@ -58,7 +58,7 @@ public class Poignet extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    // SmartDashboard.putNumber("Angle Poignet", getAngle());
+     SmartDashboard.putNumber("Angle Poignet", getAngle());
     // SmartDashboard.putNumber("Vitesse Poignet", getVitesse());
     //SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
     //SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());

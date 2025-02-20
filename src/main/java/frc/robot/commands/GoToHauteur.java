@@ -38,19 +38,28 @@ public class GoToHauteur extends Command {
   @Override
   public void execute() {
 
-    ascenseur.setPID(cibleAscenceur.getAsDouble());
-    poignet.setPID(ciblePoignet.getAsDouble());
+    if(ascenseur.atCible()){
+      ascenseur.hold();
+    }else{
+      ascenseur.setPID(cibleAscenceur.getAsDouble());
+    }
+
+    if(poignet.atCible()){
+      poignet.hold();
+    }else{
+      poignet.setPID(ciblePoignet.getAsDouble());
+    }
 
   }
 
   @Override
   public void end(boolean interrupted) {
-    ascenseur.hold();
-    poignet.hold();
+    ascenseur.stop();
+    poignet.stop();
   }
 
   @Override
   public boolean isFinished() {
-    return ascenseur.atCible() && poignet.atCible();
+    return false; 
   }
 }
