@@ -19,12 +19,12 @@ public class AutoAlgue extends ParallelCommandGroup {
   public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
 
     addCommands(
-        // se rend automatiquement à la bonne position sur le recif et se rend a la bonne hauteur 
-        // basePilotable.followPath(cible),
-        // new SequentialCommandGroup(
-        //     new WaitUntilCommand(basePilotable::isProcheRecif),
+       // se rend automatiquement à la bonne position sur le recif et se rend a la bonne hauteur 
+        basePilotable.followPath(cible),
+        new SequentialCommandGroup(
+            new WaitUntilCommand(basePilotable::isProcheRecif),
              new GoToHauteur(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet).alongWith(algueManip.goberCommand())
-        //     )
+             )
 
     );
   }

@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
@@ -37,6 +37,8 @@ public class GoToHauteur extends Command {
 
   @Override
   public void execute() {
+    SmartDashboard.putNumber("cible ascenceur", cibleAscenceur.getAsDouble());
+    SmartDashboard.putNumber("cible poignet", ciblePoignet.getAsDouble()); 
 
     if(ascenseur.atCible()){
       ascenseur.hold();

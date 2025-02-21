@@ -84,7 +84,7 @@ public class BasePilotable extends SubsystemBase {
         this::resetOdometry,
         this::getChassisSpeeds,
         (speeds, feedforward) -> conduireChassis(speeds),
-        new PPHolonomicDriveController(new PIDConstants(1, 0, 0), // a ajuster
+        new PPHolonomicDriveController(new PIDConstants(15, 0, 0), // a ajuster
             new PIDConstants(5, 0, 0)), // a ajuster
         robotConfig,
         this::isRedAlliance,
@@ -288,7 +288,7 @@ public class BasePilotable extends SubsystemBase {
 
   public Command followPath(Pose2d cible) {
 
-    PathConstraints constraints = new PathConstraints(3, 2, Math.toRadians(180), Math.toRadians(180)); ////// A Ajuster
+    PathConstraints constraints = new PathConstraints(2, 1.5, Math.toRadians(360), Math.toRadians(360)); ////// A Ajuster
 
     return AutoBuilder.pathfindToPose(cible, constraints, 0.0);
 
@@ -300,7 +300,7 @@ public class BasePilotable extends SubsystemBase {
   }
 
   public boolean isProcheRecif() {
-    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 2);
+    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 5);
   }
 
   public boolean isProcheProcesseur() {

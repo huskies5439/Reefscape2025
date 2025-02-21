@@ -89,7 +89,12 @@ public class RobotContainer {
                 Commands.runOnce(algueManip::stop, algueManip), 
                 algueManip::isAlgue)
                 );
-        
+
+         corailManip.setDefaultCommand(new ConditionalCommand(
+                Commands.runOnce(corailManip::hold, corailManip),
+                Commands.runOnce(corailManip::stop, corailManip), 
+                corailManip::isCorail)
+                 );
         //Note SAM : si ça ne marche pas avec le dPad, changer les commandes pour prendre un boolean au lieu d'un BooleanSupplier
         //Les boutons de la manettes sont des Triggers, donc des BooleanSupplier !
         ascenseur.setDefaultCommand(new AscenseurDefaut(manette.povUp(),manette.povDown(), ascenseur, poignet));

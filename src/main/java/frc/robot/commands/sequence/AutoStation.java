@@ -25,16 +25,16 @@ public class AutoStation extends ParallelCommandGroup {
    //se rend automatiquement a la station de Corail
 
     addCommands(
-      //basePilotable.followPath(cible).andThen(
-      Commands.run(basePilotable::setX, basePilotable),
-      //)
+      basePilotable.followPath(cible).andThen(
+      Commands.run(basePilotable::setX, basePilotable)
+      ),
       
       
       new SequentialCommandGroup(
-        // new WaitUntilCommand(()->{
-        //   return basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur();
-        //   }
-        // ),
+        new WaitUntilCommand(()->{
+          return basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur();
+          }
+        ),
          new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand())
       )
     );

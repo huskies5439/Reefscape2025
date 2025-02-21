@@ -31,6 +31,7 @@ public class CorailManip extends SubsystemBase {
     // set parametre de config + associe la config au moteur
     configMoteur.inverted(true);
     configMoteur.idleMode(IdleMode.kCoast);
+    configMoteur.smartCurrentLimit(5);
     moteur.configure(configMoteur, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
@@ -50,11 +51,15 @@ public class CorailManip extends SubsystemBase {
   }
 
   public void sortir() {
-    setVoltage(-2);
+    setVoltage(-5);
   }
 
   public void stop() {
     setVoltage(0);
+  }
+
+  public void hold(){
+    setVoltage(0.5);
   }
 
   // retourne s'il y a un corail dans le manip
