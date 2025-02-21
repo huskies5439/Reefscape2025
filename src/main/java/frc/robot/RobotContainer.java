@@ -26,6 +26,7 @@ import frc.robot.commands.sequence.AutoAlgue;
 import frc.robot.commands.sequence.AutoCorail;
 import frc.robot.commands.sequence.AutoProcesseur;
 import frc.robot.commands.sequence.AutoStation;
+import frc.robot.commands.sequence.autoAlgueReculler;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
@@ -141,7 +142,8 @@ public class RobotContainer {
         manette.x().whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
 
         manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
-        manette.leftBumper().whileTrue(algueManip.goberCommand()); 
+        manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(()-> Hauteur.algueSol[0], ()-> Hauteur.algueSol[1], ascenseur, poignet))); 
+
 
         grimpeurTrigger.toggleOnTrue(new ActiverGrimpeur(ascenseur, poignet)
                 .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur)));
@@ -199,7 +201,7 @@ public class RobotContainer {
 
     private void boutonAlgue() {
         manetteY.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
-                .whileTrue(new AutoAlgue(Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
+                .whileTrue(new autoAlgueReculler(Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
         manetteY.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
                 .whileTrue(new AutoAlgue(Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable, algueManip));
         manetteY.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))

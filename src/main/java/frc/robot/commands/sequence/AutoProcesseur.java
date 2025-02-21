@@ -22,12 +22,12 @@ public class AutoProcesseur extends ParallelCommandGroup {
   public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
    Pose2d cible = GamePositions.BlueProcesseur;
     addCommands(
-       basePilotable.followPath(cible),
+      //  basePilotable.followPath(cible),
       
       //faut t'il vraiment attendre?
       new SequentialCommandGroup(
         // new WaitUntilCommand(basePilotable::isProcheProcesseur),
-        // new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)
+         new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)
       )
     );
   }
