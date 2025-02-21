@@ -38,7 +38,7 @@ public final class Constants {
   public static final class Hauteur { // index 0 == hauteur ascenseur index 1 == angle poignet
 
     public static final double sol[] = { 0, 90 };
-    public static final double L1[] = { 0, 58};//vrai angle = 60
+    public static final double L1[] = { 0, 60};
     public static final double L2[] = { 0.123, -86 };
     public static final double L3[] = { 0.32, -86 };
     public static final double L4[] = { 0.56, -30 };
@@ -108,13 +108,24 @@ public final class Constants {
 
   public static class GamePositions {
     //Terrain x = 17.5 y = 8 valeur à ajuster
-    public static final Pose2d BlueCoralStationProc = new Pose2d(1.6, 0.7, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationCage = new Pose2d(1.6, 7.4, Rotation2d.fromDegrees(126));
+    //Proche/Centre/Loin selon la driver station
+    //deltaX = 0.45 et deltaY = -0.33
+    public static final Pose2d BlueCoralStationProcProche = new Pose2d(0.7, 1.36, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(1.15, 1.03, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcLoin = new Pose2d(1.6, 0.7, Rotation2d.fromDegrees(-126));
+
+    //Calcul par rapport à Processeur : même x, yProc + yCage = 8 m
+    public static final Pose2d BlueCoralStationCageProche = new Pose2d(0.7, 6.64, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueCoralStationCageCentre = new Pose2d(1.15, 6.97, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueCoralStationCageLoin = new Pose2d(1.6, 7.3, Rotation2d.fromDegrees(126));
+
+
     public static final Pose2d BlueProcesseur = new Pose2d(6.0, 0.55, Rotation2d.fromDegrees(-90));
     public static final Pose2d BlueCentreRecif = new Pose2d(4.5,4,Rotation2d.kZero);
-    // position bleu/rouge pour IsProche
-    public static final Pose2d RedCoralStationProc = new Pose2d(15.9, 7.4, Rotation2d.fromDegrees(54));
-    public static final Pose2d RedCoralStationCage = new Pose2d(15.9, 0.7, Rotation2d.fromDegrees(-54));
+
+    // Positions rouges seulement nécessaires pour les fonctions isProche, sinon on n'utilise que les Blue pour le Pathfinding
+    public static final Pose2d RedCoralStationProc = new Pose2d(15.9, 7.4, Rotation2d.fromDegrees(54));//Ajuster pour être au CENTRE de la coral station côté rouge
+    public static final Pose2d RedCoralStationCage = new Pose2d(15.9, 0.7, Rotation2d.fromDegrees(-54));//IDEM
     public static final Pose2d RedProcesseur = new Pose2d(11.5, 7.45, Rotation2d.fromDegrees(90));
     public static final Pose2d RedCentreRecif = new Pose2d(13,4,Rotation2d.kZero);
   }

@@ -4,7 +4,6 @@
 
 package frc.robot.commands.sequence;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -20,13 +19,12 @@ public class AutoProcesseur extends ParallelCommandGroup {
   //vas automatiquement au prosseseur
   //!!NE LIVRE PAS L'ALGUE!!
   public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
-   Pose2d cible = GamePositions.BlueProcesseur;
     addCommands(
-      //  basePilotable.followPath(cible),
+      basePilotable.followPath(GamePositions.BlueProcesseur),
       
-      //faut t'il vraiment attendre?
+      
       new SequentialCommandGroup(
-        // new WaitUntilCommand(basePilotable::isProcheProcesseur),
+         new WaitUntilCommand(basePilotable::isProcheProcesseur),
          new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)
       )
     );

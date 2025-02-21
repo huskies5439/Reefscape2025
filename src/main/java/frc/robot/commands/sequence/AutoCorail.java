@@ -16,7 +16,6 @@ import frc.robot.subsystems.Poignet;
 // Une fonction de téléop qui se termine quand le pilote lache le piton
 //!!NE LIVRE PAS LE CORAIL!!
 public class AutoCorail extends ParallelCommandGroup {
-  //compile les infos de la manette operateur
   // se rend automatiquement à la bonne position sur le recif
   public AutoCorail(Pose2d cible, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     addCommands(

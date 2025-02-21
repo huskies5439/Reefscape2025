@@ -26,7 +26,7 @@ import frc.robot.commands.sequence.AutoAlgue;
 import frc.robot.commands.sequence.AutoCorail;
 import frc.robot.commands.sequence.AutoProcesseur;
 import frc.robot.commands.sequence.AutoStation;
-import frc.robot.commands.sequence.autoAlgueReculler;
+import frc.robot.commands.sequence.AutoStationVariable;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
@@ -135,10 +135,19 @@ public class RobotContainer {
         boutonCorail();
         boutonAlgue();
 
-        manette.b().and(stationCageTrigger)
-                .whileTrue(new AutoStation(GamePositions.BlueCoralStationCage, basePilotable, ascenseur, poignet,corailManip));
+        //Station qui marche, aligné sur la coral station qu'on a au Katimavik
+        // manette.b().and(stationCageTrigger)
+        //         .whileTrue(new AutoStation(GamePositions.BlueCoralStationCageCentre, basePilotable, ascenseur, poignet,corailManip));
+        // manette.b().and(stationCageTrigger.negate())
+        //         .whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable, ascenseur, poignet,corailManip));
+       
+        manette.b().and(stationCageTrigger)//Ça va marcher du premier coup ! Je suis conscient que la logique true/false est inversée entre le trigger et la commande
+                .whileTrue(new AutoStationVariable(false, manette::getLeftX,basePilotable, ascenseur, poignet, corailManip));
         manette.b().and(stationCageTrigger.negate())
-                .whileTrue(new AutoStation(GamePositions.BlueCoralStationProc, basePilotable, ascenseur, poignet,corailManip));
+                .whileTrue(new AutoStationVariable(true, manette::getLeftX,basePilotable, ascenseur, poignet, corailManip));
+       
+       
+       
         manette.x().whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
 
         manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
@@ -201,7 +210,7 @@ public class RobotContainer {
 
     private void boutonAlgue() {
         manetteY.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
-                .whileTrue(new autoAlgueReculler(Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
+                .whileTrue(new AutoAlgue(Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
         manetteY.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
                 .whileTrue(new AutoAlgue(Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable, algueManip));
         manetteY.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))

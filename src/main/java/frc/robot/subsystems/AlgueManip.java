@@ -35,7 +35,7 @@ public class AlgueManip extends SubsystemBase {
     // associe configs moteur droit
     moteurDroitConfig.inverted(false);
     moteurDroitConfig.idleMode(IdleMode.kBrake);
-    moteurDroitConfig.smartCurrentLimit(20);
+    moteurDroitConfig.smartCurrentLimit(20);//Pour le hold de l'algue
     moteurDroit.configure(moteurDroitConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     // associe configs moteur gauche
@@ -70,14 +70,16 @@ public class AlgueManip extends SubsystemBase {
   }
 
   public void hold() {
-    setVoltage(0.5);
+    setVoltage(0.5);//Nécessite la limite de courant
   }
 
-  // Retrourne s'il y a de l'algue dans le manip
+  // Retourne s'il y a de l'algue dans le manip
   public boolean isAlgue() {
-    return !limitSwitch.get(); // verifier pour le not !
+    return !limitSwitch.get();
   }
 
+
+//Commandes inlines
   public Command goberCommand(){
     return Commands.run(this::gober, this).until(this::isAlgue);
   }
