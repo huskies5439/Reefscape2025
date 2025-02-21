@@ -24,7 +24,8 @@ public class AutoCorail extends ParallelCommandGroup {
       //quand suffisament proche, met l'ascenseur et le poignet à la bonne position
       new SequentialCommandGroup(
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(()-> ascenseur.getCibleManetteOperateur(), ()-> poignet.getCibleManetteOperateur(), ascenseur, poignet)
+        new GoToHauteur(ascenseur::getCibleManetteOperateur,
+						poignet::getCibleManetteOperateur, ascenseur, poignet)
       )
     );
   }
