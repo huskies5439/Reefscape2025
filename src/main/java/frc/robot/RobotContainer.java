@@ -58,6 +58,8 @@ public class RobotContainer {
     CommandGenericHID operateur = new CommandGenericHID(1);
 
     Trigger grimpeurTrigger = manette.leftTrigger(0.9).and(manette.rightTrigger(0.9));
+    boolean modeGrimpeur = false; 
+    Trigger modeGrimpeurTrigger = new Trigger(()->modeGrimpeur);
 
     Trigger stationCageTrigger = new Trigger(basePilotable::isStationCage);
     Trigger stationGaucheTrigger = new Trigger(manette.leftTrigger());
@@ -152,15 +154,19 @@ public class RobotContainer {
         manette.b().and(stationCageTrigger.negate()).and(stationCentreTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger.negate()).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcProche, basePilotable,ascenseur,poignet,corailManip));
 
-        manette.x().whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
-
+        manette.x().and(modeGrimpeurTrigger.negate()).whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
+        
         manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
         manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(()-> Hauteur.algueSol[0], ()-> Hauteur.algueSol[1], ascenseur, poignet)));
 
-        grimpeurTrigger.toggleOnTrue(new ActiverGrimpeur(ascenseur, poignet)
-                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur)));
+        grimpeurTrigger.onTrue(Commands.runOnce(()->{modeGrimpeur = !modeGrimpeur;})); 
 
-        procheStationTrigger.whileTrue(new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand()).until(isCorailTrigger)); 
+        modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)
+                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, manette.x(), ascenseur)));
+
+        manette.x().and(modeGrimpeurTrigger).toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer)); 
+
+       procheStationTrigger.whileTrue(new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand()).until(isCorailTrigger)); 
 
         //dPad pour ajuster le bouton. Normalement ça devrait être intégré aux commandes par défaut pour plus de sécurité.
         // manette.povUp().whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));

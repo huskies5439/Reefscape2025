@@ -50,7 +50,7 @@ public final class Constants {
     public static final double processeur[] = { 0.08, 0 };
     public static final double station[] = { 0.01, 83 };
 
-    public static final double grimper[] = {0.2 , 0};
+    public static final double grimper[] = {0.13, 0};
 
   }
 
@@ -85,14 +85,14 @@ public final class Constants {
     public static final Pose2d B = new Pose2d(3.153, 3.851, Rotation2d.fromDegrees(0));
     public static final Pose2d C = new Pose2d(3.720, 2.990, Rotation2d.fromDegrees(60));
     public static final Pose2d D = new Pose2d(3.992, 2.784, Rotation2d.fromDegrees(60));
-    public static final Pose2d E = new Pose2d(5.037, 2.814, Rotation2d.fromDegrees(120));
-    public static final Pose2d F = new Pose2d(5.311, 2.940, Rotation2d.fromDegrees(120));
-    public static final Pose2d G = new Pose2d(5.815, 3.860, Rotation2d.fromDegrees(-180));
-    public static final Pose2d H = new Pose2d(5.815, 4.196, Rotation2d.fromDegrees(-180));
-    public static final Pose2d I = new Pose2d(5.275, 5.058, Rotation2d.fromDegrees(-120));
-    public static final Pose2d J = new Pose2d(5.021, 5.244, Rotation2d.fromDegrees(-120));
-    public static final Pose2d K = new Pose2d(3.978, 5.224, Rotation2d.fromDegrees(-60));
-    public static final Pose2d L = new Pose2d(3.715, 5.107, Rotation2d.fromDegrees(-60));
+    public static final Pose2d E = new Pose2d(4.997, 2.854, Rotation2d.fromDegrees(120));
+    public static final Pose2d F = new Pose2d(5.281, 3.01, Rotation2d.fromDegrees(120));
+    public static final Pose2d G = new Pose2d(5.795, 3.860, Rotation2d.fromDegrees(-180));
+    public static final Pose2d H = new Pose2d(5.795, 4.196, Rotation2d.fromDegrees(-180));
+    public static final Pose2d I = new Pose2d(5.235, 5.078, Rotation2d.fromDegrees(-120));
+    public static final Pose2d J = new Pose2d(4.941, 5.214, Rotation2d.fromDegrees(-120));
+    public static final Pose2d K = new Pose2d(3.978, 5.204, Rotation2d.fromDegrees(-60));
+    public static final Pose2d L = new Pose2d(3.675, 5.067, Rotation2d.fromDegrees(-60));
   }
 
   public static class Algue {

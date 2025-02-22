@@ -108,6 +108,8 @@ public class BasePilotable extends SubsystemBase {
     field2d.setRobotPose(getPose());
     SmartDashboard.putData("Field", field2d);
 
+    SmartDashboard.putBoolean("redalliance", isRedAlliance());
+
     SmartDashboard.putNumber("Angle Gyro", getAngle());
     // SmartDashboard.putNumber("Vitesse Gyro", getRate());
 
@@ -291,7 +293,7 @@ public class BasePilotable extends SubsystemBase {
     PathConstraints constraints = new PathConstraints(2, 1.5, Math.toRadians(360), Math.toRadians(360)); ////// A Ajuster
     //max velocity = 2 
     //max aceleration = 1.5
-    return AutoBuilder.pathfindToPose(cible, constraints, 0.0);
+    return AutoBuilder.pathfindToPoseFlipped(cible, constraints, 0.0);
 
   }
 
@@ -301,7 +303,7 @@ public class BasePilotable extends SubsystemBase {
   }
 
   public boolean isProcheRecif() {
-    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 5);
+    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 3);
   }
 
   public boolean isProcheProcesseur() {

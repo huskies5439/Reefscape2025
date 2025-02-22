@@ -4,6 +4,7 @@
 
 package frc.robot.commands.grimpeur;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,34 +18,42 @@ public class ControleGrimpeur extends Command {
   private DoubleSupplier monter;
   private DoubleSupplier descendre;
 
-  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, Ascenseur ascenseur) {
+  private BooleanSupplier barrure;
+
+  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, BooleanSupplier barrure,
+      Ascenseur ascenseur) {
     this.ascenseur = ascenseur;
     this.monter = monter;
     this.descendre = descendre;
     this.voltageDemande = 0;
+    this.barrure = barrure;
+
   }
 
   @Override
   public void initialize() {
-
+    ascenseur.debarrer();
   }
 
   @Override
   public void execute() {
     voltageDemande = monter.getAsDouble() - descendre.getAsDouble();
 
-    if (ascenseur.isLimitSwitch() && voltageDemande == 0) {
-      ascenseur.barrer();
+    if (voltageDemande == 0) {
+      // blablabla
+      if (!ascenseur.isLimitSwitch()) {
+        ascenseur.hold();
+      }
     } else {
-      ascenseur.debarrer();
+      ascenseur.setVoltage(voltageDemande * 6);
     }
-    ascenseur.setVoltage(voltageDemande * 3); // à ajuster
+    // à ajuster
   }
 
   @Override
   public void end(boolean interrupted) {
     if (interrupted) {
-      ascenseur.debarrer();
+      // ascenseur.debarrer();
     }
   }
 
