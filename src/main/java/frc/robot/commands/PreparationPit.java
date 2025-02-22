@@ -20,9 +20,7 @@ public class PreparationPit extends SequentialCommandGroup {
     Commands.runOnce(ascenseur::debarrer),
 
     //monte l'ascenseur jusqu'a ce que la limiteSwitch soit désengager
-    Commands.run(()->ascenseur.setVoltage(1)).until(()-> {
-        return !ascenseur.isLimitSwitch();
-      }
+    Commands.run(()->ascenseur.setVoltage(1)).until(()-> !ascenseur.isLimitSwitch()
     ),
 
     //Monter un peu plus
@@ -45,9 +43,7 @@ public class PreparationPit extends SequentialCommandGroup {
     Commands.runOnce(ascenseur :: resetEncodeurExterne),
 
     //définie la position de l'ascenseur a 20cm
-    Commands.run(()->ascenseur.setVoltage(2),ascenseur).until(()->{
-        return ascenseur.getPositionExterne() >= 0.2;
-      }
+    Commands.run(()->ascenseur.setVoltage(2),ascenseur).until(()-> ascenseur.getPositionExterne() >= 0.2
     ),
 
     new ParallelRaceGroup(
@@ -68,9 +64,7 @@ public class PreparationPit extends SequentialCommandGroup {
         Commands.runOnce(poignet :: stop), 
         Commands.runOnce(poignet :: resetEncodeurLimitSwitch),
       
-        Commands.runEnd(()->poignet.setVoltage(1), poignet::stop, poignet).until(()->{
-            return poignet.getAngle() >= 80;
-          })
+        Commands.runEnd(()->poignet.setVoltage(1), poignet::stop, poignet).until(()-> poignet.getAngle() >= 80)
     )),
 
     //reHome l'ascenseur
