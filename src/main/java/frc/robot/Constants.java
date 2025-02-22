@@ -43,7 +43,7 @@ public final class Constants {
     public static final double L3[] = { 0.32, -86 };
     public static final double L4[] = { 0.56, -30 };
 
-    public static final double algueSol[] = { 0, 0 };
+    public static final double algueSol[] = { 0, 7 };
     public static final double algueBas[] = { 0.38, -19 };
     public static final double algueHaut[] = { 0.537, -12 };
 
@@ -83,9 +83,9 @@ public final class Constants {
 
     public static final Pose2d A = new Pose2d(3.203, 4.177, Rotation2d.fromDegrees(0));
     public static final Pose2d B = new Pose2d(3.153, 3.851, Rotation2d.fromDegrees(0));
-    public static final Pose2d C = new Pose2d(3.680, 2.940, Rotation2d.fromDegrees(60));
+    public static final Pose2d C = new Pose2d(3.720, 2.990, Rotation2d.fromDegrees(60));
     public static final Pose2d D = new Pose2d(3.992, 2.784, Rotation2d.fromDegrees(60));
-    public static final Pose2d E = new Pose2d(4.987, 2.784, Rotation2d.fromDegrees(120));
+    public static final Pose2d E = new Pose2d(5.037, 2.814, Rotation2d.fromDegrees(120));
     public static final Pose2d F = new Pose2d(5.311, 2.940, Rotation2d.fromDegrees(120));
     public static final Pose2d G = new Pose2d(5.815, 3.860, Rotation2d.fromDegrees(-180));
     public static final Pose2d H = new Pose2d(5.815, 4.196, Rotation2d.fromDegrees(-180));
@@ -111,7 +111,7 @@ public final class Constants {
     //Proche/Centre/Loin selon la driver station
     //deltaX = 0.45 et deltaY = -0.33
     public static final Pose2d BlueCoralStationProcProche = new Pose2d(0.7, 1.36, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(1.15, 1.03, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(1.11, 1.08, Rotation2d.fromDegrees(-126));
     public static final Pose2d BlueCoralStationProcLoin = new Pose2d(1.6, 0.7, Rotation2d.fromDegrees(-126));
 
     //Calcul par rapport à Processeur : même x, yProc + yCage = 8 m

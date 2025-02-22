@@ -106,7 +106,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void hold(){
-    if(getPositionExterne()>=0.01){//On hold seulement si l'échelle est déployée
+    if(getPositionExterne()>=0.001){//On hold seulement si l'échelle est déployée
       setVoltage(feedforward.calculate(0));
     }
     else{

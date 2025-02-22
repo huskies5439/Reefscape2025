@@ -64,6 +64,9 @@ public class RobotContainer {
     Trigger stationCentreTrigger = new Trigger(manette.leftTrigger().negate().and(manette.rightTrigger().negate()));
     Trigger stationDroiteTrigger = new Trigger(manette.rightTrigger());
 
+    Trigger procheStationTrigger = new Trigger(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur());
+    Trigger isCorailTrigger = new Trigger(corailManip :: isCorail); 
+
     Trigger manetteA = manette.a();
     Trigger manetteY = manette.y();
 
@@ -141,13 +144,13 @@ public class RobotContainer {
         // manette.b().and(stationCageTrigger.negate())
         //         .whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable, ascenseur, poignet,corailManip));
 
-        manette.b().and(stationCageTrigger).and(stationGaucheTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageLoin, basePilotable,ascenseur,poignet,corailManip));
+        manette.b().and(stationCageTrigger).and(stationGaucheTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageProche, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger).and(stationCentreTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageCentre, basePilotable,ascenseur,poignet,corailManip));
-        manette.b().and(stationCageTrigger).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageProche, basePilotable,ascenseur,poignet,corailManip));
+        manette.b().and(stationCageTrigger).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageLoin, basePilotable,ascenseur,poignet,corailManip));
 
-        manette.b().and(stationCageTrigger.negate()).and(stationGaucheTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcProche, basePilotable,ascenseur,poignet,corailManip));
+        manette.b().and(stationCageTrigger.negate()).and(stationGaucheTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcLoin, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger.negate()).and(stationCentreTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable,ascenseur,poignet,corailManip));
-        manette.b().and(stationCageTrigger.negate()).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcLoin, basePilotable,ascenseur,poignet,corailManip));
+        manette.b().and(stationCageTrigger.negate()).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcProche, basePilotable,ascenseur,poignet,corailManip));
 
         manette.x().whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
 
@@ -156,6 +159,8 @@ public class RobotContainer {
 
         grimpeurTrigger.toggleOnTrue(new ActiverGrimpeur(ascenseur, poignet)
                 .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur)));
+
+        procheStationTrigger.whileTrue(new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand()).until(isCorailTrigger)); 
 
         //dPad pour ajuster le bouton. Normalement ça devrait être intégré aux commandes par défaut pour plus de sécurité.
         // manette.povUp().whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));

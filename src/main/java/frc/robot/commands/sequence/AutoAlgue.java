@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.AlgueManip;
@@ -26,10 +27,10 @@ public class AutoAlgue extends ParallelRaceGroup {
         new SequentialCommandGroup(
           basePilotable.followPath(cible)//Se rendre au récif
             .until(algueManip::isAlgue),//Qu'on se rende ou non, continuer quand on clique l'algue
-
+            new WaitCommand(0.1),
           //On recule (valeur POSITIVE à cause de l'inversion pour le joystick de la manette) en ROBOT-ORIENTED durant 0.2s
-          Commands.run(()->basePilotable.conduire(0.2, 0, 0,false, false), basePilotable)
-            .withTimeout(0.2)//Mets fin à la race
+          Commands.run(()->basePilotable.conduire(1, 0, 0,false, false), basePilotable)
+            .withTimeout(0.4)//Mets fin à la race
           
         ),
     

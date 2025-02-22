@@ -25,13 +25,13 @@ public class AutoStation extends ParallelCommandGroup {
     addCommands(
       basePilotable.followPath(cible).andThen(
       Commands.run(basePilotable::setX, basePilotable)
-      ),
+      // ),
       
       
-      new SequentialCommandGroup(
-        new WaitUntilCommand(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()
-        ),
-         new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand())
+      //  new SequentialCommandGroup(
+      //    new WaitUntilCommand(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()
+      //    ),
+      //    new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand())
       )
     );
   }

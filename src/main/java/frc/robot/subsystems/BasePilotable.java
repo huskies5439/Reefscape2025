@@ -289,7 +289,8 @@ public class BasePilotable extends SubsystemBase {
   public Command followPath(Pose2d cible) {
 
     PathConstraints constraints = new PathConstraints(2, 1.5, Math.toRadians(360), Math.toRadians(360)); ////// A Ajuster
-
+    //max velocity = 2 
+    //max aceleration = 1.5
     return AutoBuilder.pathfindToPose(cible, constraints, 0.0);
 
   }
@@ -308,11 +309,11 @@ public class BasePilotable extends SubsystemBase {
   }
 
   public boolean isProcheStationCage() {
-    return isProche(isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCageProche, 2);
+    return isProche(isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCageCentre, 1);
   }
 
   public boolean isProcheStationProcesseur() {
-    return isProche(isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProcLoin, 2);
+    return isProche(isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProcCentre, 1);
   }
 
   public boolean isRedAlliance() {
