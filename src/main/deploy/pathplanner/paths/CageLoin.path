@@ -20,7 +20,7 @@
         "y": 7.3
       },
       "prevControl": {
-        "x": 1.7469463130731182,
+        "x": 1.7469463130731184,
         "y": 7.097745751406263
       },
       "nextControl": null,
@@ -45,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "PositionStationSAM",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

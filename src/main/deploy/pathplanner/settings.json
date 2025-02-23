@@ -5,7 +5,8 @@
   "pathFolders": [
     "AutoAlgueCentre",
     "AutoCorailCage",
-    "AutoCorailProcesseur"
+    "AutoCorailProcesseur",
+    "PositionStationSAM"
   ],
   "autoFolders": [],
   "defaultMaxVel": 1.0,
