@@ -183,6 +183,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "VieuxAuto",
   "choreoAuto": false
 }

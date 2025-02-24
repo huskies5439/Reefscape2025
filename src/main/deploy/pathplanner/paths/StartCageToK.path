@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.726890369568839,
-        "y": 5.047180147998736
+        "x": 5.445227272727273,
+        "y": 6.183863636363636
       },
       "isLocked": false,
       "linkedName": "StartCage"
     },
     {
       "anchor": {
-        "x": 5.235,
-        "y": 5.0584999999999996
+        "x": 3.978,
+        "y": 5.204
       },
       "prevControl": {
-        "x": 5.475323832411481,
-        "y": 5.127380008529751
+        "x": 3.963295454545454,
+        "y": 5.808806818181818
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "I"
+      "linkedName": "K"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "AutoCorailCage",
+  "folder": "AutoDuoCage",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

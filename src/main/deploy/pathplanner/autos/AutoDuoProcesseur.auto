@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartProcesseurToF"
+                  "pathName": "StartProcesseurToD"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FToStationCorailProcesseur"
+                  "pathName": "DToCorailProcesseur"
                 }
               },
               {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StationCorailProcesseurToC"
+                  "pathName": "CorailProcesseurToC"
                 }
               },
               {
@@ -86,13 +86,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CToStationCorailProcesseur"
+                  "pathName": "CToCorailProcesseur"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationProcesseur"
+                  "name": "actionProcesseur"
                 }
               }
             ]
@@ -111,7 +111,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StationCorailProcesseurToD"
+                  "pathName": "CorailProcesseurToB"
                 }
               },
               {
@@ -127,87 +127,12 @@
           "type": "named",
           "data": {
             "name": "sortirCorail"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DToStationCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionStationProcesseur"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "StationCorailProcesseurToE"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionRecifCorail"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "sortirCorail"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "EToStationCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionStationProcesseur"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "VieuxAuto",
+  "folder": null,
   "choreoAuto": false
 }

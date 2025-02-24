@@ -6,11 +6,15 @@
     "AutoAlgueCentre",
     "AutoCorailCage",
     "AutoCorailProcesseur",
+    "AutoDuoProcesseur",
     "AutoHanSolo",
     "AutoLeGrandTour",
+    "AutoDuoCage",
     "PositionStationSAM"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "VieuxAuto"
+  ],
   "defaultMaxVel": 1.0,
   "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 1440.0,
