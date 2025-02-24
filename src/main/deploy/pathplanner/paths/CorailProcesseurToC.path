@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.155298907723396,
-        "y": 4.0
+        "x": 1.5943647540983608,
+        "y": 0.7103995901639337
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.905298907723396,
-        "y": 4.0
+        "x": 2.7495000000000003,
+        "y": 1.9384999999999988
       },
       "isLocked": false,
-      "linkedName": "StartPointCentre"
+      "linkedName": "CoralStationPros"
     },
     {
       "anchor": {
-        "x": 5.795,
-        "y": 4.196422190521628
+        "x": 3.72,
+        "y": 2.99
       },
       "prevControl": {
-        "x": 6.045,
-        "y": 4.196422190521628
+        "x": 2.7495000000000003,
+        "y": 1.9287499999999997
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "H"
+      "linkedName": "C"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "AutoAlgueCentre",
+  "folder": "Han Solo",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -126.0
   },
   "useDefaultConstraints": true
 }

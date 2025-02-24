@@ -1,0 +1,138 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "StartProcesseurToG"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifCorail"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "GToCorailProcesseur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CorailProcesseurToD"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifCorail"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DToCorailProcesseur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CorailProcesseurToC"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifCorail"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
