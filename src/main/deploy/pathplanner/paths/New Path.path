@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.978,
-        "y": 5.204
+        "x": 3.832,
+        "y": 5.107
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.342895112742668,
-        "y": 5.743061235437661
+        "x": 4.2767033989510015,
+        "y": 5.877248881281707
       },
       "isLocked": false,
-      "linkedName": "K"
+      "linkedName": "AlgueKL"
     },
     {
       "anchor": {
-        "x": 1.70625,
-        "y": 7.369249999999999
+        "x": 2.0475,
+        "y": 5.18525
       },
       "prevControl": {
-        "x": 2.2163547224497084,
-        "y": 6.674326641424273
+        "x": 1.0474999999999999,
+        "y": 5.18525
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CoralStationCage"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "AutoCorailCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -59.99999999999999
