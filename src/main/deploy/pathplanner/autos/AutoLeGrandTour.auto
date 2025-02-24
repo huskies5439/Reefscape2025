@@ -11,63 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartProcesseurToG"
+                  "pathName": "StartProcesseurToD"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "sortirCorail"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "GToCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionProcesseur"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CorailProcesseurToD"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionStationCage"
+                  "name": "actionRecifCorail"
                 }
               }
             ]
@@ -92,7 +42,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "actionProcesseur"
+                  "name": "actionStationProcesseur"
                 }
               }
             ]
@@ -117,7 +67,57 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationCage"
+                  "name": "actionRecifCorail"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "sortirCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CToCorailProcesseur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionProcesseur"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "goberCorail"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CorailProcesseurToL"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "actionRecifCorail"
                 }
               }
             ]
