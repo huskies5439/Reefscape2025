@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Han Solo",
+  "folder": "AutoHanSolo",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
