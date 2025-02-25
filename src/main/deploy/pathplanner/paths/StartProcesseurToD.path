@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.450692048907555,
-        "y": 2.222074876828489
+        "x": 6.013296478178443,
+        "y": 2.3766428358597915
       },
       "isLocked": false,
       "linkedName": "StartPointProcesseur"
     },
     {
       "anchor": {
-        "x": 4.68,
-        "y": 2.2894999999999994
+        "x": 4.6605,
+        "y": 2.3675
       },
       "prevControl": {
-        "x": 5.000373551804141,
-        "y": 2.2693081203687795
+        "x": 4.892203042094651,
+        "y": 2.273618690443282
       },
       "nextControl": {
-        "x": 4.430495060974565,
-        "y": 2.305225310868596
+        "x": 4.428796957905349,
+        "y": 2.4613813095567183
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 2.784
       },
       "prevControl": {
-        "x": 4.099836979768856,
-        "y": 2.501409436478862
+        "x": 4.23089499039069,
+        "y": 2.7103170062617408
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,8 +53,8 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.42332613390929125,
-      "maxWaypointRelativePos": 1.4946004319653976,
+      "minWaypointRelativePos": 0.42332613390928625,
+      "maxWaypointRelativePos": 1.663930885529156,
       "name": "Point Towards Zone"
     }
   ],
@@ -62,8 +62,8 @@
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
-    "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 1440.0,
+    "maxAngularAcceleration": 1440.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.111149736143583,
-        "y": 3.8269237051568914
+        "x": 6.133601076033489,
+        "y": 3.8223548113354124
       },
       "isLocked": false,
       "linkedName": "G"
@@ -20,12 +20,12 @@
         "y": 2.9915000000000003
       },
       "prevControl": {
-        "x": 6.1879466831708205,
-        "y": 3.139551456728651
+        "x": 6.160774007100857,
+        "y": 3.1707444432862872
       },
       "nextControl": {
-        "x": 4.410140863047708,
-        "y": 1.8329688051457973
+        "x": 4.378948378867128,
+        "y": 1.3380997013704141
       },
       "isLocked": false,
       "linkedName": null
@@ -36,20 +36,15 @@
         "y": 0.6222499999999991
       },
       "prevControl": {
-        "x": 2.5999945496004586,
-        "y": 1.7298224607266044
+        "x": 2.9455710401421387,
+        "y": 1.9317869802675474
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "CoralStationPros"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.23173431734317537,
-      "rotationDegrees": 180.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [
     {
@@ -67,8 +62,8 @@
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
-    "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 1440.0,
+    "maxAngularAcceleration": 1440.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

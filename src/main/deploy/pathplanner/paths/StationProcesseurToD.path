@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.14243542435424306,
+      "waypointRelativePos": 0.08191881918819206,
       "rotationDegrees": -126.0
     }
   ],
@@ -42,7 +42,7 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.3896328293736503,
+      "minWaypointRelativePos": 0.5831533477321814,
       "maxWaypointRelativePos": 0.7697624190064802,
       "name": "Point Towards Zone"
     }
@@ -51,8 +51,8 @@
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
-    "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 1440.0,
+    "maxAngularAcceleration": 1440.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },
