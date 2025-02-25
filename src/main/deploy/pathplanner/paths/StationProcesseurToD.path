@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1557445175593344,
-        "y": 1.108039274852665
+        "x": 1.8753804364360978,
+        "y": 0.793510107364965
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
@@ -20,8 +20,8 @@
         "y": 2.784
       },
       "prevControl": {
-        "x": 3.6277224980050256,
-        "y": 2.2831025534657075
+        "x": 3.737902710146713,
+        "y": 2.576232665647308
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.15867158671586915,
+      "waypointRelativePos": 0.14243542435424306,
       "rotationDegrees": -126.0
     }
   ],
@@ -42,8 +42,8 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.5,
-      "maxWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 0.3896328293736503,
+      "maxWaypointRelativePos": 0.7697624190064802,
       "name": "Point Towards Zone"
     }
   ],

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.911747481360453,
-        "y": 3.9435845525004374
+        "x": 6.908812859800788,
+        "y": 3.958231253556115
       },
       "isLocked": false,
       "linkedName": "StartPointCentre"
@@ -20,8 +20,8 @@
         "y": 3.86
       },
       "prevControl": {
-        "x": 6.071300590223085,
-        "y": 3.9677463051961177
+        "x": 6.080278128997214,
+        "y": 3.9588161387859544
       },
       "nextControl": null,
       "isLocked": false,
@@ -37,7 +37,7 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.25,
+      "minWaypointRelativePos": 0.059611231101506346,
       "maxWaypointRelativePos": 0.75,
       "name": "Point Towards Zone"
     }

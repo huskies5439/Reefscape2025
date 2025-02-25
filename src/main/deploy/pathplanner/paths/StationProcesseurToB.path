@@ -8,11 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9675897913561844,
-        "y": 2.244520864381519
+        "x": 1.7111121066844326,
+        "y": 0.9852962418372793
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
+    },
+    {
+      "anchor": {
+        "x": 2.73,
+        "y": 3.5862499999999993
+      },
+      "prevControl": {
+        "x": 1.788175384596491,
+        "y": 1.1835149522202784
+      },
+      "nextControl": {
+        "x": 2.8340823390543473,
+        "y": 3.851779568680501
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,17 +36,33 @@
         "y": 3.851
       },
       "prevControl": {
-        "x": 2.3990340909090904,
-        "y": 3.412102272727272
+        "x": 2.9153593307743555,
+        "y": 3.7733668090956725
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "B"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.16678966789668093,
+      "rotationDegrees": -126.0
+    }
+  ],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.5,
+        "y": 4.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.6652267818574524,
+      "maxWaypointRelativePos": 1.0384449244060447,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,

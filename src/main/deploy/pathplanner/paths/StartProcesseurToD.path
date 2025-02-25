@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.060097829938312,
-        "y": 2.268836086751071
+        "x": 6.450692048907555,
+        "y": 2.222074876828489
       },
       "isLocked": false,
       "linkedName": "StartPointProcesseur"
     },
     {
       "anchor": {
-        "x": 4.3875,
-        "y": 1.8117499999999995
+        "x": 4.68,
+        "y": 2.2894999999999994
       },
       "prevControl": {
-        "x": 4.637379028419326,
-        "y": 1.819526320223199
+        "x": 5.000373551804141,
+        "y": 2.2693081203687795
       },
       "nextControl": {
-        "x": 4.092754582840899,
-        "y": 1.8025774225226154
+        "x": 4.430495060974565,
+        "y": 2.305225310868596
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 2.784
       },
       "prevControl": {
-        "x": 4.1663737154730365,
-        "y": 2.604852554156838
+        "x": 4.099836979768856,
+        "y": 2.501409436478862
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,8 +53,8 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.25,
-      "maxWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 0.42332613390929125,
+      "maxWaypointRelativePos": 1.4946004319653976,
       "name": "Point Towards Zone"
     }
   ],
