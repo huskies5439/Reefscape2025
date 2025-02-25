@@ -63,6 +63,7 @@ public class Poignet extends SubsystemBase {
     //SmartDashboard.putNumber("Cible Poignet : ", getCibleManetteOperateur());
     //SmartDashboard.putBoolean("Capteur Poignet", isLimitSwitch());
     //SmartDashboard.putBoolean("Pgn. PID AT CIBLE", atCible());
+    SmartDashboard.putBoolean("AtCible Poignet", atCible());
 
 
 

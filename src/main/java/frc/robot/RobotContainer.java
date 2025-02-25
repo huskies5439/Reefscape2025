@@ -37,11 +37,13 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -68,7 +70,7 @@ public class RobotContainer {
     Trigger stationCentreTrigger = new Trigger(manette.leftTrigger().negate().and(manette.rightTrigger().negate()));
     Trigger stationDroiteTrigger = new Trigger(manette.rightTrigger());
 
-    Trigger procheStationTrigger = new Trigger(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur());
+    Trigger procheStationTrigger = new Trigger(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()).and(()->{return DriverStation.isTeleop();});
     Trigger isCorailTrigger = new Trigger(corailManip :: isCorail); 
 
     Trigger manetteA = manette.a();
@@ -77,13 +79,46 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        configureButtonBindings();
 
-        autoChooser = AutoBuilder.buildAutoChooser();
+       
         FollowPathCommand.warmupCommand().schedule(); // warm up la librairie pour éviter les temps d'attente
 
-        // Commandes par défaut
-        basePilotable.setDefaultCommand(
+       
+
+        // commmandes pour pathPlanner
+        NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand());
+        NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand().withTimeout(1));
+
+        NamedCommands.registerCommand("goberCorail", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet, corailManip));
+        NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
+         .alongWith(Commands.run(ascenseur::hold, ascenseur)).alongWith(Commands.run(poignet::hold, poignet))
+         .withTimeout(0.25));
+
+        NamedCommands.registerCommand("monterAlgueBas",
+                new GoToHauteur(() -> Hauteur.algueBas[0], () -> Hauteur.algueBas[1], ascenseur, poignet));
+
+        NamedCommands.registerCommand("actionProcesseur",
+                new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
+        NamedCommands.registerCommand("actionRecifAlgueBas",
+                new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
+        NamedCommands.registerCommand("actionRecifAlgueHaut",
+                new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
+        NamedCommands.registerCommand("actionRecifCorail",
+                new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
+         NamedCommands.registerCommand("actionRecifCorailL2",
+                new ActionRecifCorailPathPlannerL2(basePilotable, ascenseur, poignet));
+        NamedCommands.registerCommand("actionStationCage",
+                new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet, corailManip));
+
+       
+   
+        
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
+
+         // Commandes par défaut
+         basePilotable.setDefaultCommand(
                 Commands.run(
                         () -> basePilotable.conduire(
                                 manette.getLeftY(), manette.getLeftX(), manette.getRightX(),
@@ -107,37 +142,11 @@ public class RobotContainer {
         //Les boutons de la manettes sont des Triggers, donc des BooleanSupplier !
         ascenseur.setDefaultCommand(new AscenseurDefaut(manette.povUp(),manette.povDown(), ascenseur, poignet));
         poignet.setDefaultCommand(new PoignetDefaut(manette.povLeft(), manette.povRight(),poignet, algueManip));
+
+        configureButtonBindings();
+
        
     
-
-        // commmandes pour pathPlanner
-        NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand());
-        NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand().withTimeout(1));
-
-        NamedCommands.registerCommand("goberCorail", new WaitUntilCommand(corailManip::isCorail));
-        NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
-        .alongWith(Commands.run(ascenseur::hold, ascenseur)).alongWith(Commands.run(poignet::hold, poignet))
-        .withTimeout(1));
-
-        NamedCommands.registerCommand("monterAlgueBas",
-                new GoToHauteur(() -> Hauteur.algueBas[0], () -> Hauteur.algueBas[1], ascenseur, poignet));
-
-        NamedCommands.registerCommand("actionProcesseur",
-                new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionRecifAlgueBas",
-                new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionRecifAlgueHaut",
-                new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionRecifCorail",
-                new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
-         NamedCommands.registerCommand("actionRecifCorailL2",
-                new ActionRecifCorailPathPlannerL2(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionStationCage",
-                new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionStationProcesseur",
-                new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet));
-
-        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     private void configureButtonBindings() {

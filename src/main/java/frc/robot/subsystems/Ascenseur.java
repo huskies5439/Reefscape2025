@@ -67,7 +67,7 @@ public class Ascenseur extends SubsystemBase {
   
     encoder.setDistancePerPulse(0.07*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
                        
-    pidAscenseur.setTolerance(0.01);
+    pidAscenseur.setTolerance(0.02);
 
                                 
     debarrer();
@@ -82,6 +82,7 @@ public class Ascenseur extends SubsystemBase {
     // //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
      //SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     // SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
+    SmartDashboard.putBoolean("AtCible Ascenceur", atCible());
 
     if (isLimitSwitch()) {
       resetEncoders();

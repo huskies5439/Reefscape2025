@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.64775,
-        "y": 0.6222499999999991
+        "x": 0.95,
+        "y": 0.98
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.273788699571878,
-        "y": 2.902917334636661
+        "x": 2.7585000000000006,
+        "y": 2.0424999999999995
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
@@ -20,8 +20,8 @@
         "y": 2.784
       },
       "prevControl": {
-        "x": 3.26625,
-        "y": 1.938499999999999
+        "x": 2.925,
+        "y": 2.02625
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 360.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 720.0,
+    "maxAngularAcceleration": 720.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

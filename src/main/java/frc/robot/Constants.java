@@ -111,7 +111,7 @@ public final class Constants {
     //Proche/Centre/Loin selon la driver station
     //deltaX = 0.45 et deltaY = -0.33
     public static final Pose2d BlueCoralStationProcProche = new Pose2d(0.7, 1.36, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(1.11, 1.08, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(0.98, 0.954, Rotation2d.fromDegrees(-126));
     public static final Pose2d BlueCoralStationProcLoin = new Pose2d(1.6, 0.7, Rotation2d.fromDegrees(-126));
 
     //Calcul par rapport à Processeur : même x, yProc + yCage = 8 m
