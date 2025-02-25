@@ -157,11 +157,11 @@ public class Ascenseur extends SubsystemBase {
   ///////////////////// Servo
 
   public void barrer() {
-    serrureCage.setAngle(80);
+    serrureCage.setAngle(75);
   }
 
   public void debarrer() {
-    serrureCage.setAngle(110);
+    serrureCage.setAngle(105);
   }
 
   /////////////////// PID + FeedForward

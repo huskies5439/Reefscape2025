@@ -18,6 +18,7 @@ public class PreparationPit extends SequentialCommandGroup {
     addCommands(
     //Débarre le servo moteur de l'ascenseur
     Commands.runOnce(ascenseur::debarrer),
+    new WaitCommand(0.5),
 
     //monte l'ascenseur jusqu'a ce que la limiteSwitch soit désengager
     Commands.run(()->ascenseur.setVoltage(1)).until(()-> !ascenseur.isLimitSwitch()

@@ -70,8 +70,7 @@ public class CorailManip extends SubsystemBase {
 //Commandes inlines
    public Command goberCommand(){//La commande équivalente dans le AlgueManip est vraiment plus simple à cause de la commande par défaut.
                                   //Pas mal sûr qu'on pourrait ajuster pour faire la même affaire
-    return Commands.runEnd(this::gober, this::stop, this).until(this::isCorail).andThen(this::stop, this);
-
+    return Commands.run(this::gober,this).until(this::isCorail);
   }
 
   public Command sortirCommand(){
