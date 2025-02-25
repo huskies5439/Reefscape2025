@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4758598295573426,
-        "y": 5.244235111242087
+        "x": 2.3670865310562723,
+        "y": 5.506107253417967
       },
       "isLocked": false,
       "linkedName": "L"
@@ -20,8 +20,8 @@
         "y": 7.369249999999999
       },
       "prevControl": {
-        "x": 2.2249637375492637,
-        "y": 6.69389099061586
+        "x": 2.2425,
+        "y": 5.6435
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "AutoDuoCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -59.99999999999999

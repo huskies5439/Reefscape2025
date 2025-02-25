@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.568233367911171,
-        "y": 6.074614416050308
+        "x": 5.2455,
+        "y": 5.858
       },
       "isLocked": false,
       "linkedName": "J"
@@ -20,20 +20,15 @@
         "y": 7.369249999999999
       },
       "prevControl": {
-        "x": 3.122875755102462,
-        "y": 6.39975472871377
+        "x": 2.457,
+        "y": 6.58925
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "CoralStationCage"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.17792882846861208,
-      "rotationDegrees": -119.99999999999999
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -50,7 +45,7 @@
     "rotation": 126.0
   },
   "reversed": false,
-  "folder": "AutoCorailCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -119.99999999999999

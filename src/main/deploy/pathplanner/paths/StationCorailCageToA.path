@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2343749999999996,
-        "y": 6.019204545454545
+        "x": 2.8480219670308085,
+        "y": 5.922846566628353
       },
       "isLocked": false,
       "linkedName": "CoralStationCage"
@@ -20,8 +20,8 @@
         "y": 4.177
       },
       "prevControl": {
-        "x": 2.088011363636363,
-        "y": 4.765965909090909
+        "x": 2.34,
+        "y": 4.444249999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +50,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "AutoDuoCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 126.0

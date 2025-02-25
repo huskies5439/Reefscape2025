@@ -45,7 +45,7 @@
     "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "AutoDuoCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

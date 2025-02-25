@@ -8,27 +8,11 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.013296478178443,
-        "y": 2.3766428358597915
+        "x": 5.928,
+        "y": 1.9189999999999996
       },
       "isLocked": false,
       "linkedName": "StartPointProcesseur"
-    },
-    {
-      "anchor": {
-        "x": 4.6605,
-        "y": 2.3675
-      },
-      "prevControl": {
-        "x": 4.892203042094651,
-        "y": 2.273618690443282
-      },
-      "nextControl": {
-        "x": 4.428796957905349,
-        "y": 2.4613813095567183
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 2.784
       },
       "prevControl": {
-        "x": 4.23089499039069,
-        "y": 2.7103170062617408
+        "x": 3.83175,
+        "y": 2.27
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,18 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.5,
-        "y": 4.0
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.42332613390928625,
-      "maxWaypointRelativePos": 1.663930885529156,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,

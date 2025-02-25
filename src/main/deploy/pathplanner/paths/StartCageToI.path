@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.726890369568839,
-        "y": 5.047180147998736
+        "x": 6.021728933431526,
+        "y": 5.185127868396854
       },
       "isLocked": false,
       "linkedName": "StartCage"
@@ -20,8 +20,8 @@
         "y": 5.0584999999999996
       },
       "prevControl": {
-        "x": 5.475323832411481,
-        "y": 5.127380008529751
+        "x": 5.4736501201461545,
+        "y": 4.984027722243602
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "AutoCorailCage",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0
