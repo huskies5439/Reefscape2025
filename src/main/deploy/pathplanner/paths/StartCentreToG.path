@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5943647540983608,
-        "y": 0.7103995901639337
+        "x": 7.155298907723396,
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7495000000000003,
-        "y": 1.9384999999999988
+        "x": 6.905298907723396,
+        "y": 4.0
       },
       "isLocked": false,
-      "linkedName": "CoralStationPros"
+      "linkedName": "StartPointCentre"
     },
     {
       "anchor": {
-        "x": 3.72,
-        "y": 2.99
+        "x": 5.795,
+        "y": 3.86
       },
       "prevControl": {
-        "x": 2.7495000000000003,
-        "y": 1.9287499999999997
+        "x": 6.045,
+        "y": 3.86
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "C"
+      "linkedName": "G"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "AutoHanSolo",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -126.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

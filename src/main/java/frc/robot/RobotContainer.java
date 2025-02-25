@@ -20,6 +20,7 @@ import frc.robot.commands.pathplanner.ActionProcesseurPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifAlgueBasPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifAlgueHautPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifCorailPathPlanner;
+import frc.robot.commands.pathplanner.ActionRecifCorailPathPlannerL2;
 import frc.robot.commands.pathplanner.ActionStationCagePathPlanner;
 import frc.robot.commands.pathplanner.ActionStationProcesseurPathPlanner;
 import frc.robot.commands.sequence.AutoAlgue;
@@ -41,6 +42,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -112,8 +114,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand());
         NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand().withTimeout(1));
 
-        NamedCommands.registerCommand("goberCorail", corailManip.goberCommand());
-        NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand().withTimeout(1));
+        NamedCommands.registerCommand("goberCorail", new WaitUntilCommand(corailManip::isCorail));
+        NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
+        .alongWith(Commands.run(ascenseur::hold, ascenseur)).alongWith(Commands.run(poignet::hold, poignet))
+        .withTimeout(1));
 
         NamedCommands.registerCommand("monterAlgueBas",
                 new GoToHauteur(() -> Hauteur.algueBas[0], () -> Hauteur.algueBas[1], ascenseur, poignet));
@@ -126,6 +130,8 @@ public class RobotContainer {
                 new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
         NamedCommands.registerCommand("actionRecifCorail",
                 new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
+         NamedCommands.registerCommand("actionRecifCorailL2",
+                new ActionRecifCorailPathPlannerL2(basePilotable, ascenseur, poignet));
         NamedCommands.registerCommand("actionStationCage",
                 new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet));
         NamedCommands.registerCommand("actionStationProcesseur",

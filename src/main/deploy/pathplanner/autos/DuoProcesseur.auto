@@ -30,22 +30,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DToCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionStationProcesseur"
-                }
-              }
-            ]
+            "pathName": "DToStationProcesseur"
           }
         },
         {
@@ -61,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CorailProcesseurToC"
+                  "pathName": "StationProcesseurToC"
                 }
               },
               {
@@ -80,22 +67,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CToCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionProcesseur"
-                }
-              }
-            ]
+            "pathName": "CToStationProcesseur"
           }
         },
         {
@@ -111,13 +85,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CorailProcesseurToB"
+                  "pathName": "StationProcesseurToE"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "actionRecifCorail"
+                  "name": "actionRecifCorailL2"
                 }
               }
             ]

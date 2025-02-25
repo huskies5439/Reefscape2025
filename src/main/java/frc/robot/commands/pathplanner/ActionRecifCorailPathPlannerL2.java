@@ -12,15 +12,15 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
 
-public class ActionRecifCorailPathPlanner extends SequentialCommandGroup {
+public class ActionRecifCorailPathPlannerL2 extends SequentialCommandGroup {
 
   /** Actions durant le déplacement vers le récif pour un corail */
-  public ActionRecifCorailPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
+  public ActionRecifCorailPathPlannerL2(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
 
     addCommands(
         
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(()-> Hauteur.L4[0], ()-> Hauteur.L4[1], ascenseur, poignet)
+        new GoToHauteur(()-> Hauteur.L2[0], ()-> Hauteur.L2[1], ascenseur, poignet)
         .until(()-> {return ascenseur.atCible() && poignet.atCible();})
         );
   }

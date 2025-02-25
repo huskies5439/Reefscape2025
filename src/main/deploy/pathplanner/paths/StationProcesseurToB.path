@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.795,
-        "y": 4.196422190521628
+        "x": 1.5943647540983608,
+        "y": 0.7103995901639337
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.044972158806083,
-        "y": 4.1926912627782595
+        "x": 1.914204545454545,
+        "y": 2.332670454545454
       },
-      "isLocked": true,
-      "linkedName": "H"
+      "isLocked": false,
+      "linkedName": "CoralStationPros"
     },
     {
       "anchor": {
-        "x": 5.82075,
-        "y": 4.015249999999999
+        "x": 3.153,
+        "y": 3.851
       },
       "prevControl": {
-        "x": 6.070685458886236,
-        "y": 4.009569648661675
+        "x": 2.3990340909090904,
+        "y": 3.412102272727272
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AlgueHG"
+      "linkedName": "B"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "AutoAlgueCentre",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -126.0
   },
   "useDefaultConstraints": true
 }

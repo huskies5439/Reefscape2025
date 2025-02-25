@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.677324986353712,
-        "y": 3.854062329421397
+        "x": 3.72,
+        "y": 2.99
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6773249863537125,
-        "y": 3.854062329421397
+        "x": 2.9639999999999995,
+        "y": 2.1919999999999993
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "C"
     },
     {
       "anchor": {
-        "x": 1.15,
-        "y": 6.97
+        "x": 1.5943647540983608,
+        "y": 0.7103995901639337
       },
       "prevControl": {
-        "x": 1.2969463130731183,
-        "y": 6.767745751406263
+        "x": 2.7104999999999997,
+        "y": 1.9579999999999997
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralStationPros"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 126.0
+    "rotation": -126.0
   },
   "reversed": false,
-  "folder": "PositionStationSAM",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

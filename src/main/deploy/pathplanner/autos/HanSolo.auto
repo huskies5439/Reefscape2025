@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartProcesseurToD"
+                  "pathName": "StartCentreToG"
                 }
               },
               {
@@ -30,22 +30,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "DToCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionStationProcesseur"
-                }
-              }
-            ]
+            "pathName": "GToCorailProcesseur"
           }
         },
         {
@@ -61,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CorailProcesseurToC"
+                  "pathName": "StationProcesseurToD"
                 }
               },
               {
@@ -80,22 +67,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "CToCorailProcesseur"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "actionProcesseur"
-                }
-              }
-            ]
+            "pathName": "DToStationProcesseur"
           }
         },
         {
@@ -111,7 +85,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CorailProcesseurToL"
+                  "pathName": "StationProcesseurToC"
                 }
               },
               {
@@ -127,6 +101,12 @@
           "type": "named",
           "data": {
             "name": "sortirCorail"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CToStationProcesseur"
           }
         }
       ]

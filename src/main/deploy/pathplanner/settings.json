@@ -3,14 +3,8 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "AutoAlgueCentre",
     "AutoCorailCage",
-    "AutoCorailProcesseur",
-    "AutoDuoProcesseur",
-    "AutoHanSolo",
-    "AutoLeGrandTour",
-    "AutoDuoCage",
-    "PositionStationSAM"
+    "AutoDuoCage"
   ],
   "autoFolders": [
     "VieuxAuto"

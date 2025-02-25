@@ -8,27 +8,32 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.914204545454545,
-        "y": 2.332670454545454
+        "x": 2.8949549990125316,
+        "y": 2.2046220396112535
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
     },
     {
       "anchor": {
-        "x": 3.153,
-        "y": 3.851
+        "x": 3.992,
+        "y": 2.784
       },
       "prevControl": {
-        "x": 2.3990340909090904,
-        "y": 3.412102272727272
+        "x": 2.3546056778638977,
+        "y": 1.8521227398655495
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "B"
+      "linkedName": "D"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5020746887966805,
+      "rotationDegrees": 45.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,10 +47,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "reversed": false,
-  "folder": "AutoDuoProcesseur",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -126.0
