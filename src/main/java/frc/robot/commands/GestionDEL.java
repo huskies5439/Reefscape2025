@@ -13,7 +13,6 @@ import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.DEL;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class GestionDEL extends Command {
 
   DEL del; 
@@ -39,11 +38,13 @@ public class GestionDEL extends Command {
   @Override
   public void execute() {
     if(corailManip.isCorail() || algueManip.isAlgue()){
-      del.couleur(Color.kGreen);
-    }else{
+      del.couleur(Color.kRed);
+    }
+    else{
       if(basePilotable.isRedAlliance()){
-        del.breathe(Color.kRed);
-      }else{
+        del.breathe(Color.kGreen);
+      }
+      else{
         del.breathe(Color.kBlue);
       }
     }

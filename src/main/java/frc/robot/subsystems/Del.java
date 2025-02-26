@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Percent;
 import static edu.wpi.first.units.Units.Seconds;
 
 import edu.wpi.first.wpilibj.AddressableLED;
@@ -37,7 +39,7 @@ public class DEL extends SubsystemBase {
 
   public void breathe(Color color){
     LEDPattern base = LEDPattern.solid(color);
-    LEDPattern pattern = base.breathe(Seconds.of(2));
+    LEDPattern pattern = base.breathe(Seconds.of(1.0));
     pattern.applyTo(delBuffer);
     del.setData(delBuffer);
   }

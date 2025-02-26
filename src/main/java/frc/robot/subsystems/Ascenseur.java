@@ -31,7 +31,7 @@ public class Ascenseur extends SubsystemBase {
   private SparkFlexConfig moteurConfig = new SparkFlexConfig();
   private double conversionVortex;
 
-  private Servo serrureCage = new Servo(6);
+  private Servo serrureCage = new Servo(2);
 
   // Encodeur
   private Encoder encoder = new Encoder(2, 3,true);
@@ -162,7 +162,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void debarrer() {
-    serrureCage.setAngle(105);
+    serrureCage.setAngle(90);
   }
 
   /////////////////// PID + FeedForward
