@@ -16,13 +16,9 @@ import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
 import frc.robot.commands.grimpeur.ActiverGrimpeur;
 import frc.robot.commands.grimpeur.ControleGrimpeur;
-import frc.robot.commands.pathplanner.ActionProcesseurPathPlanner;
-import frc.robot.commands.pathplanner.ActionRecifAlgueBasPathPlanner;
-import frc.robot.commands.pathplanner.ActionRecifAlgueHautPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifCorailPathPlanner;
 import frc.robot.commands.pathplanner.ActionRecifCorailPathPlannerL2;
-import frc.robot.commands.pathplanner.ActionStationCagePathPlanner;
-import frc.robot.commands.pathplanner.ActionStationProcesseurPathPlanner;
+import frc.robot.commands.pathplanner.ActionStationPathPlanner;
 import frc.robot.commands.sequence.AutoAlgue;
 import frc.robot.commands.sequence.AutoCorail;
 import frc.robot.commands.sequence.AutoProcesseur;
@@ -86,32 +82,15 @@ public class RobotContainer {
        
 
         // commmandes pour pathPlanner
-        NamedCommands.registerCommand("goberAlgue", algueManip.goberCommand());
-        NamedCommands.registerCommand("sortirAlgue", algueManip.sortirCommand().withTimeout(1));
-
-        NamedCommands.registerCommand("goberCorail", new ActionStationProcesseurPathPlanner(basePilotable, ascenseur, poignet, corailManip));
+        NamedCommands.registerCommand("goberCorail", new ActionStationPathPlanner(basePilotable, ascenseur, poignet, corailManip));
         NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
          .alongWith(Commands.run(ascenseur::hold, ascenseur)).alongWith(Commands.run(poignet::hold, poignet))
          .withTimeout(0.25));
 
-        NamedCommands.registerCommand("monterAlgueBas",
-                new GoToHauteur(() -> Hauteur.algueBas[0], () -> Hauteur.algueBas[1], ascenseur, poignet));
-
-        NamedCommands.registerCommand("actionProcesseur",
-                new ActionProcesseurPathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionRecifAlgueBas",
-                new ActionRecifAlgueBasPathPlanner(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionRecifAlgueHaut",
-                new ActionRecifAlgueHautPathPlanner(basePilotable, ascenseur, poignet));
         NamedCommands.registerCommand("actionRecifCorail",
                 new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
          NamedCommands.registerCommand("actionRecifCorailL2",
                 new ActionRecifCorailPathPlannerL2(basePilotable, ascenseur, poignet));
-        NamedCommands.registerCommand("actionStationCage",
-                new ActionStationCagePathPlanner(basePilotable, ascenseur, poignet, corailManip));
-
-       
-   
         
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);

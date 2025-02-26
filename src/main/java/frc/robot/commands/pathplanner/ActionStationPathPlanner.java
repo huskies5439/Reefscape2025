@@ -16,11 +16,11 @@ import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
-public class ActionStationProcesseurPathPlanner extends ParallelRaceGroup {
+public class ActionStationPathPlanner extends ParallelRaceGroup {
 
   /**Actions durant le déplacement vers la station côté processeur
  * @param corailManip TODO*/
-  public ActionStationProcesseurPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
+  public ActionStationPathPlanner(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
 
     addCommands(
       new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet),
