@@ -42,7 +42,7 @@ public class Ascenseur extends SubsystemBase {
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(60, 0, 0.02,
-      new TrapezoidProfile.Constraints(0.8, 1.5));
+      new TrapezoidProfile.Constraints(1.0, 2.5));
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.701, 0.3, 6.3327, 0.2652);
 
@@ -78,7 +78,7 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    // SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
+    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
      SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
     // //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
      //SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
@@ -163,7 +163,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   public void debarrer() {
-    serrureCage.setAngle(90);
+    serrureCage.setAngle(105);
   }
 
   /////////////////// PID + FeedForward

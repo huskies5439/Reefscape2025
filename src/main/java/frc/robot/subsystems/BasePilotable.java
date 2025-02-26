@@ -290,7 +290,7 @@ public class BasePilotable extends SubsystemBase {
 
   public Command followPath(Pose2d cible) {
 
-    PathConstraints constraints = new PathConstraints(2, 1.5, Math.toRadians(360), Math.toRadians(360)); ////// A Ajuster
+    PathConstraints constraints = new PathConstraints(2, 2.0, Math.toRadians(720), Math.toRadians(720)); ////// A Ajuster
     //max velocity = 2 
     //max aceleration = 1.5
     return AutoBuilder.pathfindToPoseFlipped(cible, constraints, 0.0);
@@ -303,7 +303,7 @@ public class BasePilotable extends SubsystemBase {
   }
 
   public boolean isProcheRecif() {
-    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 3);
+    return isProche(isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif, 3.5);
   }
 
   public boolean isProcheProcesseur() {
