@@ -12,12 +12,12 @@ import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Del extends SubsystemBase {
+public class DEL extends SubsystemBase {
 
   private AddressableLED del = new AddressableLED(1);
   private AddressableLEDBuffer delBuffer = new AddressableLEDBuffer(66);
 
-  public Del() {
+  public DEL() {
     del.setLength(delBuffer.getLength());
     del.setData(delBuffer);
     del.start();

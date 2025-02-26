@@ -10,6 +10,7 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.Constants.GamePositions;
 import frc.robot.commands.AscenseurDefaut;
+import frc.robot.commands.GestionDEL;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.commands.PoignetDefaut;
 import frc.robot.commands.PreparationPit;
@@ -27,6 +28,7 @@ import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
+import frc.robot.subsystems.DEL;
 import frc.robot.subsystems.Poignet;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -49,9 +51,9 @@ public class RobotContainer {
     private final BasePilotable basePilotable = new BasePilotable();
     private final Ascenseur ascenseur = new Ascenseur();
     private final Poignet poignet = new Poignet();
-
     private final AlgueManip algueManip = new AlgueManip();
     private final CorailManip corailManip = new CorailManip();
+    private final DEL del = new DEL();
 
     CommandXboxController manette = new CommandXboxController(0);
 
@@ -82,6 +84,7 @@ public class RobotContainer {
        
 
         // commmandes pour pathPlanner
+        //LES NAMED COMMANDS DOIVENT ÊTRE CALLER AVANT LES AUTOS, DONC AVANT LE SENDABLE CHOOSER
         NamedCommands.registerCommand("goberCorail", new ActionStationPathPlanner(basePilotable, ascenseur, poignet, corailManip));
         NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
          .alongWith(Commands.run(ascenseur::hold, ascenseur)).alongWith(Commands.run(poignet::hold, poignet))
@@ -117,10 +120,11 @@ public class RobotContainer {
                 corailManip::isCorail)
                  );
 
-        //Note SAM : si ça ne marche pas avec le dPad, changer les commandes pour prendre un boolean au lieu d'un BooleanSupplier
         //Les boutons de la manettes sont des Triggers, donc des BooleanSupplier !
         ascenseur.setDefaultCommand(new AscenseurDefaut(manette.povUp(),manette.povDown(), ascenseur, poignet));
         poignet.setDefaultCommand(new PoignetDefaut(manette.povLeft(), manette.povRight(),poignet, algueManip));
+
+        del.setDefaultCommand(new GestionDEL(del, corailManip, algueManip, basePilotable));
 
         configureButtonBindings();
 
@@ -134,12 +138,7 @@ public class RobotContainer {
         boutonCorail();
         boutonAlgue();
 
-        //Station qui marche, aligné sur la coral station qu'on a au Katimavik
-        // manette.b().and(stationCageTrigger)
-        //         .whileTrue(new AutoStation(GamePositions.BlueCoralStationCageCentre, basePilotable, ascenseur, poignet,corailManip));
-        // manette.b().and(stationCageTrigger.negate())
-        //         .whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable, ascenseur, poignet,corailManip));
-
+       
         manette.b().and(stationCageTrigger).and(stationGaucheTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageProche, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger).and(stationCentreTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageCentre, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationCageLoin, basePilotable,ascenseur,poignet,corailManip));
@@ -161,13 +160,6 @@ public class RobotContainer {
         manette.x().and(modeGrimpeurTrigger).toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer)); 
 
        procheStationTrigger.whileTrue(new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand()).until(isCorailTrigger)); 
-
-        //dPad pour ajuster le bouton. Normalement ça devrait être intégré aux commandes par défaut pour plus de sécurité.
-        // manette.povUp().whileTrue(Commands.startEnd(() -> ascenseur.monter(), () -> ascenseur.hold(), ascenseur));
-        // manette.povDown().whileTrue(Commands.startEnd(() -> ascenseur.descendre(), () -> ascenseur.hold(), ascenseur));
-
-        // manette.povRight().whileTrue(Commands.startEnd(() -> poignet.monter(), () -> poignet.stop(), poignet));
-        // manette.povLeft().whileTrue(Commands.startEnd(() -> poignet.descendre(), () -> poignet.stop(), poignet));
 
 
         manette.start().onTrue(new PreparationPit(ascenseur, poignet));

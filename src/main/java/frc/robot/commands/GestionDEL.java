@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
-import frc.robot.subsystems.Del;
+import frc.robot.subsystems.DEL;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class GestionDEL extends Command {
 
-  Del del; 
+  DEL del; 
   CorailManip corailManip; 
   AlgueManip algueManip; 
   BasePilotable basePilotable; 
   
-  public GestionDEL(Del del, CorailManip corailManip, AlgueManip algueManip,BasePilotable basePilotable) {
+  public GestionDEL(DEL del, CorailManip corailManip, AlgueManip algueManip,BasePilotable basePilotable) {
     this.del = del; 
     this.corailManip = corailManip; 
     this.algueManip = algueManip; 
