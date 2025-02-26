@@ -46,6 +46,7 @@ public class Ascenseur extends SubsystemBase {
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.701, 0.3, 6.3327, 0.2652);
 
+  private boolean rainbow = false; 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
 

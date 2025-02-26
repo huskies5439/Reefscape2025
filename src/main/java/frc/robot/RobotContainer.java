@@ -155,7 +155,7 @@ public class RobotContainer {
         grimpeurTrigger.onTrue(Commands.runOnce(()->{modeGrimpeur = !modeGrimpeur;})); 
 
         modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)
-                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, manette.x(), ascenseur)));
+                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, manette.x(), ascenseur)).alongWith(Commands.run(()-> del.rainbow(),del)));
 
         manette.x().and(modeGrimpeurTrigger).toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer)); 
 

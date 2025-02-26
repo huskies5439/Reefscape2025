@@ -12,8 +12,8 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.Poignet;
 
 public class ActiverGrimpeur extends SequentialCommandGroup {
-
-  public ActiverGrimpeur(Ascenseur ascenseur, Poignet poignet) {
+  
+  public ActiverGrimpeur(Ascenseur ascenseur, Poignet poignet) { 
     addCommands(
         new InstantCommand(ascenseur::debarrer, ascenseur),
         new GoToHauteur(()-> Hauteur.grimper[0], ()-> Hauteur.grimper[1], ascenseur, poignet)

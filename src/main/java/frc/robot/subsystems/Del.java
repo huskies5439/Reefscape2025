@@ -43,4 +43,12 @@ public class DEL extends SubsystemBase {
     pattern.applyTo(delBuffer);
     del.setData(delBuffer);
   }
+
+  public void rainbow(){
+    LEDPattern base = LEDPattern.rainbow(255,255); 
+    //LEDPattern pattern = base.blink(Seconds.of(2),Seconds.of(1)); 
+    LEDPattern pattern = base.scrollAtRelativeSpeed(Percent.per(Second).of(25));
+    pattern.applyTo(delBuffer); 
+    del.setData(delBuffer); 
+  }
 }
