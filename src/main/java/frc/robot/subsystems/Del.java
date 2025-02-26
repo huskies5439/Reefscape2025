@@ -4,8 +4,11 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Seconds;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -25,19 +28,17 @@ public class Del extends SubsystemBase {
   }
 
 //////////////////////////////DEL
-  public void closeDel() {
-    for (var i = 0; i < delBuffer.getLength(); i++) {
-      delBuffer.setRGB(i, 0, 0, 0);
-    }
-    del.setData(delBuffer);
 
+  public void couleur(Color color){
+    LEDPattern solide = LEDPattern.solid(color);
+    solide.applyTo(delBuffer);
+    del.setData(delBuffer);
   }
 
-  public void setCouleur(Color color) {
-    for (int i = 0; i < delBuffer.getLength(); i++) {
-      delBuffer.setLED(i, color);
-    }
+  public void breathe(Color color){
+    LEDPattern base = LEDPattern.solid(color);
+    LEDPattern pattern = base.breathe(Seconds.of(2));
+    pattern.applyTo(delBuffer);
     del.setData(delBuffer);
-
   }
 }
