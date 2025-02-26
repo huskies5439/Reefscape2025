@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.70625,
-        "y": 7.369249999999999
+        "x": 0.98,
+        "y": 7.046
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2555342915908305,
-        "y": 5.939769163202579
+        "x": 2.0669999999999997,
+        "y": 6.49175
       },
       "isLocked": false,
       "linkedName": "CoralStationCage"
@@ -20,8 +20,8 @@
         "y": 5.204
       },
       "prevControl": {
-        "x": 2.21325,
-        "y": 5.653250000000001
+        "x": 2.3594999999999997,
+        "y": 5.86775
       },
       "nextControl": null,
       "isLocked": false,
@@ -35,8 +35,8 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

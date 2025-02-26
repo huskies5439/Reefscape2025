@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.95,
-        "y": 0.98
+        "x": 0.98,
+        "y": 0.95
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.40275,
-        "y": 2.7642500000000014
+        "x": 2.4327500000000004,
+        "y": 2.734250000000001
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
@@ -35,8 +35,8 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 720.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0,
     "nominalVoltage": 11.0,
     "unlimited": false
   },

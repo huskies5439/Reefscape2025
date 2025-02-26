@@ -42,16 +42,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "actionStationProcesseur"
+                  "name": "goberCorail"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
           }
         },
         {
@@ -92,16 +86,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "actionProcesseur"
+                  "name": "goberCorail"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
           }
         },
         {

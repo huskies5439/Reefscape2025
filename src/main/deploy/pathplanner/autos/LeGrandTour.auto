@@ -30,15 +30,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "DToStationProcesseur"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DToStationProcesseur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "goberCorail"
+                }
+              }
+            ]
           }
         },
         {
@@ -67,15 +74,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "CToStationProcesseur"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "goberCorail"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CToStationProcesseur"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "goberCorail"
+                }
+              }
+            ]
           }
         },
         {
