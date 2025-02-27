@@ -4,23 +4,22 @@
 
 package frc.robot.commands;
 
-import java.security.Key;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
-import frc.robot.subsystems.DEL;
+import frc.robot.subsystems.Del;
 
 public class GestionDEL extends Command {
 
-  DEL del; 
+  Del del; 
   CorailManip corailManip; 
   AlgueManip algueManip; 
   BasePilotable basePilotable; 
   
-  public GestionDEL(DEL del, CorailManip corailManip, AlgueManip algueManip,BasePilotable basePilotable) {
+  public GestionDEL(Del del, CorailManip corailManip, AlgueManip algueManip,BasePilotable basePilotable) {
     this.del = del; 
     this.corailManip = corailManip; 
     this.algueManip = algueManip; 

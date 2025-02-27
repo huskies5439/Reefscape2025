@@ -28,7 +28,7 @@ import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
-import frc.robot.subsystems.DEL;
+import frc.robot.subsystems.Del;
 import frc.robot.subsystems.Poignet;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -53,7 +53,7 @@ public class RobotContainer {
     private final Poignet poignet = new Poignet();
     private final AlgueManip algueManip = new AlgueManip();
     private final CorailManip corailManip = new CorailManip();
-    private final DEL del = new DEL();
+    private final Del del = new Del();
 
     CommandXboxController manette = new CommandXboxController(0);
 
