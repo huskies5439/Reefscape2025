@@ -52,7 +52,7 @@ public class Poignet extends SubsystemBase {
     moteur.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     resetEncodeurStartUp();
 
-    pidPoignet.setTolerance(5);
+    pidPoignet.setTolerance(2);
   }
 
   @Override

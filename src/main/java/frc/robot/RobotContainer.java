@@ -72,7 +72,7 @@ public class RobotContainer {
     Trigger isCorailTrigger = new Trigger(corailManip :: isCorail); 
 
     Trigger manetteA = manette.a();
-    Trigger manetteY = manette.y();
+    Trigger manetteX = manette.x();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -147,7 +147,7 @@ public class RobotContainer {
         manette.b().and(stationCageTrigger.negate()).and(stationCentreTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcCentre, basePilotable,ascenseur,poignet,corailManip));
         manette.b().and(stationCageTrigger.negate()).and(stationDroiteTrigger).whileTrue(new AutoStation(GamePositions.BlueCoralStationProcProche, basePilotable,ascenseur,poignet,corailManip));
 
-        manette.x().and(modeGrimpeurTrigger.negate()).whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
+        manette.y().and(modeGrimpeurTrigger.negate()).whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
         
         manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
         manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(()-> Hauteur.algueSol[0], ()-> Hauteur.algueSol[1], ascenseur, poignet)));
@@ -218,22 +218,22 @@ public class RobotContainer {
     }
 
     private void boutonAlgue() {
-        manetteY.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
+        manetteX.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
                 .whileTrue(new AutoAlgue(Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
 
-        manetteY.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
+        manetteX.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
                 .whileTrue(new AutoAlgue(Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable, algueManip));
 
-        manetteY.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))
+        manetteX.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))
                 .whileTrue(new AutoAlgue(Algue.EF, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
 
-        manetteY.and(operateur.button(BoutonOperateur.G).or(operateur.button(BoutonOperateur.H)))
+        manetteX.and(operateur.button(BoutonOperateur.G).or(operateur.button(BoutonOperateur.H)))
                 .whileTrue(new AutoAlgue(Algue.GH, Hauteur.algueBas, ascenseur, poignet, basePilotable, algueManip));
 
-        manetteY.and(operateur.button(BoutonOperateur.I).or(operateur.button(BoutonOperateur.J)))
+        manetteX.and(operateur.button(BoutonOperateur.I).or(operateur.button(BoutonOperateur.J)))
                 .whileTrue(new AutoAlgue(Algue.IJ, Hauteur.algueHaut, ascenseur, poignet, basePilotable, algueManip));
 
-        manetteY.and(operateur.button(BoutonOperateur.K).or(operateur.button(BoutonOperateur.L)))
+        manetteX.and(operateur.button(BoutonOperateur.K).or(operateur.button(BoutonOperateur.L)))
                 .whileTrue(new AutoAlgue(Algue.KL, Hauteur.algueBas, ascenseur, poignet, basePilotable, algueManip));
     }
 
