@@ -103,7 +103,7 @@ public class BasePilotable extends SubsystemBase {
 
 		setpointGenerator = new SwerveSetpointGenerator(
 				robotConfig,
-				Units.rotationsToRadians(10.0)
+				Units.rotationsToRadians(3.94)//Valeur selon la freespeed du neo 550
 		);
 
 		previousSetpoint = new SwerveSetpoint(
