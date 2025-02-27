@@ -84,7 +84,7 @@ public class BasePilotable extends SubsystemBase {
         this::resetOdometry,
         this::getChassisSpeeds,
         (speeds, feedforward) -> conduireChassis(speeds),
-        new PPHolonomicDriveController(new PIDConstants(15, 0, 0), // a ajuster
+        new PPHolonomicDriveController(new PIDConstants(12, 0, 0), // a ajuster
             new PIDConstants(5, 0, 0)), // a ajuster
         robotConfig,
         this::isRedAlliance,
