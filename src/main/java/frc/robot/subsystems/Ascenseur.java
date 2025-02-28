@@ -42,7 +42,7 @@ public class Ascenseur extends SubsystemBase {
 
   // PID
   private ProfiledPIDController pidAscenseur = new ProfiledPIDController(60, 0, 0.02,
-      new TrapezoidProfile.Constraints(1.0, 2.5));
+      new TrapezoidProfile.Constraints(1.0, 2));
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.701, 0.3, 6.3327, 0.2652);
 

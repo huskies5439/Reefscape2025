@@ -5,7 +5,9 @@
 package frc.robot.commands.sequence;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -21,16 +23,23 @@ public class AutoAlgue extends ParallelRaceGroup {
   //Cette commande doit reculer avant de descendre l'ascenseur à cause de a taille de l'Algue
   //Contrairement aux autres AutoXYZ, se termine automatiquement.
   //Si on ne veut pas que ça se termine automatiquement, ôter la Race, mais l'ascenseur va rester dans les airs
-  public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
+  public AutoAlgue(double vx, double vy, double vRotation, Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
 
     addCommands(
         new SequentialCommandGroup(
           basePilotable.followPath(cible)//Se rendre au récif
             .until(algueManip::isAlgue),//Qu'on se rende ou non, continuer quand on clique l'algue
-            new WaitCommand(0.1),
-          //On recule (valeur POSITIVE à cause de l'inversion pour le joystick de la manette) en ROBOT-ORIENTED durant 0.2s
-          Commands.run(()->basePilotable.conduire(1, 0, 0,false, false), basePilotable)
-            .withTimeout(0.4)//Mets fin à la race
+        
+            new ConditionalCommand(
+          Commands.run(
+          () -> basePilotable.conduire(
+                  0.5*vx, 0.5*vy, 0.5*vRotation,
+                  true, true),
+          basePilotable),
+          new WaitCommand(0.01), 
+          ()-> {return DriverStation.isTeleop();})
+       
+         
           
         ),
     

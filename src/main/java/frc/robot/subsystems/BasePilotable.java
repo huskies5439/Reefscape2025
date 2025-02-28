@@ -406,7 +406,7 @@ public class BasePilotable extends SubsystemBase {
 		return isProche(
 				isRedAlliance() ? GamePositions.RedCentreRecif :
 				GamePositions.BlueCentreRecif,
-				3.5
+				4
 					   );
 	}
 
