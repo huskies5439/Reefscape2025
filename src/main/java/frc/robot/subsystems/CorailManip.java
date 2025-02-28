@@ -51,7 +51,7 @@ public class CorailManip extends SubsystemBase {
   }
 
   public void sortir() {
-    setVoltage(-5);
+    setVoltage(-7);
   }
 
   public void stop() {

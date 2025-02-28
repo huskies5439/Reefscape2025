@@ -385,7 +385,7 @@ public class BasePilotable extends SubsystemBase {
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				2,
+				1,
 														  2.0,
 														  Math.toRadians(720),
 														  Math.toRadians(720)
@@ -409,6 +409,16 @@ public class BasePilotable extends SubsystemBase {
 				4
 					   );
 	}
+
+
+	public boolean isLoinRecif() {
+		return !isProche(
+				isRedAlliance() ? GamePositions.RedCentreRecif :
+				GamePositions.BlueCentreRecif,
+				1.5
+					   );
+	}
+
 
 	public boolean isProcheProcesseur() {
 		return isProche(
