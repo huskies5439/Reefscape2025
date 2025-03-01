@@ -51,7 +51,7 @@ public class PoignetDefaut extends Command {
     }
 
     if (!modeManuel) {//PID si on n'a pas touché au dPad
-      if (poignet.getAngle() < 85) {// Désactive le PID si on est proche de la verticale
+      if (poignet.getAngle() < 82.5) {// Désactive le PID si on est proche de la verticale
         if (algueManip.isAlgue()) {// Si on a une algue, on va plutôt à l'horizontale
           poignet.setPID(0);
         } else {

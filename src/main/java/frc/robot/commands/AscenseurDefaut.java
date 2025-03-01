@@ -55,8 +55,10 @@ public class AscenseurDefaut extends Command {
       if (poignet.getAngle() < -30 && ascenseur.getPositionExterne() < 0.13) {// Sécurité pour empècher de smasher la
                                                                               // pince dans le bumper
         ascenseur.hold();
-      } else {
+      } else if(ascenseur.getPositionExterne() > 0.03){
         ascenseur.setPID(Hauteur.sol[0]);
+      }else{
+        ascenseur.stop();
       }
     }
 

@@ -65,7 +65,7 @@ public class PreparationPit extends SequentialCommandGroup {
         Commands.runOnce(poignet :: stop), 
         Commands.runOnce(poignet :: resetEncodeurLimitSwitch),
       
-        Commands.runEnd(()->poignet.setVoltage(1), poignet::stop, poignet).until(()-> poignet.getAngle() >= 80)
+        Commands.runEnd(()->poignet.setVoltage(1), poignet::stop, poignet).until(()-> poignet.getAngle() >= 83)
     )),
 
     //reHome l'ascenseur

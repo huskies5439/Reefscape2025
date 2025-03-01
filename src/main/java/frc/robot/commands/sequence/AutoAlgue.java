@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -19,7 +20,7 @@ import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
 
-public class AutoAlgue extends ParallelRaceGroup {
+public class AutoAlgue extends ParallelCommandGroup {
   //Aller chercher les Algues automatiquement au Récif
   //Cette commande doit reculer avant de descendre l'ascenseur à cause de a taille de l'Algue
   //Contrairement aux autres AutoXYZ, se termine automatiquement.
@@ -28,8 +29,8 @@ public class AutoAlgue extends ParallelRaceGroup {
 
     addCommands(
 
-      basePilotable.followPath(cible)//Se rendre au récif
-      .until(algueManip::isAlgue),//Qu'on se rende ou non, continuer quand on clique l'algue
+      basePilotable.followPath(cible),//Se rendre au récif
+      //Qu'on se rende ou non, continuer quand on clique l'algue
     
         //Monter quand on approche du récif
         //On gobe en même temps

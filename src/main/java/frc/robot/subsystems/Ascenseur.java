@@ -41,12 +41,11 @@ public class Ascenseur extends SubsystemBase {
   private final DigitalInput limitSwitchDroite = new DigitalInput(1);
 
   // PID
-  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(60, 0, 0.02,
+  private ProfiledPIDController pidAscenseur = new ProfiledPIDController(80, 0, 0.02,
       new TrapezoidProfile.Constraints(1.0, 2));
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(0.701, 0.3, 6.3327, 0.2652);
 
-  private boolean rainbow = false; 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
 
@@ -159,7 +158,7 @@ public class Ascenseur extends SubsystemBase {
   ///////////////////// Servo
 
   public void barrer() {
-    serrureCage.setAngle(75);
+    serrureCage.setAngle(70);
   }
 
   public void debarrer() {

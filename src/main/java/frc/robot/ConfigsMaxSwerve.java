@@ -29,7 +29,7 @@ public final class ConfigsMaxSwerve {
 
                         drivingConfig
                                         .idleMode(IdleMode.kBrake)
-                                        .smartCurrentLimit(50);
+                                        .smartCurrentLimit(70);
                         drivingConfig.encoder
                                         .positionConversionFactor(conversionEncodeur) // meters
                                         .velocityConversionFactor(conversionEncodeur / 60.0); // meters per second

@@ -57,11 +57,10 @@ public class BasePilotable extends SubsystemBase {
 	SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
 			Constants.kDriveKinematics,
 			Rotation2d.fromDegrees(getAngle()),
-			new SwerveModulePosition[]{avantGauche.getPosition(),
+			new SwerveModulePosition[] { avantGauche.getPosition(),
 					avantDroite.getPosition(), arriereGauche.getPosition(),
-					arriereDroite.getPosition()},
-			Pose2d.kZero
-	);
+					arriereDroite.getPosition() },
+			Pose2d.kZero);
 
 	Field2d field2d = new Field2d();
 
@@ -81,8 +80,7 @@ public class BasePilotable extends SubsystemBase {
 
 			robotConfig = RobotConfig.fromGUISettings();
 
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// configuration Pathplanner
@@ -93,24 +91,21 @@ public class BasePilotable extends SubsystemBase {
 				(speeds, feedforward) -> conduireChassis(speeds),
 				new PPHolonomicDriveController(
 						new PIDConstants(12, 0, 0), // a ajuster
-						new PIDConstants(5, 0, 0)
-				),
+						new PIDConstants(5, 0, 0)),
 				// a ajuster
 				robotConfig,
 				this::isRedAlliance,
-				this
-							 );
+				this);
 
 		setpointGenerator = new SwerveSetpointGenerator(
 				robotConfig,
-				Units.rotationsToRadians(3.94)//Valeur selon la freespeed du neo 550
+				Units.rotationsToRadians(3.94)// Valeur selon la freespeed du neo 550
 		);
 
 		previousSetpoint = new SwerveSetpoint(
 				getChassisSpeeds(),
 				getModuleStates(),
-				DriveFeedforwards.zeros(4)
-		);
+				DriveFeedforwards.zeros(4));
 
 	}
 
@@ -119,10 +114,8 @@ public class BasePilotable extends SubsystemBase {
 		// Update du Pose Estimator
 		poseEstimator.update(
 				Rotation2d.fromDegrees(getAngle()),
-				new SwerveModulePosition[]{avantGauche.getPosition(),
-						avantDroite.getPosition(), arriereGauche.getPosition()
-						, arriereDroite.getPosition()}
-							);
+				new SwerveModulePosition[] { avantGauche.getPosition(),
+						avantDroite.getPosition(), arriereGauche.getPosition(), arriereDroite.getPosition() });
 
 		field2d.setRobotPose(getPose());
 		SmartDashboard.putData("Field", field2d);
@@ -136,13 +129,11 @@ public class BasePilotable extends SubsystemBase {
 		SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY());
 		SmartDashboard.putNumber(
 				"Pose Estimator Theta : ",
-				getPose().getRotation().getDegrees()
-								);
+				getPose().getRotation().getDegrees());
 
 		SmartDashboard.putString(
 				"Cible BasePilotable",
-				getCibleManetteOperateur().toString()
-								);
+				getCibleManetteOperateur().toString());
 		// SmartDashboard.putString("cible station", getCibleStation()
 		// .toString());
 
@@ -155,8 +146,8 @@ public class BasePilotable extends SubsystemBase {
 	/// ////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
 
 	public void setModuleStates(SwerveModuleState[] desiredStates) {
-		//    SwerveDriveKinematics.desaturateWheelSpeeds(
-		//        desiredStates, Constants.maxVitesseModule);
+		// SwerveDriveKinematics.desaturateWheelSpeeds(
+		// desiredStates, Constants.maxVitesseModule);
 		avantGauche.setDesiredState(desiredStates[0]);
 		avantDroite.setDesiredState(desiredStates[1]);
 		arriereGauche.setDesiredState(desiredStates[2]);
@@ -164,20 +155,24 @@ public class BasePilotable extends SubsystemBase {
 	}
 
 	public SwerveModuleState[] getModuleStates() {
-		return new SwerveModuleState[]{avantGauche.getState(),
+		return new SwerveModuleState[] { avantGauche.getState(),
 				avantDroite.getState(), arriereGauche.getState(),
-				arriereDroite.getState()};
+				arriereDroite.getState() };
 	}
 
 	/// ///// TÉLÉOP
+
+	public void resetSetpoint(){
+		previousSetpoint = new SwerveSetpoint(getChassisSpeeds(), getModuleStates(), DriveFeedforwards.zeros(4));
+	}
+	
+
 	public void conduire(
 			double xSpeed,
 			double ySpeed,
 			double rot,
 			boolean fieldRelative,
-			boolean squared
-						)
-	{
+			boolean squared) {
 
 		double deadband = 0.05;
 		// appliquer une deadband sur les joysticks et corriger la direction
@@ -185,7 +180,7 @@ public class BasePilotable extends SubsystemBase {
 		ySpeed = -MathUtil.applyDeadband(ySpeed, deadband);
 		rot = -MathUtil.applyDeadband(rot, deadband);
 
-		if(squared) {// Mettre les joysticks "au carré" pour adoucir les
+		if (squared) {// Mettre les joysticks "au carré" pour adoucir les
 			// déplacements
 			xSpeed = xSpeed * Math.abs(xSpeed);
 			ySpeed = ySpeed * Math.abs(ySpeed);
@@ -200,27 +195,24 @@ public class BasePilotable extends SubsystemBase {
 
 		// inversion du field oriented selon l'alliance
 		double invert = 1;
-		if(isRedAlliance()) {
+		if (isRedAlliance()) {
 			invert = -1; // on inverse le déplacement du robot
 		}
 
-		ChassisSpeeds speeds = fieldRelative ?
-							   ChassisSpeeds.fromFieldRelativeSpeeds(
+		ChassisSpeeds speeds = fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
 				xSpeedDelivered * invert,
 				ySpeedDelivered * invert,
 				rotDelivered,
-				getPose().getRotation()
-																					) : new ChassisSpeeds(
-				xSpeedDelivered,
-				ySpeedDelivered,
-				rotDelivered
-		);
+				getPose().getRotation())
+				: new ChassisSpeeds(
+						xSpeedDelivered,
+						ySpeedDelivered,
+						rotDelivered);
 
 		previousSetpoint = setpointGenerator.generateSetpoint(
 				previousSetpoint,
 				speeds,
-				0.02
-															 );
+				0.02);
 		setModuleStates(previousSetpoint.moduleStates());
 	}
 
@@ -233,24 +225,20 @@ public class BasePilotable extends SubsystemBase {
 	public void setX() {
 		avantGauche.setDesiredState(new SwerveModuleState(
 				0,
-														  Rotation2d.fromDegrees(
-																  45)
-		));
+				Rotation2d.fromDegrees(
+						45)));
 		avantDroite.setDesiredState(new SwerveModuleState(
 				0,
-														  Rotation2d.fromDegrees(
-																  -45)
-		));
+				Rotation2d.fromDegrees(
+						-45)));
 		arriereGauche.setDesiredState(new SwerveModuleState(
 				0,
-															Rotation2d.fromDegrees(
-																	-45)
-		));
+				Rotation2d.fromDegrees(
+						-45)));
 		arriereDroite.setDesiredState(new SwerveModuleState(
 				0,
-															Rotation2d.fromDegrees(
-																	45)
-		));
+				Rotation2d.fromDegrees(
+						45)));
 	}
 
 	/// ////// Pose estimator
@@ -262,11 +250,9 @@ public class BasePilotable extends SubsystemBase {
 		// l'odométrie du robot
 		poseEstimator.resetPosition(
 				Rotation2d.fromDegrees(getAngle()),
-				new SwerveModulePosition[]{avantGauche.getPosition(),
-						avantDroite.getPosition(), arriereGauche.getPosition()
-						, arriereDroite.getPosition()},
-				pose
-								   );
+				new SwerveModulePosition[] { avantGauche.getPosition(),
+						avantDroite.getPosition(), arriereGauche.getPosition(), arriereDroite.getPosition() },
+				pose);
 	}
 
 	/// ///////////////// limelight
@@ -278,8 +264,7 @@ public class BasePilotable extends SubsystemBase {
 				0,
 				0,
 				0,
-				0
-											);
+				0);
 		LimelightHelpers.SetRobotOrientation(
 				"limelight-bas",
 				poseEstimator.getEstimatedPosition().getRotation().getDegrees(),
@@ -287,8 +272,7 @@ public class BasePilotable extends SubsystemBase {
 				0,
 				0,
 				0,
-				0
-											);
+				0);
 	}
 
 	public void addVisionPosition(String nomComplet) {
@@ -297,29 +281,26 @@ public class BasePilotable extends SubsystemBase {
 		poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(
 				0.7,
 				0.7,
-				9999999
-																 ));
+				9999999));
 
-		LimelightHelpers.PoseEstimate poseEstimate =
-				LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
+		LimelightHelpers.PoseEstimate poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(
 				nomComplet);
 		boolean doRejectUpdate = false;
-		if(poseEstimate == null) {
+		if (poseEstimate == null) {
 			return;
 		}
 
-		if(Math.abs(getRate()) > 720) {
+		if (Math.abs(getRate()) > 720) {
 			doRejectUpdate = true;
 		}
-		if(poseEstimate.tagCount == 0) {
+		if (poseEstimate.tagCount == 0) {
 			doRejectUpdate = true;
 		}
 		SmartDashboard.putBoolean(nomComplet, !doRejectUpdate);
-		if(!doRejectUpdate) {
+		if (!doRejectUpdate) {
 			poseEstimator.addVisionMeasurement(
 					poseEstimate.pose,
-					poseEstimate.timestampSeconds
-											  );
+					poseEstimate.timestampSeconds);
 		}
 	}
 
@@ -353,19 +334,16 @@ public class BasePilotable extends SubsystemBase {
 				avantDroite.getState(),
 				avantGauche.getState(),
 				arriereDroite.getState(),
-				arriereGauche.getState()
-														 );
+				arriereGauche.getState());
 	}
 
 	public void conduireChassis(ChassisSpeeds chassisSpeeds) {
 		// Ramene la vitesse en intervale de 20 ms
 		ChassisSpeeds targetSpeed = ChassisSpeeds.discretize(
 				chassisSpeeds,
-				0.02
-															);
+				0.02);
 
-		SwerveModuleState[] swerveModuleState =
-				Constants.kDriveKinematics.toSwerveModuleStates(
+		SwerveModuleState[] swerveModuleState = Constants.kDriveKinematics.toSwerveModuleStates(
 				targetSpeed);
 		setModuleStates(swerveModuleState);
 	}
@@ -379,78 +357,62 @@ public class BasePilotable extends SubsystemBase {
 		return this.runOnce(() -> cibleManetteOperateur = cible);
 	}
 
-
 	/// //////////// On the fly
 
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				1,
-														  2.0,
-														  Math.toRadians(720),
-														  Math.toRadians(720)
-		); ////// A Ajuster
-		//max velocity = 2
-		//max aceleration = 1.5
+				1.5,
+				2.0,
+				Math.toRadians(720),
+				Math.toRadians(720)); ////// A Ajuster
+										// max velocity = 2
+										// max aceleration = 1.5
 		return AutoBuilder.pathfindToPoseFlipped(cible, constraints, 0.0);
 
 	}
 
 	// isProche multiple pour séparation rouge/bleu en automatique
 	public boolean isProche(Pose2d cible, double distanceMin) {
-		return getPose().getTranslation().getDistance(cible.getTranslation()) <
-			   distanceMin;
+		return getPose().getTranslation().getDistance(cible.getTranslation()) < distanceMin;
 	}
 
 	public boolean isProcheRecif() {
 		return isProche(
-				isRedAlliance() ? GamePositions.RedCentreRecif :
-				GamePositions.BlueCentreRecif,
-				4
-					   );
+				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
+				4);
 	}
-
 
 	public boolean isLoinRecif() {
 		return !isProche(
-				isRedAlliance() ? GamePositions.RedCentreRecif :
-				GamePositions.BlueCentreRecif,
-				1.5
-					   );
+				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
+				1.5);
 	}
-
 
 	public boolean isProcheProcesseur() {
 		return isProche(
-				isRedAlliance() ? GamePositions.RedProcesseur :
-				GamePositions.BlueProcesseur,
-				2
-					   );
+				isRedAlliance() ? GamePositions.RedProcesseur : GamePositions.BlueProcesseur,
+				2);
 	}
 
 	public boolean isProcheStationCage() {
 		return isProche(
-				isRedAlliance() ? GamePositions.RedCoralStationCage :
-				GamePositions.BlueCoralStationCageCentre,
-				1
-					   );
+				isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCageCentre,
+				1);
 	}
 
 	public boolean isProcheStationProcesseur() {
 		return isProche(
-				isRedAlliance() ? GamePositions.RedCoralStationProc :
-				GamePositions.BlueCoralStationProcCentre,
-				1
-					   );
+				isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProcCentre,
+				1);
 	}
 
 	public boolean isRedAlliance() {
 		Optional<Alliance> ally = DriverStation.getAlliance();
-		if(ally.isPresent()) {
+		if (ally.isPresent()) {
 			return ally.get() == Alliance.Red;
 
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

@@ -106,7 +106,7 @@ public class Poignet extends SubsystemBase {
   }
 
   public void resetEncodeurLimitSwitch() {
-    moteur.getEncoder().setPosition(-90);
+    moteur.getEncoder().setPosition(-87);
   }
 
   public void resetEncodeurStartUp(){

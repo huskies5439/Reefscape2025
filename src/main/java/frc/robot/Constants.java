@@ -15,12 +15,12 @@ public final class Constants {
   //////// BasePilotable
   // Driving Parameters - Note that these are not the maximum capable speeds of
   // the robot, rather the allowed maximum speeds
-  public static final double maxVitesseLineaire = 4.8;// Vitesse linéaire max du chassis //Valeur original 4.8 a note:à
+  public static final double maxVitesseLineaire = 3.75;// Vitesse linéaire max du chassis //Valeur original 4.8 a note:à
   // ajuster
   public static final double maxVitesseRotation = Math.PI * 1.4; // radians per second //Originale REV = 2pi soirée 22
                                                                  // fevrier = 1.5
 
-  public static final double maxVitesseModule = 4.46;// Vitesse maximale d'un module en m/s
+  // public static final double maxVitesseModule = 4.46;// Vitesse maximale d'un module en m/s
 
   // Chassis configuration
   public static final double kTrackWidth = Units.inchesToMeters(25.5);
@@ -40,7 +40,7 @@ public final class Constants {
     public static final double sol[] = { 0, 90 };
     public static final double L1[] = { 0, 60};
     public static final double L2[] = { 0.123, -86 };
-    public static final double L3[] = { 0.32, -86 };
+    public static final double L3[] = { 0.256, -20 };
     public static final double L4[] = { 0.56, -30 };
 
     public static final double algueSol[] = { 0, 0 };
@@ -87,7 +87,7 @@ public final class Constants {
     public static final Pose2d D = new Pose2d(3.992, 2.784, Rotation2d.fromDegrees(60));
     public static final Pose2d E = new Pose2d(4.997, 2.854, Rotation2d.fromDegrees(120));
     public static final Pose2d F = new Pose2d(5.281, 3.01, Rotation2d.fromDegrees(120));
-    public static final Pose2d G = new Pose2d(5.795, 3.860, Rotation2d.fromDegrees(-180));
+    public static final Pose2d G = new Pose2d(5.795, 3.880, Rotation2d.fromDegrees(-180));
     public static final Pose2d H = new Pose2d(5.795, 4.196, Rotation2d.fromDegrees(-180));
     public static final Pose2d I = new Pose2d(5.235, 5.078, Rotation2d.fromDegrees(-120));
     public static final Pose2d J = new Pose2d(4.941, 5.214, Rotation2d.fromDegrees(-120));

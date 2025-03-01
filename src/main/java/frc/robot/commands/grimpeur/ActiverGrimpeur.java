@@ -6,6 +6,7 @@ package frc.robot.commands.grimpeur;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
@@ -18,6 +19,7 @@ public class ActiverGrimpeur extends SequentialCommandGroup {
         new InstantCommand(ascenseur::debarrer, ascenseur),
         new GoToHauteur(()-> Hauteur.grimper[0], ()-> Hauteur.grimper[1], ascenseur, poignet)
           .until(()-> {return ascenseur.atCible() && poignet.atCible();})
+          .raceWith(new WaitCommand(2))
         );
   }
 }
