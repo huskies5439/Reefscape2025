@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
@@ -25,11 +24,11 @@ import frc.robot.subsystems.Poignet;
 //!!NE LIVRE PAS LE CORAIL!!
 public class AutoCorail extends ParallelCommandGroup {
   // se rend automatiquement à la bonne position sur le recif
-  public AutoCorail(Pose2d cible, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CommandXboxController manette) {
+  public AutoCorail(Pose2d cible, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     addCommands(
 
       basePilotable.followPath(cible),
-      
+
       //quand suffisament proche, met l'ascenseur et le poignet à la bonne position
       new SequentialCommandGroup(
         new WaitUntilCommand(basePilotable::isProcheRecif),

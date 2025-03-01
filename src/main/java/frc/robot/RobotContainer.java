@@ -139,7 +139,7 @@ public class RobotContainer {
 
         private void configureButtonBindings() {
 
-                // voir en bas pour les fonctions
+                // voir plus bas pour les fonctions
                 manetteOperateur();
                 boutonCorail();
                 boutonAlgue();
@@ -171,25 +171,25 @@ public class RobotContainer {
                 manette.y().and(modeGrimpeurTrigger.negate())
                                 .whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
                
-                 //Sortir les pieces de jeu
+                 // Bumper droit = Sortir les pieces de jeu
                 manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
                 
-                //Gober les algues 
+                //Bumper droit = Gober les algues 
                 manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
                                 () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
 
-                //Activer/desactiver grimpeur 
+                //Bumper gauche + droit = Activer/desactiver grimpeur 
                 grimpeurTrigger.onTrue(Commands.runOnce(() -> {
                         modeGrimpeur = !modeGrimpeur;
                 }));
 
-                //Controler grimpeur
+                // Trigger Gauche = monter et trigger droit = descendre pour controler grimpeur
                 modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)
                                 .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis,
                                                 manette.x(), ascenseur))
                                 .alongWith(Commands.run(() -> del.rainbow(), del)));
                
-                 // Barrer le servo en mode grimpeur
+                 // X en mode grimpeur = Barrer le servo en mode grimpeur
                 manette.x().and(modeGrimpeurTrigger)
                                 .toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer));
 
@@ -198,7 +198,7 @@ public class RobotContainer {
                                 new GoToHauteur(() -> Hauteur.station[0], () -> Hauteur.station[1], ascenseur, poignet)
                                                 .alongWith(corailManip.goberCommand()).until(isCorailTrigger));
                
-                 //Homing dans le pit 
+                 // Start = Homing dans le pit 
                 manette.start().onTrue(new PreparationPit(ascenseur, poignet));
         }
 
@@ -220,52 +220,74 @@ public class RobotContainer {
         private void boutonCorail() {
                 manetteA.and(operateur.button(BoutonOperateur.A))
                                 .whileTrue(new AutoCorail(
-                                                Branche.A, basePilotable, ascenseur, poignet, manette))
+                                                Branche.A, basePilotable, ascenseur, poignet))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteA.and(operateur.button(BoutonOperateur.B))
                                 .whileTrue(new AutoCorail(
-                                                Branche.B, basePilotable, ascenseur, poignet, manette));
+                                                Branche.B, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.C))
                                 .whileTrue(new AutoCorail(
-                                                Branche.C, basePilotable, ascenseur, poignet, manette));
+                                                Branche.C, basePilotable, ascenseur, poignet))
+                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.D))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.D, basePilotable, ascenseur, poignet, manette));
+                                                Branche.D, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.E))
                                 .whileTrue(new AutoCorail(
-                                                Branche.E, basePilotable, ascenseur, poignet, manette));
+                                                Branche.E, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.F))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.F, basePilotable, ascenseur, poignet, manette));
+                                                Branche.F, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.G))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.G, basePilotable, ascenseur, poignet, manette));
+                                                Branche.G, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.H))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.H, basePilotable, ascenseur, poignet, manette));
+                                                Branche.H, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.I))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.I, basePilotable, ascenseur, poignet, manette));
+                                                Branche.I, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.J))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.J, basePilotable, ascenseur, poignet, manette));
+                                                Branche.J, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.K))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.K, basePilotable, ascenseur, poignet, manette));
+                                                Branche.K, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteA.and(operateur.button(BoutonOperateur.L))
                                 .whileTrue(new AutoCorail( 
-                                                Branche.L, basePilotable, ascenseur, poignet, manette));
+                                                Branche.L, basePilotable, ascenseur, poignet))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
         }
 
@@ -274,32 +296,43 @@ public class RobotContainer {
                 manetteX.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
                                 .whileTrue(new AutoAlgue(
                                                 Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteX.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
                                 .whileTrue(new AutoAlgue( 
                                                 Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteX.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))
                                 .whileTrue(new AutoAlgue( 
                                                 Algue.EF, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip)) 
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteX.and(operateur.button(BoutonOperateur.G).or(operateur.button(BoutonOperateur.H)))
                                 .whileTrue(new AutoAlgue( 
                                                 Algue.GH, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteX.and(operateur.button(BoutonOperateur.I).or(operateur.button(BoutonOperateur.J)))
                                 .whileTrue(new AutoAlgue( 
                                                 Algue.IJ, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
+
 
                 manetteX.and(operateur.button(BoutonOperateur.K).or(operateur.button(BoutonOperateur.L)))
                                 .whileTrue(new AutoAlgue( 
                                                 Algue.KL, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip,manette));
+                                                algueManip))
+                                .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));      
         }
 
 }
