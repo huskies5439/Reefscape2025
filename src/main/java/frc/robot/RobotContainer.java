@@ -18,9 +18,8 @@ import frc.robot.commands.PreparationPit;
 import frc.robot.commands.SetHauteur;
 import frc.robot.commands.grimpeur.ActiverGrimpeur;
 import frc.robot.commands.grimpeur.ControleGrimpeur;
-import frc.robot.commands.pathplanner.ActionRecifCorailPathPlanner;
-import frc.robot.commands.pathplanner.ActionRecifCorailPathPlannerL2;
-import frc.robot.commands.pathplanner.ActionStationPathPlanner;
+import frc.robot.commands.pathplanner.actionCorailPP;
+import frc.robot.commands.pathplanner.actionSationPP;
 import frc.robot.commands.sequence.AutoAlgue;
 import frc.robot.commands.sequence.AutoCorail;
 import frc.robot.commands.sequence.AutoProcesseur;
@@ -50,7 +49,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
 
-        // créer les sous systèmes
+        // Créer les sous systèmes
         private final BasePilotable basePilotable = new BasePilotable();
         private final Ascenseur ascenseur = new Ascenseur();
         private final Poignet poignet = new Poignet();
@@ -58,63 +57,87 @@ public class RobotContainer {
         private final CorailManip corailManip = new CorailManip();
         private final Del del = new Del();
 
+
+        //Les deux manettes
         CommandXboxController manette = new CommandXboxController(0);
+        CommandGenericHID operateur = new CommandGenericHID(1); //Voir le dossier manetteOperateur pour le code platformio
 
-        CommandGenericHID operateur = new CommandGenericHID(1);
-
-        Trigger grimpeurTrigger = manette.leftTrigger(0.9).and(manette.rightTrigger(0.9));
+        //Trigger arbitraire du monde grimpeur
+        Trigger grimpeurTrigger = //Les deux triggers de la manette toggle le "mode grimpeur"
+                manette.leftTrigger(0.9).and(manette.rightTrigger(0.9));
+        
+        //Permet le suivi du mode grimpeur. Trop simple cette année pour mettre dans un sous-système
         boolean modeGrimpeur = false;
         Trigger modeGrimpeurTrigger = new Trigger(() -> modeGrimpeur);
 
+
+        //Trigger arbitraire pour aller à la bonne station selon la moitié de terrain
         Trigger stationCageTrigger = new Trigger(basePilotable::isStationCage);
+        
+        //3 triggers abitraires pour décaler le robot de gauche à droite sur la station
         Trigger stationGaucheTrigger = new Trigger(manette.leftTrigger());
         Trigger stationCentreTrigger = new Trigger(manette.leftTrigger().negate().and(manette.rightTrigger().negate()));
         Trigger stationDroiteTrigger = new Trigger(manette.rightTrigger());
 
+        
+        //Trigger pour se mettre automatiqument en mode gober si on est proche d'une station
         Trigger procheStationTrigger = new Trigger(
                         () -> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur())
-                        .and(() -> {
-                                return DriverStation.isTeleop();
-                        });
-        Trigger isCorailTrigger = new Trigger(corailManip::isCorail);
+                        .and(() -> {return DriverStation.isTeleop();});//Les triggers arbitraires brisent pathplanner, donc il faut les désactiver en auto
 
-        Trigger manetteA = manette.a();
-        Trigger manetteX = manette.x();
 
+        /* Comme il y a des tonnes de commandes associées à ces deux boutons,
+        nous avons fait un trigger arbitraire afin qu'il soit facile de modifer
+        le mapping de la manette si nécessaire*/
+        Trigger manetteA = manette.a();//Pour autoCorail
+        Trigger manetteX = manette.x();//Pour autoAlgue
+
+        
         private final SendableChooser<Command> autoChooser;
 
         public RobotContainer() {
 
                 FollowPathCommand.warmupCommand().schedule(); // warm up la librairie pour éviter les temps d'attente
 
-                // commmandes pour pathPlanner
-                // LES NAMED COMMANDS DOIVENT ÊTRE CALLER AVANT LES AUTOS, DONC AVANT LE
-                // SENDABLE CHOOSER
+                ////////////////// Commmandes pour PathPlanner/////////////////
+                // IMPORTANT : LES NAMED COMMANDS DOIVENT ÊTRE CALLER AVANT LES AUTOS, DONC AVANT LE SENDABLE CHOOSER
+                
+                //Pour gober. La fonction automatique ne marche pas dans PathPlanner car il ne gère pas les triggers
                 NamedCommands.registerCommand("goberCorail",
-                                new ActionStationPathPlanner(basePilotable, ascenseur, poignet, corailManip));
+                                new actionSationPP(basePilotable, ascenseur, poignet, corailManip));
+                
+                //Pour sortir le corail en gardant l'ascenceur en bonne position.
+                //Nécessaire car sinon les commandes par défaut s'effectuent en auto
                 NamedCommands.registerCommand("sortirCorail", corailManip.sortirCommand()
                                 .alongWith(Commands.run(ascenseur::hold, ascenseur))
                                 .alongWith(Commands.run(poignet::hold, poignet))
                                 .withTimeout(0.25));
 
+                //Actions à accomplir en se rendant vers le Récif
                 NamedCommands.registerCommand("actionRecifCorail",
-                                new ActionRecifCorailPathPlanner(basePilotable, ascenseur, poignet));
+                                new actionCorailPP(Hauteur.L4, basePilotable, ascenseur, poignet));
                 NamedCommands.registerCommand("actionRecifCorailL2",
-                                new ActionRecifCorailPathPlannerL2(basePilotable, ascenseur, poignet));
+                                new actionCorailPP(Hauteur.L2, basePilotable, ascenseur, poignet));
 
+                //Construction du sendable chooser
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
 
-                // Commandes par défaut (lorsque le robot s'ennuie)
+
+                /////////////// Commandes par défaut (lorsque le robot s'ennuie)//////////////
+                
+                //Conduire avec joystick
+                //Il faut réinitialiser le Setpoint Generator avant de conduire, car sinon le robot bouge après les pathfinding commands !
                 basePilotable.setDefaultCommand(
-                                Commands.runOnce(basePilotable::resetSetpoint, basePilotable).andThen(Commands.run(
+                                Commands.runOnce(basePilotable::resetSetpoint, basePilotable).andThen(
+                                Commands.run(
                                         () -> basePilotable.conduire(
                                                         manette.getLeftY(), manette.getLeftX(),
                                                         manette.getRightX(),
                                                         true, true),
                                         basePilotable)));
 
-                // des holds pour les sous systèmes
+                //Hold automatique s'il y a une pièce de jeu dans les manipulateurs, sinon stop
                 algueManip.setDefaultCommand(new ConditionalCommand(
                                 Commands.runOnce(algueManip::hold, algueManip),
                                 Commands.runOnce(algueManip::stop, algueManip),
@@ -125,9 +148,12 @@ public class RobotContainer {
                                 Commands.runOnce(corailManip::stop, corailManip),
                                 corailManip::isCorail));
 
-                // Les boutons de la manettes sont des Triggers, donc des BooleanSupplier !
+                
+                //Retourne automatiquement à sa position de départ (avec quelques protections)
+                //Override le PID si on utilise le DPad pour se déplacer manuellement
                 ascenseur.setDefaultCommand(
                                 new AscenseurDefaut(manette.povUp(), manette.povDown(), ascenseur, poignet));
+                                //Pas besoin de lambda car Button = Trigger = BooleanSupplier !
                 poignet.setDefaultCommand(
                                 new PoignetDefaut(manette.povLeft(), manette.povRight(), poignet, algueManip));
 
@@ -138,10 +164,33 @@ public class RobotContainer {
         }
 
         private void configureButtonBindings() {
+                /* Si on met "bêtement" les cibles en argument des fonctions, elles ne se mettent
+                 * pas à jour durant la match. En effet, la cible devient constante selon l'état de la manette
+                 * opérateur lors de la compilation du code.
+                 * 
+                 * Il faut donc utiliser un lambda et un supplier. 
+                 * C'est ce que l'on fait pour GoToHauteur, car la cible est un double[].
+                 * 
+                 * Par contre, pour toutes les fonctions qui font du pathfinding jusqu'à une Pose2d,
+                 * Il n'y a pas de Pose2dSupplier !!
+                 * 
+                 * Alors, la stratégie adoptée est de dupliquer les fonctions avec chacune des cibles dans la liste
+                 * d'arguments (donc constantes), mais d'utiliser la combinations de Triggers pilote-opérateur pour caller
+                 * la bonne "version" de la commande.
+                 * 
+                 * C'est pas le plus clean car nous avons énormément de répétition dans le code, mais ça fonctionne 1
+                  */
 
-                // voir plus bas pour les fonctions
-                manetteOperateur();
+                ///////////////////Auto Corail (amener le corail au Récif)///////////////////
+                
+                //Lecture de la manette opérateur pour savoir la hauteur sur le Récif
+                setHauteurOperateur();
+                
+                //SAM : tu es rendu ici dans le commentage massif du code !!!!!!!
+                //Renomme cette fonction
                 boutonCorail();
+
+
                 boutonAlgue();
 
                 // boutons pour la mannette ;
@@ -196,7 +245,7 @@ public class RobotContainer {
                 // Trigger pour se mettre en mode Station lorsque proche
                 procheStationTrigger.whileTrue(
                                 new GoToHauteur(() -> Hauteur.station[0], () -> Hauteur.station[1], ascenseur, poignet)
-                                                .alongWith(corailManip.goberCommand()).until(isCorailTrigger));
+                                                .alongWith(corailManip.goberCommand()).until(corailManip::isCorail));
 
                 // Start = Homing dans le pit
                 manette.start().onTrue(new PreparationPit(ascenseur, poignet));
@@ -207,8 +256,12 @@ public class RobotContainer {
                 return autoChooser.getSelected();
         }
 
-        private void manetteOperateur() {
-                // boutton manette oprateur
+        private void setHauteurOperateur() {
+                /* On actualise la cible dans une variable interne des deux sous-systèmes
+                selon le bouton de la manette opérateur. On appelle ensuite cette variable
+                pour connaitre la cible lorsqu'on active AutoCorail avec le bouton A.
+                Ça fonctionne car la cible en hauteur et en angle sont des doubles, donc
+                on a un DoubleSupplier*/
                 operateur.button(BoutonOperateur.L1).onTrue(new SetHauteur(Hauteur.L1, ascenseur, poignet));
                 operateur.button(BoutonOperateur.L2).onTrue(new SetHauteur(Hauteur.L2, ascenseur, poignet));
                 operateur.button(BoutonOperateur.L3).onTrue(new SetHauteur(Hauteur.L3, ascenseur, poignet));
