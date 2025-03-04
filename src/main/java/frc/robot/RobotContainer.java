@@ -41,8 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -178,7 +176,7 @@ public class RobotContainer {
                  * d'arguments (donc constantes), mais d'utiliser la combinations de Triggers pilote-opérateur pour caller
                  * la bonne "version" de la commande.
                  * 
-                 * C'est pas le plus clean car nous avons énormément de répétition dans le code, mais ça fonctionne 1
+                 * C'est pas le plus clean car nous avons énormément de répétition dans le code, mais ça fonctionne !
                   */
 
                 ///////////////////Auto Corail (amener le corail au Récif)///////////////////
@@ -186,16 +184,17 @@ public class RobotContainer {
                 //Lecture de la manette opérateur pour savoir la hauteur sur le Récif
                 setHauteurOperateur();
                 
-                //SAM : tu es rendu ici dans le commentage massif du code !!!!!!!
-                //Renomme cette fonction
-                boutonCorail();
+                //Bouton A = Se rendre au corail automatiquement et lever le manipulateur à la bonne hauteur selon la manette opérateur
+                autoCorailOperateur();
 
+                ///////////////////Auto Station (récupérer un corail à la station)///////////////////
 
-                boutonAlgue();
+                //Bouton B = se rendre Station
+                //AutoStation ne gère que la basepilotable
+                //Avec les triggers gauche et droite pour se décaler sur la station
+                //Permet de se rendre automatiquement vers la station la plus proche
 
-                // boutons pour la mannette ;
-                // B = auto station
-
+                //Côté Cage
                 manette.b().and(stationCageTrigger).and(stationGaucheTrigger)
                                 .whileTrue(new AutoStation(GamePositions.BlueCoralStationCageProche, basePilotable,
                                                 ascenseur, poignet, corailManip));
@@ -206,6 +205,7 @@ public class RobotContainer {
                                 .whileTrue(new AutoStation(GamePositions.BlueCoralStationCageLoin, basePilotable,
                                                 ascenseur, poignet, corailManip));
 
+                //Côté Processeur
                 manette.b().and(stationCageTrigger.negate()).and(stationGaucheTrigger)
                                 .whileTrue(new AutoStation(GamePositions.BlueCoralStationProcLoin, basePilotable,
                                                 ascenseur, poignet, corailManip));
@@ -216,42 +216,53 @@ public class RobotContainer {
                                 .whileTrue(new AutoStation(GamePositions.BlueCoralStationProcProche, basePilotable,
                                                 ascenseur, poignet, corailManip));
 
-                // Y = Auto algue au processeur
-                manette.y().and(modeGrimpeurTrigger.negate())
-                                .whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
 
-                // Bumper droit = Sortir les pieces de jeu
-                manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
-
-                // Bumper droit = Gober les algues
-                manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
-                                () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
-
-                // Bumper gauche + droit = Activer/desactiver grimpeur
-                grimpeurTrigger.onTrue(Commands.runOnce(() -> {
-                        modeGrimpeur = !modeGrimpeur;
-                }));
-
-                // Trigger Gauche = monter et trigger droit = descendre pour controler grimpeur
-                modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)
-                                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis,
-                                                manette.x(), ascenseur))
-                                .alongWith(Commands.run(() -> del.rainbow(), del)));
-
-                // X en mode grimpeur = Barrer le servo en mode grimpeur
-                manette.x().and(modeGrimpeurTrigger)
-                                .toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer));
-
-                // Trigger pour se mettre en mode Station lorsque proche
+                //Place le manipulateur à la bonne hauteur et gobe automatiquement quand on est proche d'une station
                 procheStationTrigger.whileTrue(
                                 new GoToHauteur(() -> Hauteur.station[0], () -> Hauteur.station[1], ascenseur, poignet)
                                                 .alongWith(corailManip.goberCommand()).until(corailManip::isCorail));
 
-                // Start = Homing dans le pit
+                //////////////ALGUES////////////////////
+                
+                //Bouton X = aller chercher algue dans le récif selon la branche sélectionnée par l'opérateur
+                autoAlgueOperateur();
+
+                //Bouton Y = Auto algue au processeur
+                manette.y().and(modeGrimpeurTrigger.negate())
+                                .whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
+               
+                // Bumper gauche = Gober les algues au sol
+                manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
+                                () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
+
+
+                //////////////Sortir les pièces de jeu////////////////////
+                // Bumper droit = Sortir les pieces de jeu
+                manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
+
+
+                //////////////Mode Grimpeur////////////////////
+
+                // Trigger gauche + droit = Activer/desactiver grimpeur
+                grimpeurTrigger.onTrue(Commands.runOnce(() -> {
+                        modeGrimpeur = !modeGrimpeur;
+                }));
+
+                //Contrôle du grimpeur
+                modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)//Placer la pince en mode grimpeur
+                                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur))//Trigger Gauche = monter et trigger droit = descendre
+                                .alongWith(Commands.run(() -> del.rainbow(), del)));//Classique : Grimper = Rainbow
+
+                // Bouton X en mode grimpeur = Barrer le servo
+                manette.x().and(modeGrimpeurTrigger)
+                                .toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer));
+
+                // Start = Homing dans le pit. Ne marche pas super bien
                 manette.start().onTrue(new PreparationPit(ascenseur, poignet));
         }
 
-        // Choisir les paths dans Dashboard
+
+
         public Command getAutonomousCommand() {
                 return autoChooser.getSelected();
         }
@@ -269,8 +280,11 @@ public class RobotContainer {
 
         }
 
-        // Automatiquement placer base pilotable et monter l'échelle pour coraux
-        private void boutonCorail() {
+        
+        private void autoCorailOperateur() {
+                /*Toutes les versions de autoCorail. Nécessaire car il n'y a pas de "Pose2dSupplier"
+                DescenteAutomatique sert à protéger la pince du récif lors de sa descente
+                Permet aussi de Hold la pince dans les airs en libérant la basepilotable pour permettre au pilote de s'ajuster*/
                 manetteA.and(operateur.button(BoutonOperateur.A))
                                 .whileTrue(new AutoCorail(
                                                 Branche.A, basePilotable, ascenseur, poignet))
@@ -333,8 +347,8 @@ public class RobotContainer {
 
         }
 
-        // Automatiquement chercher des algues selon des hauteurs alternantes
-        private void boutonAlgue() {
+        private void autoAlgueOperateur() {
+        //Voir les commentaires dans le bloc de fonctions ci-haut
                 manetteX.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
                                 .whileTrue(new AutoAlgue(
                                                 Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable,

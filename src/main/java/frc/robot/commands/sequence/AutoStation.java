@@ -6,33 +6,22 @@ package frc.robot.commands.sequence;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants.Hauteur;
-import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
 
-public class AutoStation extends ParallelCommandGroup {
-  
+public class AutoStation extends SequentialCommandGroup {
+  //Contrairement aux autres AutoXYZ, l'ascenceur est géré automatiquement par un trigger arbitraire.
+  //La Commande ne fait que se rendre à la station.
   public AutoStation(Pose2d cible, BasePilotable basePilotable,Ascenseur ascenseur, Poignet poignet, CorailManip corailManip ) {
    //se rend automatiquement à la station de Corail
 
     addCommands(
-      basePilotable.followPath(cible).andThen(
-      Commands.run(basePilotable::setX, basePilotable)
-      // ),
-      
-      
-      //  new SequentialCommandGroup(
-      //    new WaitUntilCommand(()-> basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()
-      //    ),
-      //    new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet).alongWith(corailManip.goberCommand())
-      )
-    );
+      basePilotable.followPath(cible),
+      Commands.run(basePilotable::setX, basePilotable)//On barre les roues.car la station n'es pas protégée
+      );
   }
 }

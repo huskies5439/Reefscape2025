@@ -65,8 +65,6 @@ public class Poignet extends SubsystemBase {
     //SmartDashboard.putBoolean("Pgn. PID AT CIBLE", atCible());
     SmartDashboard.putBoolean("AtCible Poignet", atCible());
 
-
-
     if(isLimitSwitch()){
       resetEncodeurLimitSwitch();
     }
@@ -74,8 +72,6 @@ public class Poignet extends SubsystemBase {
 
   ////////////////// MOTEUR
   public void setVoltage(double voltage) {
-   SmartDashboard.putNumber("Voltage Poignet ", voltage);
-
     moteur.setVoltage(voltage);
   }
 
@@ -105,11 +101,11 @@ public class Poignet extends SubsystemBase {
     return moteur.getEncoder().getVelocity();
   }
 
-  public void resetEncodeurLimitSwitch() {
+  public void resetEncodeurLimitSwitch() {//Quand on clique la limit switch
     moteur.getEncoder().setPosition(-87);
   }
 
-  public void resetEncodeurStartUp(){
+  public void resetEncodeurStartUp(){//Quand on ouvre le robot, la pince doit être verticale vers le haut
     moteur.getEncoder().setPosition(90); 
   }
 
@@ -132,7 +128,7 @@ public class Poignet extends SubsystemBase {
     return pidPoignet.atGoal();
   }
 
-  ////////////////// angles Cible
+  ////////////////// Angle cible dans autoCorail/autoAlgue selon la manette opérateur
 
   public void setCibleManetteOperateur(double cible) {
     this.cibleManetteOperateur = cible;
@@ -145,7 +141,7 @@ public class Poignet extends SubsystemBase {
   //////////////////// LimitSwitch
 
   public boolean isLimitSwitch() {
-    return !limitSwitch.get(); // verifier pour le not !
+    return !limitSwitch.get();
   }
 
 }

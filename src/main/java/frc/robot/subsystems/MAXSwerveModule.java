@@ -20,6 +20,8 @@ import com.revrobotics.RelativeEncoder;
 
 import frc.robot.ConfigsMaxSwerve;
 
+
+///////Librairie de REV. Essentiellement rien de changer sauf la conversion automatique du angular offset en radian
 public class MAXSwerveModule {
   private final SparkFlex m_drivingSpark;
   private final SparkMax m_turningSpark;

@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Del extends SubsystemBase {
+  ////////Voir la documentation de Adressable LED.
+  /// Grosse mise à jour cette année, beaucoup plus facile de faire des patterns
 
   private AddressableLED del = new AddressableLED(1);
   private AddressableLEDBuffer delBuffer = new AddressableLEDBuffer(66);
@@ -46,7 +48,6 @@ public class Del extends SubsystemBase {
 
   public void rainbow(){
     LEDPattern base = LEDPattern.rainbow(255,255); 
-    //LEDPattern pattern = base.blink(Seconds.of(2),Seconds.of(1)); 
     LEDPattern pattern = base.scrollAtRelativeSpeed(Percent.per(Second).of(25));
     pattern.applyTo(delBuffer); 
     del.setData(delBuffer); 

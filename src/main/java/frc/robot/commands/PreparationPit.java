@@ -13,6 +13,10 @@ import frc.robot.subsystems.Poignet;
 
 public class PreparationPit extends SequentialCommandGroup {
 
+
+  //Routine de préparation dans la Pit
+  //Attention ! Ne fonctione pas super bien pour le poignet
+  //Il faut placer le poignet à 90° en tourant le moteur avant de reset le robot....
   public PreparationPit(Ascenseur ascenseur, Poignet poignet) {
     
     addCommands(

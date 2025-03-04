@@ -52,13 +52,12 @@ public class AscenseurDefaut extends Command {
     }
 
     if (!modeManuel) {// PID automatique vers le sol
-      if (poignet.getAngle() < -30 && ascenseur.getPositionExterne() < 0.13) {// Sécurité pour empècher de smasher la
-                                                                              // pince dans le bumper
-        ascenseur.hold();
-      } else if(ascenseur.getPositionExterne() > 0.03){
+      if (poignet.getAngle() < -30 && ascenseur.getPositionExterne() < 0.13) {
+        ascenseur.hold();// Sécurité pour empècher de smasher la pince dans le bumper
+      } else if(ascenseur.getPositionExterne() > 0.03){//On fait un PID seulement si on est dans les airs. 
         ascenseur.setPID(Hauteur.sol[0]);
       }else{
-        ascenseur.stop();
+        ascenseur.stop();//En bas de 3 cm, on ferme les moteurs pour ne pas staller
       }
     }
 

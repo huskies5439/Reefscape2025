@@ -4,7 +4,7 @@
 
 package frc.robot.commands.grimpeur;
 
-import java.util.function.BooleanSupplier;
+
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,43 +18,40 @@ public class ControleGrimpeur extends Command {
   private DoubleSupplier monter;
   private DoubleSupplier descendre;
 
-  private BooleanSupplier barrure;
 
-  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, BooleanSupplier barrure,
-      Ascenseur ascenseur) {
+  //Descendre et monter l'ascenseur dans le mode grimpeur
+  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, Ascenseur ascenseur) {
     this.ascenseur = ascenseur;
     this.monter = monter;
     this.descendre = descendre;
     this.voltageDemande = 0;
-    this.barrure = barrure;
-
   }
 
   @Override
   public void initialize() {
-    ascenseur.debarrer();
+    ascenseur.debarrer();//Normalement le servo est débarré, c'est une double sécurité
   }
 
   @Override
   public void execute() {
-    voltageDemande = monter.getAsDouble() - descendre.getAsDouble();
+    voltageDemande = monter.getAsDouble() - descendre.getAsDouble();//Classique mouvement avec les deux triggers de la manette
 
     if (voltageDemande == 0) {
-      // blablabla
       if (!ascenseur.isLimitSwitch()) {
+        /* Le cas de figure ici c'est quand on est sur les limit switches, donc l'ascenseur sous le cadre périphérique,
+         * donc dans les airs (!), on ne veut pas hold car on veut les moteurs désactivés quand on barre avec le servo.
+         * Par contre, si on est dans les airs sans appuyé sur les triggers, on veut hold pour ne pas que la pince descende
+         * durant le recul vers la cage. */
         ascenseur.hold();
       }
     } else {
       ascenseur.setVoltage(voltageDemande * 6);
     }
-    // à ajuster
+
   }
 
   @Override
   public void end(boolean interrupted) {
-    if (interrupted) {
-      // ascenseur.debarrer();
-    }
   }
 
   @Override

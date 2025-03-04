@@ -12,7 +12,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -67,9 +66,8 @@ public class CorailManip extends SubsystemBase {
     return !limitSwitch.get();
   }
 
-//Commandes inlines
-   public Command goberCommand(){//La commande équivalente dans le AlgueManip est vraiment plus simple à cause de la commande par défaut.
-                                  //Pas mal sûr qu'on pourrait ajuster pour faire la même affaire
+//Commandes inlines. L'arrêt/hold est géré par la commande par défaut
+   public Command goberCommand(){
     return Commands.run(this::gober,this).until(this::isCorail);
   }
 

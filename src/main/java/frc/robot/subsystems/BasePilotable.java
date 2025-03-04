@@ -22,7 +22,6 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -50,6 +49,12 @@ public class BasePilotable extends SubsystemBase {
 	// Le gyroscope
 	private Pigeon2 gyro = new Pigeon2(0);
 
+
+	/* Setpoint genetator est une fonction de PathPlanner qui permet de valider
+	 * si les vitesses demandées en téléop respectent les contraintes mécaniques
+	 * du robot telles que définies dans les App Settings de PathPlanner
+	 * C'est expérimental en 2025, donc valider les changements pour l'an prochain */
+	
 	private final SwerveSetpointGenerator setpointGenerator;
 	private SwerveSetpoint previousSetpoint;
 
@@ -64,8 +69,6 @@ public class BasePilotable extends SubsystemBase {
 
 	Field2d field2d = new Field2d();
 
-	// cible du robot en utilisant la manette operateur
-	private Pose2d cibleManetteOperateur = new Pose2d();
 
 	public BasePilotable() {
 
@@ -84,28 +87,26 @@ public class BasePilotable extends SubsystemBase {
 			e.printStackTrace();
 		}
 		// configuration Pathplanner
+		//Voir la documentation, ça va peut-être changer en 2026
 		AutoBuilder.configure(
 				this::getPose,
 				this::resetOdometry,
 				this::getChassisSpeeds,
 				(speeds, feedforward) -> conduireChassis(speeds),
 				new PPHolonomicDriveController(
-						new PIDConstants(12, 0, 0), // a ajuster
+						new PIDConstants(12, 0, 0),
 						new PIDConstants(5, 0, 0)),
-				// a ajuster
 				robotConfig,
 				this::isRedAlliance,
 				this);
-
+		
+		//Configuration Setpoint Generator
 		setpointGenerator = new SwerveSetpointGenerator(
 				robotConfig,
 				Units.rotationsToRadians(3.94)// Valeur selon la freespeed du neo 550
 		);
 
-		previousSetpoint = new SwerveSetpoint(
-				getChassisSpeeds(),
-				getModuleStates(),
-				DriveFeedforwards.zeros(4));
+		resetSetpoint();
 
 	}
 
@@ -117,13 +118,13 @@ public class BasePilotable extends SubsystemBase {
 				new SwerveModulePosition[] { avantGauche.getPosition(),
 						avantDroite.getPosition(), arriereGauche.getPosition(), arriereDroite.getPosition() });
 
+		//Update du Field2d
 		field2d.setRobotPose(getPose());
 		SmartDashboard.putData("Field", field2d);
 
-		SmartDashboard.putBoolean("redalliance", isRedAlliance());
+		//SmartDashboard.putBoolean("redalliance", isRedAlliance());
 
 		SmartDashboard.putNumber("Angle Gyro", getAngle());
-		// SmartDashboard.putNumber("Vitesse Gyro", getRate());
 
 		SmartDashboard.putNumber("Pose Estimator X : ", getPose().getX());
 		SmartDashboard.putNumber("Pose Estimator Y : ", getPose().getY());
@@ -131,13 +132,10 @@ public class BasePilotable extends SubsystemBase {
 				"Pose Estimator Theta : ",
 				getPose().getRotation().getDegrees());
 
-		SmartDashboard.putString(
-				"Cible BasePilotable",
-				getCibleManetteOperateur().toString());
-		// SmartDashboard.putString("cible station", getCibleStation()
-		// .toString());
 
-		// Ajouter seulement quand la Limelight va être branchée sur le robot !
+		//Fonctions limelight
+		//Première année que ça fonctionne comme ça directement dans le sous-système de BasePilotable
+		//Valider que cela ne change pas l'an prochain
 		setLimelightRobotOrientation();
 		addVisionPosition("limelight-haut");
 		addVisionPosition("limelight-bas");
@@ -146,8 +144,9 @@ public class BasePilotable extends SubsystemBase {
 	/// ////// MÉTHODE DONNANT DES CONSIGNES À CHAQUE MODULE
 
 	public void setModuleStates(SwerveModuleState[] desiredStates) {
-		// SwerveDriveKinematics.desaturateWheelSpeeds(
-		// desiredStates, Constants.maxVitesseModule);
+		//La librairie de REV utilise la fonction .desaturate ici.
+		//Attention, ils utilisent le maxChassisSpeed au lieu du maxVitesseModule
+		//SetPointGenerator ôte la nécessiter de désaturer
 		avantGauche.setDesiredState(desiredStates[0]);
 		avantDroite.setDesiredState(desiredStates[1]);
 		arriereGauche.setDesiredState(desiredStates[2]);
@@ -163,6 +162,8 @@ public class BasePilotable extends SubsystemBase {
 	/// ///// TÉLÉOP
 
 	public void resetSetpoint(){
+		//Il faut le caller à chaque fois que l'on retourne à la commande de conduite téléop
+		//Sinon les premiers mouvements du robot dépendent de la conduite avant la commande de pathfinding
 		previousSetpoint = new SwerveSetpoint(getChassisSpeeds(), getModuleStates(), DriveFeedforwards.zeros(4));
 	}
 	
@@ -199,20 +200,21 @@ public class BasePilotable extends SubsystemBase {
 			invert = -1; // on inverse le déplacement du robot
 		}
 
-		ChassisSpeeds speeds = fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-				xSpeedDelivered * invert,
-				ySpeedDelivered * invert,
-				rotDelivered,
-				getPose().getRotation())
-				: new ChassisSpeeds(
-						xSpeedDelivered,
-						ySpeedDelivered,
-						rotDelivered);
+		//Ajuster pour field relative
+		//L'inversion selon l'alliance seulement nécessaire en x et y en field oriented
+		//Façon vraiment plus clean de gérer ça qu'en 2024
+		ChassisSpeeds speeds = fieldRelative ? 
+				ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered * invert, ySpeedDelivered * invert,
+				rotDelivered, getPose().getRotation())
+				: new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
 
+		//Actualiser le setpoint generator pour corriger le mouvement si nécessaire
 		previousSetpoint = setpointGenerator.generateSetpoint(
 				previousSetpoint,
 				speeds,
 				0.02);
+
+		//Envoyer les consignes aux 4 modules
 		setModuleStates(previousSetpoint.moduleStates());
 	}
 
@@ -246,8 +248,7 @@ public class BasePilotable extends SubsystemBase {
 		return poseEstimator.getEstimatedPosition();
 	}
 
-	public void resetOdometry(Pose2d pose) {// pose est à la pose où reset
-		// l'odométrie du robot
+	public void resetOdometry(Pose2d pose) {// pose est à la pose où reset, c'est typiquement l'origine du terrain
 		poseEstimator.resetPosition(
 				Rotation2d.fromDegrees(getAngle()),
 				new SwerveModulePosition[] { avantGauche.getPosition(),
@@ -256,6 +257,10 @@ public class BasePilotable extends SubsystemBase {
 	}
 
 	/// ///////////////// limelight
+	/// On utilise MegaTag 2 cette année
+	/// Algorithme puissant, mais il faut connaître l'angle du robot
+	/// Donc TOUJOURS ouvrir le robot/compiler en pointant 0°
+	/// Voir la documentation limelight, il se peut que ça change l'an prochain !
 	public void setLimelightRobotOrientation() {
 		LimelightHelpers.SetRobotOrientation(
 				"limelight-haut",
@@ -306,8 +311,7 @@ public class BasePilotable extends SubsystemBase {
 
 	////////////// Encodeurs
 	// Pas besoin de méthode pour obtenir la position des encodeurs, tout ça
-	// passe
-	/// /////////// directement pas la pose2D du robot
+	// passe directement par la pose2D du robot
 	public void resetEncoders() {
 		avantGauche.resetEncoders();
 		arriereGauche.resetEncoders();
@@ -315,7 +319,7 @@ public class BasePilotable extends SubsystemBase {
 		arriereDroite.resetEncoders();
 	}
 
-	/// //////////// GYRO
+	/////////////// GYRO
 	public double getAngle() {
 		return gyro.getYaw().getValueAsDouble();
 	}
@@ -348,16 +352,10 @@ public class BasePilotable extends SubsystemBase {
 		setModuleStates(swerveModuleState);
 	}
 
-	/// /////////// gestion des cibles avec la manette de l'opperateur au recif
-	public Pose2d getCibleManetteOperateur() {
-		return cibleManetteOperateur;
-	}
 
-	public Command setCibleManetteOperateurCommand(Pose2d cible) {
-		return this.runOnce(() -> cibleManetteOperateur = cible);
-	}
 
-	/// //////////// On the fly
+
+	/////////////// On the fly
 
 	public Command followPath(Pose2d cible) {
 
@@ -365,25 +363,26 @@ public class BasePilotable extends SubsystemBase {
 				1.5,
 				2.0,
 				Math.toRadians(720),
-				Math.toRadians(720)); ////// A Ajuster
-										// max velocity = 2
-										// max aceleration = 1.5
+				Math.toRadians(720)); 
+		//Hyper Important : Il faut mettre la méthode "flipped" pour ajuster pour RedAlliance
+		//Fonction pas mentionnée dans la doc !!
 		return AutoBuilder.pathfindToPoseFlipped(cible, constraints, 0.0);
 
 	}
 
-	// isProche multiple pour séparation rouge/bleu en automatique
+	//////////////isProche permet de vérifier la position du robot
+	/// Seule fois où on a besoin des Pose2D de l'alliance rouge car on ne passe pas par PathPlanner
 	public boolean isProche(Pose2d cible, double distanceMin) {
 		return getPose().getTranslation().getDistance(cible.getTranslation()) < distanceMin;
 	}
 
-	public boolean isProcheRecif() {
+	public boolean isProcheRecif() {//Pour la monter
 		return isProche(
 				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
 				4);
 	}
 
-	public boolean isLoinRecif() {
+	public boolean isLoinRecif() {//Pour la descente
 		return !isProche(
 				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
 				1.5);
@@ -407,6 +406,12 @@ public class BasePilotable extends SubsystemBase {
 				1);
 	}
 
+	public boolean isStationCage() {
+		return isRedAlliance() ^ getPose().getY() >= 4;
+	}
+
+
+	//Vérifier l'alliance. Il faut le caller en tout temps car l'alliance est initialiser après le boot du robot
 	public boolean isRedAlliance() {
 		Optional<Alliance> ally = DriverStation.getAlliance();
 		if (ally.isPresent()) {
@@ -415,10 +420,6 @@ public class BasePilotable extends SubsystemBase {
 		} else {
 			return false;
 		}
-	}
-
-	public boolean isStationCage() {
-		return isRedAlliance() ^ getPose().getY() >= 4;
 	}
 
 }

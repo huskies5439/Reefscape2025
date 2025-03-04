@@ -22,7 +22,6 @@ public class AutoProcesseur extends ParallelCommandGroup {
     addCommands(
       basePilotable.followPath(GamePositions.BlueProcesseur),
       
-      
       new SequentialCommandGroup(
          new WaitUntilCommand(basePilotable::isProcheProcesseur),
          new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)

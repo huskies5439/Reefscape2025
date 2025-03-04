@@ -6,7 +6,7 @@ package frc.robot.commands.pathplanner;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.commands.GoToHauteur;
+import frc.robot.commands.GoToHauteurAvecFin;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
 import frc.robot.subsystems.Poignet;
@@ -19,8 +19,7 @@ public class actionCorailPP extends SequentialCommandGroup {
     addCommands(
         
         new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteur(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet)
-        .until(()-> {return ascenseur.atCible() && poignet.atCible();})
+        new GoToHauteurAvecFin(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet)
         );
   }
 }

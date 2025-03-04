@@ -12,7 +12,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -48,7 +47,7 @@ public class AlgueManip extends SubsystemBase {
 
   @Override
   public void periodic() {
-     SmartDashboard.putBoolean("Capteur Algue : ", isAlgue());
+     //SmartDashboard.putBoolean("Capteur Algue : ", isAlgue());
   }
 
   public void setVoltage(double voltage) {
@@ -58,7 +57,7 @@ public class AlgueManip extends SubsystemBase {
 
   // gober/lancer/stop avec le manip d'algues
   public void gober() {
-    setVoltage(2); // Voltages a reverifier
+    setVoltage(2); 
   }
 
   public void sortir() {
@@ -79,7 +78,7 @@ public class AlgueManip extends SubsystemBase {
   }
 
 
-//Commandes inlines
+//Commandes inlines. L'arrêt/hold est géré par la commande par défaut
   public Command goberCommand(){
     return Commands.run(this::gober, this).until(this::isAlgue);
   }

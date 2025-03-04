@@ -15,32 +15,30 @@ public class DescenteAutomatique extends Command {
   Poignet poignet;
 
 
+  //Sert à laisser la pince dans les airs quand on est proche du récif.
+  //Overide la commande par défaut qui fait descendre automatiquement
 
+  //Avec le recul (à une journée de la compé), ce code aurait 100% pu être intégré dans PoignetDefaut et AscenceurDefaut......
   public DescenteAutomatique(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     this.basePilotable = basePilotable;
     this.ascenseur = ascenseur;
     this.poignet = poignet;
 
-    addRequirements(ascenseur, poignet);
-
+    addRequirements(ascenseur, poignet);//On ne demande explicitement pas la basepilotable car on veut pouvoir conduire !!
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     ascenseur.hold();
     poignet.hold();
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return basePilotable.isLoinRecif();

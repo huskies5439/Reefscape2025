@@ -65,7 +65,7 @@ public class Ascenseur extends SubsystemBase {
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   
-    encoder.setDistancePerPulse(0.07*Math.PI / 360.0); // Calcul -------> (60mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
+    encoder.setDistancePerPulse(0.07*Math.PI / 360.0); // Calcul -------> (70mm * PI / 1 tr poulie) * (1 tr poulie / 1 tr encodeur) * (1 tr encodeur / 360 click)
                        
     pidAscenseur.setTolerance(0.02);
 
@@ -77,11 +77,10 @@ public class Ascenseur extends SubsystemBase {
   @Override
   public void periodic() {
     // SmartDashboard
-    SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
-     SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur des Encodeurs moteur
-    // //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
-     //SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
-    // SmartDashboard.putBoolean("Asc. PID AT CIBLE", atCible());
+    //SmartDashboard.putNumber("Vitesse Ascenseur", getVitesseExterne()); // Vitesse Ascenseur
+    SmartDashboard.putNumber("Hauteur Ascenseur", getPositionExterne());// Hauteur Ascenseur de l'encodeur externe
+    //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
+    //SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("AtCible Ascenceur", atCible());
 
     if (isLimitSwitch()) {
@@ -120,6 +119,7 @@ public class Ascenseur extends SubsystemBase {
   }
 
   ////////////////////////// ENCODEUR VORTEX
+  /// Seulement utile avant qu'on ait solutionner l'encodeur extene
 
   // Retourne la position de l'encodeur VORTEX
   public double getPositionVortex() {

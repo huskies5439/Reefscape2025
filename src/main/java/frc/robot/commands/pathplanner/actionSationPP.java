@@ -4,11 +4,7 @@
 
 package frc.robot.commands.pathplanner;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.Hauteur;
 import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
@@ -18,11 +14,11 @@ import frc.robot.subsystems.Poignet;
 
 public class actionSationPP extends ParallelRaceGroup {
 
-  //Actions durant le déplacement vers la station côté processeur
+  //Actions durant le déplacement vers la station
   public actionSationPP(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
 
     addCommands(
-      new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet),
+      new GoToHauteur(()-> Hauteur.station[0], ()-> Hauteur.station[1], ascenseur, poignet),//GoToHauteur nécessaire car le trigger automatique n'est pas géré par PathPlanner en autonome
       corailManip.goberCommand().until(corailManip::isCorail)
         );
   }

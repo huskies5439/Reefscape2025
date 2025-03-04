@@ -19,7 +19,8 @@ public class GoToHauteur extends Command {
 
 
   //Double PID pour le poignet et l'ascenseur
-  //que faire après la command? tel est la question
+  //Commande qui n'a pas de fin.
+  //On hold jusqu'à ce que la commande soit interrompue
   public GoToHauteur(DoubleSupplier cibleAscenceur, DoubleSupplier ciblePoignet, Ascenseur ascenseur, Poignet poignet) {
     this.cibleAscenceur = cibleAscenceur;
     this.ciblePoignet = ciblePoignet;
