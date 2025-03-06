@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.08,
-        "y": 0.919
+        "x": 1.07,
+        "y": 0.99
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.53275,
-        "y": 2.7032500000000015
+        "x": 2.5227500000000003,
+        "y": 2.774250000000001
       },
       "isLocked": false,
       "linkedName": "CoralStationPros"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 4.9,
-        "y": 2.854
+        "y": 2.85
       },
       "prevControl": {
         "x": 5.25575,
-        "y": 2.2407499999999994
+        "y": 2.2367499999999993
       },
       "nextControl": null,
       "isLocked": false,
