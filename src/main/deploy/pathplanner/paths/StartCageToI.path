@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.0967213114754095,
-        "y": 5.058
+        "x": 7.097,
+        "y": 6.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.021728933431526,
-        "y": 5.185127868396854
+        "x": 6.022007621956117,
+        "y": 6.327127868396854
       },
       "isLocked": false,
       "linkedName": "StartCage"
