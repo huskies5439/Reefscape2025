@@ -38,13 +38,13 @@ public final class Constants {
 
     public static final double sol[] = { 0, 90 };
     public static final double L1[] = { 0, 60};
-    public static final double L2[] = { 0.123, -86 };
-    public static final double L3[] = { 0.256, -20 };
-    public static final double L4[] = { 0.56, -30 };
+    public static final double L2[] = { 0.122, -85 };
+    public static final double L3[] = { 0.250, -20 };
+    public static final double L4[] = { 0.55, -30 };
 
     public static final double algueSol[] = { 0, 0 };
-    public static final double algueBas[] = { 0.38, -19 };
-    public static final double algueHaut[] = { 0.537, -19 };
+    public static final double algueBas[] = { 0.378, -32 };
+    public static final double algueHaut[] = { 0.555, -29 };
 
     public static final double processeur[] = { 0.08, 0 };
     public static final double station[] = { 0.01, 80 };
@@ -80,22 +80,22 @@ public final class Constants {
 
   public static class Branche {
 
-    public static final Pose2d A = new Pose2d(3.203, 4.177, Rotation2d.fromDegrees(0));
-    public static final Pose2d B = new Pose2d(3.153, 3.851, Rotation2d.fromDegrees(0));
-    public static final Pose2d C = new Pose2d(3.720, 2.990, Rotation2d.fromDegrees(60));
-    public static final Pose2d D = new Pose2d(3.992, 2.784, Rotation2d.fromDegrees(60));
-    public static final Pose2d E = new Pose2d(4.997, 2.854, Rotation2d.fromDegrees(120));
-    public static final Pose2d F = new Pose2d(5.281, 3.01, Rotation2d.fromDegrees(120));
-    public static final Pose2d G = new Pose2d(5.795, 3.880, Rotation2d.fromDegrees(-180));
-    public static final Pose2d H = new Pose2d(5.795, 4.196, Rotation2d.fromDegrees(-180));
-    public static final Pose2d I = new Pose2d(5.235, 5.078, Rotation2d.fromDegrees(-120));
-    public static final Pose2d J = new Pose2d(4.941, 5.214, Rotation2d.fromDegrees(-120));
-    public static final Pose2d K = new Pose2d(3.978, 5.204, Rotation2d.fromDegrees(-60));
-    public static final Pose2d L = new Pose2d(3.675, 5.067, Rotation2d.fromDegrees(-60));
+    public static final Pose2d A = new Pose2d(3.25, 4.24, Rotation2d.fromDegrees(0));
+    public static final Pose2d B = new Pose2d(3.25, 3.91, Rotation2d.fromDegrees(0));
+    public static final Pose2d C = new Pose2d(3.67, 3.18, Rotation2d.fromDegrees(60));
+    public static final Pose2d D = new Pose2d(3.96, 2.91, Rotation2d.fromDegrees(60));
+    public static final Pose2d E = new Pose2d(4.9, 2.85, Rotation2d.fromDegrees(120));
+    public static final Pose2d F = new Pose2d(5.19, 3.01, Rotation2d.fromDegrees(120));
+    public static final Pose2d G = new Pose2d(5.79, 3.85, Rotation2d.fromDegrees(-180));
+    public static final Pose2d H = new Pose2d(5.76, 4.16, Rotation2d.fromDegrees(-180));
+    public static final Pose2d I = new Pose2d(5.30, 5.06, Rotation2d.fromDegrees(-120));
+    public static final Pose2d J = new Pose2d(5.00, 5.19, Rotation2d.fromDegrees(-120));
+    public static final Pose2d K = new Pose2d(4.00, 5.24, Rotation2d.fromDegrees(-60));
+    public static final Pose2d L = new Pose2d(3.74, 5.05, Rotation2d.fromDegrees(-60));
   }
 
   public static class Algue {
-
+    //pas encore ajustée
     public static final Pose2d AB = new Pose2d(3.188, 4.035, Rotation2d.fromDegrees(0));
     public static final Pose2d CD = new Pose2d(3.861, 2.855, Rotation2d.fromDegrees(60));
     public static final Pose2d EF = new Pose2d(5.119, 2.894, Rotation2d.fromDegrees(120));
@@ -106,20 +106,17 @@ public final class Constants {
   }
 
   public static class GamePositions {
-    //Terrain x = 17.5 y = 8 valeur à ajuster
-    //Proche/Centre/Loin selon la driver station
-    //deltaX = 0.45 et deltaY = -0.33
-    public static final Pose2d BlueCoralStationProcProche = new Pose2d(0.53, 1.284, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(0.98, 0.954, Rotation2d.fromDegrees(-126));
-    public static final Pose2d BlueCoralStationProcLoin = new Pose2d(1.43, 0.624, Rotation2d.fromDegrees(-126));
+    
+    public static final Pose2d BlueCoralStationProcProche = new Pose2d(0.61, 1.34, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcCentre = new Pose2d(1.07, 0.99, Rotation2d.fromDegrees(-126));
+    public static final Pose2d BlueCoralStationProcLoin = new Pose2d(1.53, 0.64, Rotation2d.fromDegrees(-126));
 
-    //Calcul par rapport à Processeur : même x, yProc + yCage = 8 m
-    public static final Pose2d BlueCoralStationCageProche = new Pose2d(0.53, 6.716, Rotation2d.fromDegrees(126));
-    public static final Pose2d BlueCoralStationCageCentre = new Pose2d(0.98, 7.046, Rotation2d.fromDegrees(126));
-    public static final Pose2d BlueCoralStationCageLoin = new Pose2d(1.43, 7.376, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueCoralStationCageProche = new Pose2d(0.65, 6.75, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueCoralStationCageCentre = new Pose2d(1.11, 7.09, Rotation2d.fromDegrees(126));
+    public static final Pose2d BlueCoralStationCageLoin = new Pose2d(1.57, 7.43, Rotation2d.fromDegrees(126));
 
 
-    public static final Pose2d BlueProcesseur = new Pose2d(6.0, 0.55, Rotation2d.fromDegrees(-90));
+    public static final Pose2d BlueProcesseur = new Pose2d(6.07, 0.74, Rotation2d.fromDegrees(-90));
     public static final Pose2d BlueCentreRecif = new Pose2d(4.5,4,Rotation2d.kZero);
 
     // Positions rouges seulement nécessaires pour les fonctions isProche, sinon on n'utilise que les Blue pour le Pathfinding
