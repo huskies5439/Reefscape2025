@@ -80,28 +80,28 @@ public final class Constants {
 
   public static class Branche {
 
-    public static final Pose2d A = new Pose2d(3.25, 4.24, Rotation2d.fromDegrees(0));
-    public static final Pose2d B = new Pose2d(3.25, 3.91, Rotation2d.fromDegrees(0));
-    public static final Pose2d C = new Pose2d(3.67, 3.18, Rotation2d.fromDegrees(60));
-    public static final Pose2d D = new Pose2d(3.96, 2.91, Rotation2d.fromDegrees(60));
-    public static final Pose2d E = new Pose2d(4.9, 2.85, Rotation2d.fromDegrees(120));
+    public static final Pose2d A = new Pose2d(3.25, 4.22, Rotation2d.fromDegrees(0));
+    public static final Pose2d B = new Pose2d(3.25, 3.89, Rotation2d.fromDegrees(0));
+    public static final Pose2d C = new Pose2d(3.69, 2.98, Rotation2d.fromDegrees(60));
+    public static final Pose2d D = new Pose2d(3.98, 2.82, Rotation2d.fromDegrees(60));
+    public static final Pose2d E = new Pose2d(4.90, 2.85, Rotation2d.fromDegrees(120));
     public static final Pose2d F = new Pose2d(5.19, 3.01, Rotation2d.fromDegrees(120));
     public static final Pose2d G = new Pose2d(5.79, 3.85, Rotation2d.fromDegrees(-180));
-    public static final Pose2d H = new Pose2d(5.76, 4.16, Rotation2d.fromDegrees(-180));
+    public static final Pose2d H = new Pose2d(5.79, 4.18, Rotation2d.fromDegrees(-180));
     public static final Pose2d I = new Pose2d(5.30, 5.06, Rotation2d.fromDegrees(-120));
     public static final Pose2d J = new Pose2d(5.00, 5.19, Rotation2d.fromDegrees(-120));
-    public static final Pose2d K = new Pose2d(4.00, 5.24, Rotation2d.fromDegrees(-60));
-    public static final Pose2d L = new Pose2d(3.74, 5.05, Rotation2d.fromDegrees(-60));
+    public static final Pose2d K = new Pose2d(3.87, 5.24, Rotation2d.fromDegrees(-60));
+    public static final Pose2d L = new Pose2d(3.7, 5.05, Rotation2d.fromDegrees(-60));
   }
 
   public static class Algue {
     //pas encore ajustée
-    public static final Pose2d AB = new Pose2d(3.188, 4.035, Rotation2d.fromDegrees(0));
-    public static final Pose2d CD = new Pose2d(3.861, 2.855, Rotation2d.fromDegrees(60));
-    public static final Pose2d EF = new Pose2d(5.119, 2.894, Rotation2d.fromDegrees(120));
-    public static final Pose2d GH = new Pose2d(5.811, 4.015, Rotation2d.fromDegrees(-180));
-    public static final Pose2d IJ = new Pose2d(5.168, 5.146, Rotation2d.fromDegrees(-120));
-    public static final Pose2d KL = new Pose2d(3.832, 5.107, Rotation2d.fromDegrees(-60));
+    public static final Pose2d AB = new Pose2d(3.25, 4.06, Rotation2d.fromDegrees(0));
+    public static final Pose2d CD = new Pose2d(3.83, 2.9, Rotation2d.fromDegrees(60));
+    public static final Pose2d EF = new Pose2d(5.05, 2.93, Rotation2d.fromDegrees(120));
+    public static final Pose2d GH = new Pose2d(5.79, 4.02, Rotation2d.fromDegrees(-180));
+    public static final Pose2d IJ = new Pose2d(5.15, 5.13, Rotation2d.fromDegrees(-120));
+    public static final Pose2d KL = new Pose2d(3.78, 5.15, Rotation2d.fromDegrees(-60));
 
   }
 
