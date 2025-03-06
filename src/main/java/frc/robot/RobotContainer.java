@@ -258,7 +258,7 @@ public class RobotContainer {
                                 .toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer));
 
                 // Start = Homing dans le pit. Ne marche pas super bien
-                manette.start().onTrue(new PreparationPit(ascenseur, poignet));
+                //manette.start().onTrue(new PreparationPit(ascenseur, poignet));
         }
 
 
