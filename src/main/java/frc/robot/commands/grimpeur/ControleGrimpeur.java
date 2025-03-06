@@ -52,8 +52,8 @@ public class ControleGrimpeur extends Command {
         ascenseur.hold();
       }
     } else {
-      voltageDemande = MathUtil.clamp(voltageDemande, ascenseur.getPositionVortex() < -0.08 ? -0.1 : -1, 1);
-      ascenseur.setVoltage(voltageDemande * 2);
+      voltageDemande = MathUtil.clamp(voltageDemande, ascenseur.getPositionVortex() < -0.08 ? -0.3 : -1, 1);
+      ascenseur.setVoltage(voltageDemande * 4);
     }
 
   }
