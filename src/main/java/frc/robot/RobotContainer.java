@@ -67,6 +67,7 @@ public class RobotContainer {
         //Permet le suivi du mode grimpeur. Trop simple cette année pour mettre dans un sous-système
         boolean modeGrimpeur = false;
         Trigger modeGrimpeurTrigger = new Trigger(() -> modeGrimpeur);
+        Trigger resetEncodeurTrigger = new Trigger(ascenseur::isLimitSwitch);
 
 
         //Trigger arbitraire pour aller à la bonne station selon la moitié de terrain
@@ -250,7 +251,7 @@ public class RobotContainer {
 
                 //Contrôle du grimpeur
                 modeGrimpeurTrigger.whileTrue(new ActiverGrimpeur(ascenseur, poignet)//Placer la pince en mode grimpeur
-                                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur))//Trigger Gauche = monter et trigger droit = descendre
+                                .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur, poignet))//Trigger Gauche = monter et trigger droit = descendre
                                 .alongWith(Commands.run(() -> del.rainbow(), del)));//Classique : Grimper = Rainbow
 
                 // Bouton X en mode grimpeur = Barrer le servo
@@ -259,6 +260,8 @@ public class RobotContainer {
 
                 // Start = Homing dans le pit. Ne marche pas super bien
                 //manette.start().onTrue(new PreparationPit(ascenseur, poignet));
+
+                resetEncodeurTrigger.onTrue(Commands.runOnce(ascenseur::resetEncodersVortex));
         }
 
 

@@ -82,9 +82,10 @@ public class Ascenseur extends SubsystemBase {
     //SmartDashboard.putBoolean("Ascenceur limit Switch", isLimitSwitch());
     //SmartDashboard.putNumber("Cible Ascenseur : ", getCibleManetteOperateur());
     SmartDashboard.putBoolean("AtCible Ascenceur", atCible());
+    SmartDashboard.putNumber("Encodeur vortex", getPositionVortex()); 
 
     if (isLimitSwitch()) {
-      resetEncoders();
+      resetEncodeurExterne();
     }
   }
 

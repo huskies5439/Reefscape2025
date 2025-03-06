@@ -7,24 +7,31 @@ package frc.robot.commands.grimpeur;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Ascenseur;
+import frc.robot.subsystems.Poignet;
 
 public class ControleGrimpeur extends Command {
 
   private Ascenseur ascenseur;
   private double voltageDemande;
+  private Poignet poignet;
 
   private DoubleSupplier monter;
   private DoubleSupplier descendre;
 
 
   //Descendre et monter l'ascenseur dans le mode grimpeur
-  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, Ascenseur ascenseur) {
+  public ControleGrimpeur(DoubleSupplier monter, DoubleSupplier descendre, Ascenseur ascenseur, Poignet poignet) {
     this.ascenseur = ascenseur;
     this.monter = monter;
     this.descendre = descendre;
     this.voltageDemande = 0;
+    this.poignet = poignet; 
+
+    addRequirements(ascenseur,poignet);
+
   }
 
   @Override
@@ -35,7 +42,7 @@ public class ControleGrimpeur extends Command {
   @Override
   public void execute() {
     voltageDemande = monter.getAsDouble() - descendre.getAsDouble();//Classique mouvement avec les deux triggers de la manette
-
+    poignet.hold();
     if (voltageDemande == 0) {
       if (!ascenseur.isLimitSwitch()) {
         /* Le cas de figure ici c'est quand on est sur les limit switches, donc l'ascenseur sous le cadre périphérique,
@@ -45,7 +52,8 @@ public class ControleGrimpeur extends Command {
         ascenseur.hold();
       }
     } else {
-      ascenseur.setVoltage(voltageDemande * 6);
+      voltageDemande = MathUtil.clamp(voltageDemande, ascenseur.getPositionVortex() < -0.08 ? -0.1 : -1, 1);
+      ascenseur.setVoltage(voltageDemande * 2);
     }
 
   }
