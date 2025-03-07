@@ -94,7 +94,7 @@ public class BasePilotable extends SubsystemBase {
 				this::getChassisSpeeds,
 				(speeds, feedforward) -> conduireChassis(speeds),
 				new PPHolonomicDriveController(
-						new PIDConstants(5, 0, 0), // valeur stupide de 12 a Montréal ; ne plus faire l'Erreur S.V.P
+						new PIDConstants(2, 0, 0), // valeur stupide de 12 a Montréal ; ne plus faire l'Erreur S.V.P
 						new PIDConstants(5, 0, 0)), 
 				robotConfig,
 				this::isRedAlliance,
