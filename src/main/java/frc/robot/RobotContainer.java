@@ -10,6 +10,7 @@ import frc.robot.Constants.Hauteur;
 import frc.robot.Constants.Branche;
 import frc.robot.Constants.GamePositions;
 import frc.robot.commands.AscenseurDefaut;
+import frc.robot.commands.BasePilotableDefaut;
 import frc.robot.commands.DescenteAutomatique;
 import frc.robot.commands.GestionDEL;
 import frc.robot.commands.GoToHauteur;
@@ -126,15 +127,9 @@ public class RobotContainer {
                 /////////////// Commandes par défaut (lorsque le robot s'ennuie)//////////////
                 
                 //Conduire avec joystick
-                //Il faut réinitialiser le Setpoint Generator avant de conduire, car sinon le robot bouge après les pathfinding commands !
-                basePilotable.setDefaultCommand(
-                                Commands.runOnce(basePilotable::resetSetpoint, basePilotable).andThen(
-                                Commands.run(
-                                        () -> basePilotable.conduire(
-                                                        manette.getLeftY(), manette.getLeftX(),
-                                                        manette.getRightX(),
-                                                        true, true),
-                                        basePilotable)));
+                basePilotable.setDefaultCommand(new BasePilotableDefaut(manette::getLeftY,
+                                                 manette::getLeftX, manette::getRightX, basePilotable, ascenseur));
+                              
 
                 //Hold automatique s'il y a une pièce de jeu dans les manipulateurs, sinon stop
                 algueManip.setDefaultCommand(new ConditionalCommand(
