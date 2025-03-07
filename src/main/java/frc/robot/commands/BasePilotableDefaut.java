@@ -28,8 +28,7 @@ public class BasePilotableDefaut extends Command {
     this.vy = vy;
     this.omega = omega;
     
-    //On ne requiert pas car c'est une fonction par défaut
-
+      addRequirements(basePilotable);
   }
 
   @Override
