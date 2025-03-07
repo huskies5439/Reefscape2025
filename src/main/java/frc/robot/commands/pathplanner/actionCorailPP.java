@@ -4,22 +4,28 @@
 
 package frc.robot.commands.pathplanner;
 
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.commands.GoToHauteurAvecFin;
+import frc.robot.commands.GoToHauteur;
 import frc.robot.subsystems.Ascenseur;
 import frc.robot.subsystems.BasePilotable;
+import frc.robot.subsystems.CorailManip;
 import frc.robot.subsystems.Poignet;
 
-public class actionCorailPP extends SequentialCommandGroup {
+public class actionCorailPP extends ParallelCommandGroup {
 
-  /** Actions durant le déplacement vers le récif pour un corail */
-  public actionCorailPP(double[] hauteur, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
+  /** Actions durant le déplacement vers le récif pour un corail 
+ **/
+  public actionCorailPP(double[] hauteur, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet, CorailManip corailManip) {
 
     addCommands(
-        
-        new WaitUntilCommand(basePilotable::isProcheRecif),
-        new GoToHauteurAvecFin(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet)
-        );
+        Commands.runEnd(corailManip::hold, corailManip::stop, corailManip),
+        new SequentialCommandGroup(
+          new WaitUntilCommand(basePilotable::isProcheRecif),
+          new GoToHauteur(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet)
+        )
+      );
   }
 }

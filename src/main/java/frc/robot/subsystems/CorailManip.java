@@ -58,7 +58,7 @@ public class CorailManip extends SubsystemBase {
   }
 
   public void hold(){
-    setVoltage(0.5);
+    setVoltage(1);
   }
 
   // retourne s'il y a un corail dans le manip

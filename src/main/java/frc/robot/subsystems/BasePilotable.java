@@ -94,7 +94,7 @@ public class BasePilotable extends SubsystemBase {
 				this::getChassisSpeeds,
 				(speeds, feedforward) -> conduireChassis(speeds),
 				new PPHolonomicDriveController(
-						new PIDConstants(2, 0, 0), // valeur stupide de 12 a Montréal ; ne plus faire l'Erreur S.V.P
+						new PIDConstants(5, 0, 0), // valeur stupide de 12 a Montréal ; ne plus faire l'Erreur S.V.P
 						new PIDConstants(5, 0, 0)), 
 				robotConfig,
 				this::isRedAlliance,
@@ -132,7 +132,7 @@ public class BasePilotable extends SubsystemBase {
 				"Pose Estimator Theta : ",
 				getPose().getRotation().getDegrees());
 
-
+		SmartDashboard.putNumber("match time",DriverStation.getMatchTime());
 		//Fonctions limelight
 		//Première année que ça fonctionne comme ça directement dans le sous-système de BasePilotable
 		//Valider que cela ne change pas l'an prochain
@@ -360,7 +360,7 @@ public class BasePilotable extends SubsystemBase {
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				1,
+				1.5,
 				1.0,
 				Math.toRadians(360),
 				Math.toRadians(360)); 

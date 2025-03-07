@@ -115,9 +115,9 @@ public class RobotContainer {
 
                 //Actions à accomplir en se rendant vers le Récif
                 NamedCommands.registerCommand("actionRecifCorail",
-                                new actionCorailPP(Hauteur.L4, basePilotable, ascenseur, poignet));
+                                new actionCorailPP(Hauteur.L4, basePilotable, ascenseur, poignet, corailManip));
                 NamedCommands.registerCommand("actionRecifCorailL2",
-                                new actionCorailPP(Hauteur.L2, basePilotable, ascenseur, poignet));
+                                new actionCorailPP(Hauteur.L2, basePilotable, ascenseur, poignet, corailManip));
 
                 //Construction du sendable chooser
                 autoChooser = AutoBuilder.buildAutoChooser();
@@ -249,12 +249,12 @@ public class RobotContainer {
                                 .andThen(new ControleGrimpeur(manette::getLeftTriggerAxis, manette::getRightTriggerAxis, ascenseur, poignet))//Trigger Gauche = monter et trigger droit = descendre
                                 .alongWith(Commands.run(() -> del.rainbow(), del)));//Classique : Grimper = Rainbow
 
-                // Bouton X en mode grimpeur = Barrer le servo
-                manette.x().and(modeGrimpeurTrigger)
+                // Bouton Start en mode grimpeur = Barrer le servo 
+                manette.start().and(modeGrimpeurTrigger)
                                 .toggleOnTrue(Commands.startEnd(ascenseur::barrer, ascenseur::debarrer));
 
                 // Start = Homing dans le pit. Ne marche pas super bien
-                manette.start().onTrue(new PreparationPit(ascenseur, poignet));
+                //manette.start().onTrue(new PreparationPit(ascenseur, poignet));
 
                 resetEncodeurTrigger.onTrue(Commands.runOnce(ascenseur::resetEncodersVortex));
         }
