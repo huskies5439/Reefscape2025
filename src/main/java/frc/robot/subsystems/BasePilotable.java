@@ -360,7 +360,7 @@ public class BasePilotable extends SubsystemBase {
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				1.5,
+				1.75,
 				1.0,
 				Math.toRadians(360),
 				Math.toRadians(360)); 

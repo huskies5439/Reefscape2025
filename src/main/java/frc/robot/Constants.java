@@ -82,8 +82,8 @@ public final class Constants {
 
     public static final Pose2d A = new Pose2d(3.26, 4.25, Rotation2d.fromDegrees(0));
     public static final Pose2d B = new Pose2d(3.26, 3.92, Rotation2d.fromDegrees(0));
-    public static final Pose2d C = new Pose2d(3.69, 2.98, Rotation2d.fromDegrees(60));
-    public static final Pose2d D = new Pose2d(3.98, 2.82, Rotation2d.fromDegrees(60));
+    public static final Pose2d C = new Pose2d(3.68, 3.00, Rotation2d.fromDegrees(60));
+    public static final Pose2d D = new Pose2d(3.97, 2.84, Rotation2d.fromDegrees(60));
     public static final Pose2d E = new Pose2d(5.00, 2.85, Rotation2d.fromDegrees(120));
     public static final Pose2d F = new Pose2d(5.25, 3.00, Rotation2d.fromDegrees(120));
     public static final Pose2d G = new Pose2d(5.79, 3.88, Rotation2d.fromDegrees(-180));
@@ -96,7 +96,7 @@ public final class Constants {
 
   public static class Algue {
     public static final Pose2d AB = new Pose2d(3.26, 4.09, Rotation2d.fromDegrees(0));
-    public static final Pose2d CD = new Pose2d(3.83, 2.9, Rotation2d.fromDegrees(60));
+    public static final Pose2d CD = new Pose2d(3.82, 2.92, Rotation2d.fromDegrees(60));
     public static final Pose2d EF = new Pose2d(5.13, 2.93, Rotation2d.fromDegrees(120));
     public static final Pose2d GH = new Pose2d(5.79, 4.05, Rotation2d.fromDegrees(-180));
     public static final Pose2d IJ = new Pose2d(5.12, 5.15, Rotation2d.fromDegrees(-120));
