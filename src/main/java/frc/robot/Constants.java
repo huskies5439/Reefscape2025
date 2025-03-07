@@ -88,8 +88,8 @@ public final class Constants {
     public static final Pose2d F = new Pose2d(5.25, 3.00, Rotation2d.fromDegrees(120));
     public static final Pose2d G = new Pose2d(5.79, 3.88, Rotation2d.fromDegrees(-180));
     public static final Pose2d H = new Pose2d(5.79, 4.21, Rotation2d.fromDegrees(-180));
-    public static final Pose2d I = new Pose2d(5.30, 5.06, Rotation2d.fromDegrees(-120));
-    public static final Pose2d J = new Pose2d(5.00, 5.2, Rotation2d.fromDegrees(-120));
+    public static final Pose2d I = new Pose2d(5.27, 5.08, Rotation2d.fromDegrees(-120));
+    public static final Pose2d J = new Pose2d(4.97, 5.22, Rotation2d.fromDegrees(-120));
     public static final Pose2d K = new Pose2d(3.95, 5.25, Rotation2d.fromDegrees(-60));
     public static final Pose2d L = new Pose2d(3.70, 5.05, Rotation2d.fromDegrees(-60));
   }
@@ -99,7 +99,7 @@ public final class Constants {
     public static final Pose2d CD = new Pose2d(3.83, 2.9, Rotation2d.fromDegrees(60));
     public static final Pose2d EF = new Pose2d(5.13, 2.93, Rotation2d.fromDegrees(120));
     public static final Pose2d GH = new Pose2d(5.79, 4.05, Rotation2d.fromDegrees(-180));
-    public static final Pose2d IJ = new Pose2d(5.15, 5.13, Rotation2d.fromDegrees(-120));
+    public static final Pose2d IJ = new Pose2d(5.12, 5.15, Rotation2d.fromDegrees(-120));
     public static final Pose2d KL = new Pose2d(3.83, 5.15, Rotation2d.fromDegrees(-60));
 
   }
