@@ -11,6 +11,9 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -28,6 +31,7 @@ public class AlgueManip extends SubsystemBase {
 
   // Capteur
   private DigitalInput limitSwitch = new DigitalInput(4);
+  private Debouncer debouncer = new Debouncer(0.5, DebounceType.kBoth);
 
   public AlgueManip() {
     
@@ -57,11 +61,11 @@ public class AlgueManip extends SubsystemBase {
 
   // gober/lancer/stop avec le manip d'algues
   public void gober() {
-    setVoltage(2); 
+    setVoltage(4); 
   }
 
   public void sortir() {
-    setVoltage(-4);
+    setVoltage(-2);
   }
 
   public void stop() {
@@ -69,12 +73,12 @@ public class AlgueManip extends SubsystemBase {
   }
 
   public void hold() {
-    setVoltage(0.5);//Nécessite la limite de courant
+    setVoltage(2);//Nécessite la limite de courant
   }
 
   // Retourne s'il y a de l'algue dans le manip
   public boolean isAlgue() {
-    return !limitSwitch.get();
+    return debouncer.calculate(!limitSwitch.get());
   }
 
 

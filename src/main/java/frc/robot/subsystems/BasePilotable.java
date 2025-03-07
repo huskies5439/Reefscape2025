@@ -94,8 +94,8 @@ public class BasePilotable extends SubsystemBase {
 				this::getChassisSpeeds,
 				(speeds, feedforward) -> conduireChassis(speeds),
 				new PPHolonomicDriveController(
-						new PIDConstants(12, 0, 0),
-						new PIDConstants(5, 0, 0)),
+						new PIDConstants(2, 0, 0), // valeur stupide de 12 a Montréal ; ne plus faire l'Erreur S.V.P
+						new PIDConstants(5, 0, 0)), 
 				robotConfig,
 				this::isRedAlliance,
 				this);
@@ -360,10 +360,10 @@ public class BasePilotable extends SubsystemBase {
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				1.5,
-				2.0,
-				Math.toRadians(720),
-				Math.toRadians(720)); 
+				1,
+				1.0,
+				Math.toRadians(360),
+				Math.toRadians(360)); 
 		//Hyper Important : Il faut mettre la méthode "flipped" pour ajuster pour RedAlliance
 		//Fonction pas mentionnée dans la doc !!
 		return AutoBuilder.pathfindToPoseFlipped(cible, constraints, 0.0);

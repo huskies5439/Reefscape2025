@@ -84,24 +84,23 @@ public final class Constants {
     public static final Pose2d B = new Pose2d(3.25, 3.89, Rotation2d.fromDegrees(0));
     public static final Pose2d C = new Pose2d(3.69, 2.98, Rotation2d.fromDegrees(60));
     public static final Pose2d D = new Pose2d(3.98, 2.82, Rotation2d.fromDegrees(60));
-    public static final Pose2d E = new Pose2d(4.90, 2.85, Rotation2d.fromDegrees(120));
-    public static final Pose2d F = new Pose2d(5.19, 3.01, Rotation2d.fromDegrees(120));
+    public static final Pose2d E = new Pose2d(5.00, 2.85, Rotation2d.fromDegrees(120));
+    public static final Pose2d F = new Pose2d(5.25, 3.00, Rotation2d.fromDegrees(120));
     public static final Pose2d G = new Pose2d(5.79, 3.85, Rotation2d.fromDegrees(-180));
     public static final Pose2d H = new Pose2d(5.79, 4.18, Rotation2d.fromDegrees(-180));
     public static final Pose2d I = new Pose2d(5.30, 5.06, Rotation2d.fromDegrees(-120));
-    public static final Pose2d J = new Pose2d(5.00, 5.19, Rotation2d.fromDegrees(-120));
-    public static final Pose2d K = new Pose2d(3.87, 5.24, Rotation2d.fromDegrees(-60));
-    public static final Pose2d L = new Pose2d(3.7, 5.05, Rotation2d.fromDegrees(-60));
+    public static final Pose2d J = new Pose2d(5.00, 5.2, Rotation2d.fromDegrees(-120));
+    public static final Pose2d K = new Pose2d(3.95, 5.25, Rotation2d.fromDegrees(-60));
+    public static final Pose2d L = new Pose2d(3.70, 5.05, Rotation2d.fromDegrees(-60));
   }
 
   public static class Algue {
-    //pas encore ajustée
     public static final Pose2d AB = new Pose2d(3.25, 4.06, Rotation2d.fromDegrees(0));
     public static final Pose2d CD = new Pose2d(3.83, 2.9, Rotation2d.fromDegrees(60));
-    public static final Pose2d EF = new Pose2d(5.05, 2.93, Rotation2d.fromDegrees(120));
+    public static final Pose2d EF = new Pose2d(5.13, 2.93, Rotation2d.fromDegrees(120));
     public static final Pose2d GH = new Pose2d(5.79, 4.02, Rotation2d.fromDegrees(-180));
     public static final Pose2d IJ = new Pose2d(5.15, 5.13, Rotation2d.fromDegrees(-120));
-    public static final Pose2d KL = new Pose2d(3.78, 5.15, Rotation2d.fromDegrees(-60));
+    public static final Pose2d KL = new Pose2d(3.83, 5.15, Rotation2d.fromDegrees(-60));
 
   }
 
@@ -116,7 +115,7 @@ public final class Constants {
     public static final Pose2d BlueCoralStationCageLoin = new Pose2d(1.57, 7.43, Rotation2d.fromDegrees(126));
 
 
-    public static final Pose2d BlueProcesseur = new Pose2d(6.07, 0.74, Rotation2d.fromDegrees(-90));
+    public static final Pose2d BlueProcesseur = new Pose2d(6.00, 0.70, Rotation2d.fromDegrees(-90));
     public static final Pose2d BlueCentreRecif = new Pose2d(4.5,4,Rotation2d.kZero);
 
     // Positions rouges seulement nécessaires pour les fonctions isProche, sinon on n'utilise que les Blue pour le Pathfinding
