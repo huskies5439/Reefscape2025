@@ -43,8 +43,8 @@ public final class Constants {
     public static final double L4[] = { 0.56, -30 };
 
     public static final double algueSol[] = { 0, 0 };
-    public static final double algueBas[] = { 0.378, -32 };
-    public static final double algueHaut[] = { 0.555, -29 };
+    public static final double algueBas[] = { 0.378, -27 };
+    public static final double algueHaut[] = { 0.555, -24 };
 
     public static final double processeur[] = { 0.08, 0 };
     public static final double station[] = { 0.01, 80 };
