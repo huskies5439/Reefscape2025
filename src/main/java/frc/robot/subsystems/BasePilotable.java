@@ -360,8 +360,8 @@ public class BasePilotable extends SubsystemBase {
 	public Command followPath(Pose2d cible) {
 
 		PathConstraints constraints = new PathConstraints(
-				1.75,
-				1.0,
+				2.0,
+				1.25,
 				Math.toRadians(360),
 				Math.toRadians(360)); 
 		//Hyper Important : Il faut mettre la méthode "flipped" pour ajuster pour RedAlliance
