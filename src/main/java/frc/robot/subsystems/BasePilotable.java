@@ -361,7 +361,7 @@ public class BasePilotable extends SubsystemBase {
 
 		PathConstraints constraints = new PathConstraints(
 				2.0,
-				1.25,
+				1.00,
 				Math.toRadians(360),
 				Math.toRadians(360)); 
 		//Hyper Important : Il faut mettre la méthode "flipped" pour ajuster pour RedAlliance

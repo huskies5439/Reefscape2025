@@ -6,8 +6,8 @@
   "autoFolders": [
     "VieuxAuto"
   ],
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 1.25,
+  "defaultMaxVel": 1.75,
+  "defaultMaxAccel": 1.0,
   "defaultMaxAngVel": 360.0,
   "defaultMaxAngAccel": 360.0,
   "defaultNominalVoltage": 11.0,
