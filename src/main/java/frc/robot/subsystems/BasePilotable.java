@@ -395,15 +395,12 @@ public class BasePilotable extends SubsystemBase {
 	}
 
 	public boolean isProcheStationCage() {
-		return isProche(
-				isRedAlliance() ? GamePositions.RedCoralStationCage : GamePositions.BlueCoralStationCageCentre,
-				1);
+		return isProche(GamePositions.RedCoralStationCage, 1.5) || isProche(GamePositions.BlueCoralStationCageCentre,1.5);
 	}
 
 	public boolean isProcheStationProcesseur() {
-		return isProche(
-				isRedAlliance() ? GamePositions.RedCoralStationProc : GamePositions.BlueCoralStationProcCentre,
-				1);
+		return isProche(GamePositions.RedCoralStationProc, 1.5) || isProche(GamePositions.BlueCoralStationProcCentre,1.5);
+
 	}
 
 	public boolean isStationCage() {

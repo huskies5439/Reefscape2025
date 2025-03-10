@@ -39,6 +39,9 @@ public class GestionDEL extends Command {
     if(corailManip.isCorail() || algueManip.isAlgue()){//Affiche vert quand on a gobé un élément de jeu
       del.couleur(Color.kRed);//Red et Green sont inversés.... Est-ce dans la librairie ou notre strip ?
     }
+    else if(basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()){
+      del.couleur(Color.kPurple);
+    }
     else{//Sinon, on fait juste afficher notre couleur d'alliance pour fitter avec les bumpers.
       if(basePilotable.isRedAlliance()){
         del.breathe(Color.kGreen);
