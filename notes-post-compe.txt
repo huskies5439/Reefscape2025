@@ -1,0 +1,46 @@
+#######NOTES POST-COMPÉ REEFSCAPE 2025
+
+
+#Dédoublement des Pose2d dans WPILIB et PathPlanner a vraiment été un casse-tête épouvantable
+Si on utilise pathfindToPath (ou fonction équivalente l'an prochain), toutes les Pose2d ne vivent que dans PathPlanner
+(et le développeur suggère cette approche de toute façon)
+
+#Faire fonctionner les paths à l'école
+Les deux obstacles principaux au débogage de PathPlanner à l'école (on dérapait, on fonçait dans les modules) c'était un kP extrêment élevé et des vieux pneus.
+Pour le kP, c'est pas compliqué, il faut mettre une valeur faible (1 ou 2) et ne jamais y touché. Ce n'est pas un paramètre à tweaker
+Pour les roues, il faut prévoir des pneus neufs pour les deux dernières semaines (débogage autonome et test de pilotage)
+
+#Conseil du mentor de 3015
+En gros, le pathfinding ce n'est pas fait pour être précis précis. Ça t'amène rapidement proche de ton objectif, mais ça prend un autre système pour l'alignement final
+parce que les paths ne font pas bon pour faire des petites distances, ça fait des longues courbes.
+
+Donc, quand le robot est proche de la cible, il faut faire un PIDProfiled sur chaque axe de déplacement ayant comme cible la pose2D voulue du robot et comme capteur l'AprilTag que l'on voit en tout temps (3015 utilise même MegaTag1 pour éviter d'avoir du drift de gyro). Ou ça pourrait être le tx/ty d'un objet détecté avec le machine learning.... Dans le fond, chaque PIDProfiled est ensuite pitché dans un ChassisSpeed et le robot conduit avec ça
+
+#Pour que ça fonctionne, il faut prioriser le positionnement physique de la limelight dans le robot dès le début de la conception
+Ça prend une limelight d'alignement sur la cible finale (donc qui voit jusqu'à la fin), potentiellement une autre pour l'ajustement général du poseEstimator
+
+#Faire confiance à Pathplanner pour l'alignement des poses sur le vrai terrain de compé.
+Malgré tous les tests de calibration qu'on a fait, essentiellement on était aligné selon l'image de PathPlanner. Il pourrait être judicieux d'avoir des Poses2D pour se pratiquer à l'école et d'autres pour la compé. Un boolean isCompe permettrait de switcher facilement entre les deux
+
+#Arriver en compé avec un robot lent et accéler durant la journée de pratique
+Même si ça marchait vite à l'école !
+
+#Swerve Setpoint Generator marche vraiment bien !
+Mais il faut reset quand on revient d'une fonction auto, sinon il continue à rouler selon la vitesse sur les joysticks avant la fonction auto ! Voir BasePilotableDefaut dans le code pour le détail
+
+#Quand les fonctions d'alignement automatiques sont terminées, il faut que le pilote puisse s'ajuster : c'est essentiel et comme ça tu peux jouer même si l'alignement n'est pas parfait.
+C'est évident, mais on a ajouté cette fonctionalité la dernière semaine avant de partir !!
+
+#Une crosshair dans la limelight permettrait au pilote d'avoir un visuel qu'il peut livrer et que la fonction auto a fonctionné
+
+#LED essentielle. Surtout pour voir qu'on a gobé avec succès.
+Aussi, Grimper = Rainbow Road, c'est la tradition maintenant
+
+#On ne peut pas se fier au Pose Estimator pour automatiser des fonctions où il y aura une tonne de défense
+Olivier m'a dit dans l'autobus que l'on décalait en malade quand on fonçait dans la station, donc ça nuisait à l'automatisation.
+
+#SysID = wow maintenant.
+Vraiment plus facile à runner si les 4 tests sont sur les 4 boutons de la manette !!
+
+#Les commentaires dans le robotContainer explique très bien les décisions prises dans le design du code !
+
