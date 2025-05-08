@@ -13,7 +13,7 @@ import frc.robot.subsystems.Poignet;
 
 public class PoignetDefaut extends Command {
   Poignet poignet;
-  AlgueManip algueManip;
+  //AlgueManip algueManip;
 
   boolean modeManuel;
   BooleanSupplier monterBouton;
@@ -23,9 +23,9 @@ public class PoignetDefaut extends Command {
 
   // Remonte automatique le poignet
   // Passe en mode manuel si le dPad est utilisé
-  public PoignetDefaut(BooleanSupplier monterBouton, BooleanSupplier descendreBouton, Poignet poignet, AlgueManip algueManip) {
+  public PoignetDefaut(BooleanSupplier monterBouton, BooleanSupplier descendreBouton, Poignet poignet /*,AlgueManip algueManip*/) {
     this.poignet = poignet;
-    this.algueManip = algueManip;
+    //this.algueManip = algueManip;
 
     this.monterBouton = monterBouton;
     this.descendreBouton = descendreBouton;
@@ -52,11 +52,11 @@ public class PoignetDefaut extends Command {
 
     if (!modeManuel) {//PID si on n'a pas touché au dPad
       if (poignet.getAngle() < 82.5) {// Désactive le PID si on est proche de la verticale
-        if (algueManip.isAlgue()) {// Si on a une algue, on va plutôt à l'horizontale
+       /*  if (algueManip.isAlgue()) {// Si on a une algue, on va plutôt à l'horizontale
           poignet.setPID(0);
-        } else {
+        } else {*/
           poignet.setPID(Hauteur.sol[1]);
-        }
+        //}
       } else {
         poignet.stop();
       }

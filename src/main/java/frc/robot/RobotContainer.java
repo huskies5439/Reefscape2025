@@ -52,7 +52,7 @@ public class RobotContainer {
         private final BasePilotable basePilotable = new BasePilotable();
         private final Ascenseur ascenseur = new Ascenseur();
         private final Poignet poignet = new Poignet();
-        private final AlgueManip algueManip = new AlgueManip();
+       // private final AlgueManip algueManip = new AlgueManip();
         private final CorailManip corailManip = new CorailManip();
         private final Del del = new Del();
 
@@ -132,10 +132,10 @@ public class RobotContainer {
                               
 
                 //Hold automatique s'il y a une pièce de jeu dans les manipulateurs, sinon stop
-                algueManip.setDefaultCommand(new ConditionalCommand(
+                /*algueManip.setDefaultCommand(new ConditionalCommand(
                                 Commands.runOnce(algueManip::hold, algueManip),
                                 Commands.runOnce(algueManip::stop, algueManip),
-                                algueManip::isAlgue));
+                                algueManip::isAlgue));*/
 
                 corailManip.setDefaultCommand(new ConditionalCommand(
                                 Commands.runOnce(corailManip::hold, corailManip),
@@ -148,10 +148,13 @@ public class RobotContainer {
                 ascenseur.setDefaultCommand(
                                 new AscenseurDefaut(manette.povUp(), manette.povDown(), ascenseur, poignet));
                                 //Pas besoin de lambda car Button = Trigger = BooleanSupplier !
+                // poignet.setDefaultCommand(
+                //                 new PoignetDefaut(manette.povLeft(), manette.povRight(), poignet, algueManip));
                 poignet.setDefaultCommand(
-                                new PoignetDefaut(manette.povLeft(), manette.povRight(), poignet, algueManip));
+                                new PoignetDefaut(manette.povLeft(), manette.povRight(), poignet));
 
-                del.setDefaultCommand(new GestionDEL(del, corailManip, algueManip, basePilotable));
+                //del.setDefaultCommand(new GestionDEL(del, corailManip, algueManip, basePilotable));
+                del.setDefaultCommand(new GestionDEL(del, corailManip, basePilotable));
 
                 configureButtonBindings();
 
@@ -221,21 +224,21 @@ public class RobotContainer {
                 //////////////ALGUES////////////////////
                 
                 //Bouton X = aller chercher algue dans le récif selon la branche sélectionnée par l'opérateur
-                autoAlgueOperateur();
+               // autoAlgueOperateur();
 
                 //Bouton Y = Auto algue au processeur
                 manette.y().and(modeGrimpeurTrigger.negate())
                                 .whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
                
                 // Bumper gauche = Gober les algues au sol
-                manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
-                                () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
+                // manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
+                //                 () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
 
 
                 //////////////Sortir les pièces de jeu////////////////////
                 // Bumper droit = Sortir les pieces de jeu
-                manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
-
+               // manette.rightBumper().whileTrue(algueManip.sortirCommand().alongWith(corailManip.sortirCommand()));
+                manette.rightBumper().whileTrue(corailManip.sortirCommand()); 
 
                 //////////////Mode Grimpeur////////////////////
 
@@ -345,7 +348,7 @@ public class RobotContainer {
 
         }
 
-        private void autoAlgueOperateur() {
+        /*  private void autoAlgueOperateur() {
         //Voir les commentaires dans le bloc de fonctions ci-haut
                 manetteX.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
                                 .whileTrue(new AutoAlgue(
@@ -382,6 +385,6 @@ public class RobotContainer {
                                                 Algue.KL, Hauteur.algueBas, ascenseur, poignet, basePilotable,
                                                 algueManip))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
-        }
+        }*/
 
 }

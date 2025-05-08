@@ -16,13 +16,13 @@ public class GestionDEL extends Command {
 
   Del del; 
   CorailManip corailManip; 
-  AlgueManip algueManip; 
+  //AlgueManip algueManip; 
   BasePilotable basePilotable; 
   
-  public GestionDEL(Del del, CorailManip corailManip, AlgueManip algueManip,BasePilotable basePilotable) {
+  public GestionDEL(Del del, CorailManip corailManip, /*AlgueManip algueManip,*/BasePilotable basePilotable) {
     this.del = del; 
     this.corailManip = corailManip; 
-    this.algueManip = algueManip; 
+    //this.algueManip = algueManip; 
     this.basePilotable = basePilotable; 
     addRequirements(del); 
   }
@@ -36,7 +36,7 @@ public class GestionDEL extends Command {
 
   @Override
   public void execute() {
-    if(corailManip.isCorail() || algueManip.isAlgue()){//Affiche vert quand on a gobé un élément de jeu
+    if(corailManip.isCorail() /*|| algueManip.isAlgue()*/){//Affiche vert quand on a gobé un élément de jeu
       del.couleur(Color.kRed);//Red et Green sont inversés.... Est-ce dans la librairie ou notre strip ?
     }
     else if(basePilotable.isProcheStationCage() || basePilotable.isProcheStationProcesseur()){
