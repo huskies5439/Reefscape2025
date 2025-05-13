@@ -29,10 +29,10 @@ public class Poignet extends SubsystemBase {
   private DigitalInput limitSwitch = new DigitalInput(7);
 
   // PID + FeedForward
-  private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.045, 0, 0,
+  private ProfiledPIDController pidPoignet = new ProfiledPIDController(0.0013202, 0, 0, // kp = 0.045
       new TrapezoidProfile.Constraints(540, 540));
 
-  private ArmFeedforward feedforward = new ArmFeedforward(0.1564, 0.1749, 0.01049,0);
+  private ArmFeedforward feedforward = new ArmFeedforward(0.18635, 0.58213, 0.00085991,0.00047057); // 0.1564, 0.1749, 0.01049,0
 
   // hauteur cible de la manette operateur
   private double cibleManetteOperateur;
