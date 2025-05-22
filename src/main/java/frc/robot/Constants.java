@@ -38,9 +38,9 @@ public final class Constants {
 
     public static final double sol[] = { 0, 90 };
     public static final double L1[] = { 0, 60};
-    public static final double L2[] = { 0.122, -85 };
-    public static final double L3[] = { 0.250, -20 };
-    public static final double L4[] = { 0.56, -30 };
+    public static final double L2[] = { 0.071, -35 };
+    public static final double L3[] = { 0.250, -35 };
+    public static final double L4[] = { 0.56, -35 };
 
     public static final double algueSol[] = { 0, 0 };
     public static final double algueBas[] = { 0.3, -5 };
@@ -49,7 +49,7 @@ public final class Constants {
     public static final double processeur[] = { 0.08, 0 };
     public static final double station[] = { 0.01, 80 };
 
-    public static final double grimper[] = {0.13, 0};
+    public static final double grimper[] = {0.13, -87};
 
   }
 

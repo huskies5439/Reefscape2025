@@ -110,7 +110,7 @@ public class Poignet extends SubsystemBase {
   }
 
   public void resetEncodeurStartUp(){//Quand on ouvre le robot, la pince doit être verticale vers le haut
-    moteur.getEncoder().setPosition(90); 
+    moteur.getEncoder().setPosition(105); 
   }
 
   //////////////////// PID + feedForward

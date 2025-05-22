@@ -20,7 +20,7 @@ public class AutoAlgue extends ParallelCommandGroup {
 
     addCommands(
 
-      //basePilotable.followPath(cible),//Se rendre au récif
+      basePilotable.followPath(cible),//Se rendre au récif
     
         //Monter quand on approche du récif
         //On gobe en même temps
