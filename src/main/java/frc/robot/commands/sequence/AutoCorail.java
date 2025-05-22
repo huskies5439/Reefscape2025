@@ -19,7 +19,8 @@ public class AutoCorail extends ParallelCommandGroup {
   // se rend automatiquement à la bonne position sur le recif
   public AutoCorail(Pose2d cible, BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     addCommands(
-      //basePilotable.followPath(cible),
+      
+    //basePilotable.followPath(cible),
     
 
       //quand suffisament proche, met l'ascenseur et le poignet à la bonne position

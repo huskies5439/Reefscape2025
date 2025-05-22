@@ -16,19 +16,17 @@ import frc.robot.subsystems.Poignet;
 
 public class AutoAlgue extends ParallelCommandGroup {
   //Aller chercher les Algues automatiquement au Récif
-  public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable, AlgueManip algueManip) {
+  public AutoAlgue(Pose2d cible, double[] hauteur, Ascenseur ascenseur, Poignet poignet, BasePilotable basePilotable /*,AlgueManip algueManip*/) {
 
     addCommands(
 
-      basePilotable.followPath(cible),//Se rendre au récif
+      //basePilotable.followPath(cible),//Se rendre au récif
     
         //Monter quand on approche du récif
         //On gobe en même temps
         new SequentialCommandGroup(
              new WaitUntilCommand(basePilotable::isProcheRecif),
-             new GoToHauteur(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet).alongWith(algueManip.goberCommand())
-             )
-
-    );
+             new GoToHauteur(()-> hauteur[0], ()-> hauteur[1], ascenseur, poignet)/*.alongWith(algueManip.goberCommand()*/)
+             );
   }
 }

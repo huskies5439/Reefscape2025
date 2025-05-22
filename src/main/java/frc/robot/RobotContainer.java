@@ -224,15 +224,14 @@ public class RobotContainer {
                 //////////////ALGUES////////////////////
                 
                 //Bouton X = aller chercher algue dans le récif selon la branche sélectionnée par l'opérateur
-               // autoAlgueOperateur();
+                autoAlgueOperateur();
 
                 //Bouton Y = Auto algue au processeur
                 manette.y().and(modeGrimpeurTrigger.negate())
                                 .whileTrue(new AutoProcesseur(basePilotable, ascenseur, poignet));
                
                 // Bumper gauche = Gober les algues au sol
-                // manette.leftBumper().whileTrue(algueManip.goberCommand().alongWith(new GoToHauteur(
-                //                 () -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet)));
+                 //manette.leftBumper().whileTrue(new GoToHauteur(() -> Hauteur.algueSol[0], () -> Hauteur.algueSol[1], ascenseur, poignet));
 
 
                 //////////////Sortir les pièces de jeu////////////////////
@@ -348,43 +347,37 @@ public class RobotContainer {
 
         }
 
-        /*  private void autoAlgueOperateur() {
+        private void autoAlgueOperateur() {
         //Voir les commentaires dans le bloc de fonctions ci-haut
                 manetteX.and(operateur.button(BoutonOperateur.A).or(operateur.button(BoutonOperateur.B)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.AB, Hauteur.algueHaut, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteX.and(operateur.button(BoutonOperateur.C).or(operateur.button(BoutonOperateur.D)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.CD, Hauteur.algueBas, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteX.and(operateur.button(BoutonOperateur.E).or(operateur.button(BoutonOperateur.F)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.EF, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.EF, Hauteur.algueHaut, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteX.and(operateur.button(BoutonOperateur.G).or(operateur.button(BoutonOperateur.H)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.GH, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.GH, Hauteur.algueBas, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteX.and(operateur.button(BoutonOperateur.I).or(operateur.button(BoutonOperateur.J)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.IJ, Hauteur.algueHaut, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.IJ, Hauteur.algueHaut, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
 
                 manetteX.and(operateur.button(BoutonOperateur.K).or(operateur.button(BoutonOperateur.L)))
                                 .whileTrue(new AutoAlgue(
-                                                Algue.KL, Hauteur.algueBas, ascenseur, poignet, basePilotable,
-                                                algueManip))
+                                                Algue.KL, Hauteur.algueBas, ascenseur, poignet, basePilotable))
                                 .onFalse((new DescenteAutomatique(basePilotable, ascenseur, poignet)));
-        }*/
+        }
 
 }

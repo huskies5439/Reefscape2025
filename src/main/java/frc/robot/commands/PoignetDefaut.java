@@ -8,7 +8,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.Hauteur;
-import frc.robot.subsystems.AlgueManip;
 import frc.robot.subsystems.Poignet;
 
 public class PoignetDefaut extends Command {
