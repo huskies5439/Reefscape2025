@@ -379,13 +379,13 @@ public class BasePilotable extends SubsystemBase {
 	public boolean isProcheRecif() {//Pour la monter
 		return isProche(
 				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
-				4);
+				2.5);
 	}
 
 	public boolean isLoinRecif() {//Pour la descente
 		return !isProche(
 				isRedAlliance() ? GamePositions.RedCentreRecif : GamePositions.BlueCentreRecif,
-				1.5);
+				2);
 	}
 
 	public boolean isProcheProcesseur() {
