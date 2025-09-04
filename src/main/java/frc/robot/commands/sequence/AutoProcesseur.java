@@ -20,10 +20,10 @@ public class AutoProcesseur extends ParallelCommandGroup {
   //!!NE LIVRE PAS L'ALGUE!!
   public AutoProcesseur(BasePilotable basePilotable, Ascenseur ascenseur, Poignet poignet) {
     addCommands(
-      basePilotable.followPath(GamePositions.BlueProcesseur),
+      //basePilotable.followPath(GamePositions.BlueProcesseur),
       
       new SequentialCommandGroup(
-         new WaitUntilCommand(basePilotable::isProcheProcesseur),
+         //new WaitUntilCommand(basePilotable::isProcheProcesseur),
          new GoToHauteur(()-> Hauteur.processeur[0], ()-> Hauteur.processeur[1], ascenseur, poignet)
       )
     );

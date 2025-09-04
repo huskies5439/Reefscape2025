@@ -20,7 +20,7 @@ public class AutoStation extends SequentialCommandGroup {
    //se rend automatiquement à la station de Corail
 
     addCommands(
-      basePilotable.followPath(cible),
+      //basePilotable.followPath(cible),
       Commands.run(basePilotable::setX, basePilotable)//On barre les roues.car la station n'es pas protégée
       );
   }
